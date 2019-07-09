@@ -30,9 +30,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-@Module
+@Module(includes = [ViewModelModule::class])
 class AppModule {
-
     @Singleton
     @Provides
     fun provideOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient {
@@ -42,7 +41,6 @@ class AppModule {
             .connectTimeout(30, TimeUnit.SECONDS)
             .build()
     }
-
 
     @Singleton
     @Provides
