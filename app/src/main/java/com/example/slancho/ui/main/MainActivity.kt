@@ -8,11 +8,13 @@ import dagger.android.AndroidInjection
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
     lateinit var viewModel: MainActivityViewModel
-
+    lateinit var mainFragment: MainFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+        initFragments()
         setContentView(R.layout.activity_main)
+//        supportFragmentManager.beginTransaction().add(mainFragment, mainFragment.tag).commit()
     }
 
     override fun initFields() {
@@ -22,4 +24,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun initViews() {}
 
     override fun initListeners() {}
+
+    private fun initFragments() {
+        mainFragment = MainFragment.newInstance()
+    }
 }

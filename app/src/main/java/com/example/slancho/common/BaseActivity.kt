@@ -5,19 +5,28 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.example.slancho.R
 import com.example.slancho.databinding.ActivityBaseBinding
 import com.example.slancho.di.Injectable
-import com.example.slancho.viewmodel.ViewModelFactory
 import javax.inject.Inject
 
+/**
+ * This Activity is to be inherited by any activity to initiate the injection.
+ */
 abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity(), Injectable {
+
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     protected lateinit var inheritanceBinding: B
+
     protected lateinit var baseBinding: ActivityBaseBinding
+
+    protected fun <T : ViewModel> getViewModel(cls: Class<T>): T {
+        return ViewModelProviders.of(this, viewModelFactory).get(cls)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,10 +37,6 @@ abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity(), Injectab
         initFields()
         initViews()
         initListeners()
-    }
-
-    protected fun <T : ViewModel> getViewModel(cls: Class<T>): T {
-        return ViewModelProviders.of(this, viewModelFactory).get(cls)
     }
 
     protected abstract fun initFields()

@@ -19,6 +19,7 @@ package com.example.slancho.di
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.slancho.ui.main.MainActivityViewModel
+import com.example.slancho.ui.main.MainFragmentViewModel
 import com.example.slancho.viewmodel.ViewModelFactory
 import dagger.Binds
 import dagger.Module
@@ -31,6 +32,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MainActivityViewModel::class)
     abstract fun bindMainActivityViewModel(viewModel: MainActivityViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MainFragmentViewModel::class)
+    abstract fun bindMainFragmentViewModel(viewModel: MainFragmentViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
