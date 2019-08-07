@@ -7,25 +7,23 @@ import com.example.slancho.databinding.ActivityMainBinding
 import dagger.android.AndroidInjection
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
+
     lateinit var viewModel: MainActivityViewModel
     lateinit var mainFragment: MainFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         initFragments()
-        setContentView(R.layout.activity_main)
-//        supportFragmentManager.beginTransaction().add(mainFragment, mainFragment.tag).commit()
     }
 
-    override fun initFields() {
-        viewModel = getViewModel(MainActivityViewModel::class.java)
-    }
+    override fun getLayoutResId(): Int = R.layout.activity_main
+
+    override fun initFields() { viewModel = getViewModel(MainActivityViewModel::class.java) }
 
     override fun initViews() {}
 
     override fun initListeners() {}
 
-    private fun initFragments() {
-        mainFragment = MainFragment.newInstance()
-    }
+    private fun initFragments() { mainFragment = MainFragment.newInstance() }
 }

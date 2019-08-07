@@ -17,6 +17,7 @@
 package com.example.slancho.di
 
 import com.example.slancho.ui.main.MainActivity
+import com.example.slancho.ui.splash.SplashActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -24,4 +25,7 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityModule {
     @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
     abstract fun contributeMainActivity(): MainActivity
+
+    @ContributesAndroidInjector()
+    abstract fun contributeSplashActivity(): SplashActivity
 }

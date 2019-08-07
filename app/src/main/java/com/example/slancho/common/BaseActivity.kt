@@ -1,6 +1,8 @@
 package com.example.slancho.common
 
+import android.content.Context
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -32,16 +34,26 @@ abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity(), Injectab
         super.onCreate(savedInstanceState)
         baseBinding = DataBindingUtil.setContentView(this, R.layout.activity_base)
         inheritanceBinding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.activity_base, baseBinding.grpContentBase, true)
-        setContentView(R.layout.activity_base)
+            DataBindingUtil.inflate(layoutInflater, getLayoutResId(), baseBinding.grpContentBase, true)
         initFields()
         initViews()
         initListeners()
     }
+
+    fun getBinding() = inheritanceBinding
 
     protected abstract fun initFields()
 
     protected abstract fun initViews()
 
     protected abstract fun initListeners()
+
+    protected abstract fun getLayoutResId(): Int
+
+    fun hideKeyboard() {
+        if (currentFocus != null) {
+            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+        }
+    }
 }

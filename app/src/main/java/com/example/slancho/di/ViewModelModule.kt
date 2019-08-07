@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.slancho.ui.main.MainActivityViewModel
 import com.example.slancho.ui.main.MainFragmentViewModel
+import com.example.slancho.ui.splash.SplashActivityViewModel
 import com.example.slancho.viewmodel.ViewModelFactory
 import dagger.Binds
 import dagger.Module
@@ -32,6 +33,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MainActivityViewModel::class)
     abstract fun bindMainActivityViewModel(viewModel: MainActivityViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SplashActivityViewModel::class)
+    abstract fun bindSplashActivityViewModel(viewModel: SplashActivityViewModel): ViewModel
 
     @Binds
     @IntoMap
