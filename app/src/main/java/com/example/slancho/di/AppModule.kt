@@ -21,6 +21,7 @@ import androidx.room.Room
 import com.example.slancho.api.OpenWeatherMapService
 import com.example.slancho.db.SlanchoDb
 import com.example.slancho.db.dao.UserDao
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -67,4 +68,9 @@ class AppModule {
         return db.userDao()
     }
 
+    @Singleton
+    @Provides
+    fun provideFirebaseAuth() : FirebaseAuth {
+        return FirebaseAuth.getInstance()
+    }
 }

@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.slancho.R
 import com.example.slancho.databinding.ActivityBaseBinding
 import com.example.slancho.di.Injectable
+import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
 
 /**
@@ -21,6 +22,9 @@ abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity(), Injectab
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var firebaseAuth: FirebaseAuth
 
     protected lateinit var inheritanceBinding: B
 

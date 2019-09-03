@@ -1,11 +1,11 @@
-package com.example.slancho.ui.splash
+package com.example.slancho.ui.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
 
-class SplashActivityViewModel @Inject constructor() : ViewModel() {
+class LoginActivityViewModel @Inject constructor(firebaseAuth: FirebaseAuth) : ViewModel() {
     @Inject
     lateinit var firebaseAuth: FirebaseAuth
 

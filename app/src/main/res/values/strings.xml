@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Slancho</string>
-    <string name="title_activity_splash">SplashActivity</string>
+    <string name="login">Login</string>
 </resources>
