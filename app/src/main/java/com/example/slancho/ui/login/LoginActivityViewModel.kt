@@ -12,21 +12,19 @@ class LoginActivityViewModel @Inject constructor(firebaseAuth: FirebaseAuth) : V
     val navigateToMain: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
     }
-    val navigateToLogin: MutableLiveData<Boolean> by lazy {
+    val navigateToRegister: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
     }
 
     fun onScreenReady() {
-        if (firebaseAuth.currentUser != null) {
-            navigateToMain()
-        } else {
-            navigateToLogin()
-        }
+
     }
 
     fun navigateToMain() = navigateToMain.postValue(true)
 
-    fun navigateToLogin() = navigateToLogin.postValue(true)
+    fun navigateToRegister() = navigateToRegister.postValue(true)
+
+
 }
 
 

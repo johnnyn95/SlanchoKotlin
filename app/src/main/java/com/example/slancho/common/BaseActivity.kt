@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.slancho.R
 import com.example.slancho.databinding.ActivityBaseBinding
 import com.example.slancho.di.Injectable
+import com.example.slancho.utils.VibrationManager
 import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
 
@@ -26,6 +27,9 @@ abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity(), Injectab
     @Inject
     lateinit var firebaseAuth: FirebaseAuth
 
+    @Inject
+    lateinit var vibrationManager: VibrationManager
+
     protected lateinit var inheritanceBinding: B
 
     protected lateinit var baseBinding: ActivityBaseBinding
@@ -38,7 +42,12 @@ abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity(), Injectab
         super.onCreate(savedInstanceState)
         baseBinding = DataBindingUtil.setContentView(this, R.layout.activity_base)
         inheritanceBinding =
-            DataBindingUtil.inflate(layoutInflater, getLayoutResId(), baseBinding.grpContentBase, true)
+            DataBindingUtil.inflate(
+                layoutInflater,
+                getLayoutResId(),
+                baseBinding.grpContentBase,
+                true
+            )
         initFields()
         initViews()
         initListeners()
@@ -56,7 +65,8 @@ abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity(), Injectab
 
     fun hideKeyboard() {
         if (currentFocus != null) {
-            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val inputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
         }
     }
