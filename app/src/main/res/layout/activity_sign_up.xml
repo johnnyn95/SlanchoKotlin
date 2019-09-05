@@ -10,14 +10,14 @@
         tools:context=".ui.signIn.SignInActivity">
 
         <Button
-            android:id="@+id/btn_sign_in"
+            android:id="@+id/btn_sign_up"
             style="@style/Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sign_in"
-            app:layout_constraintEnd_toEndOf="@+id/et_password"
-            app:layout_constraintStart_toStartOf="@+id/et_password"
-            app:layout_constraintTop_toBottomOf="@id/et_password" />
+            android:text="@string/sign_up"
+            app:layout_constraintEnd_toEndOf="@+id/et_password_confirmation"
+            app:layout_constraintStart_toStartOf="@+id/et_password_confirmation"
+            app:layout_constraintTop_toBottomOf="@id/et_password_confirmation" />
 
         <EditText
             android:id="@+id/et_password"
@@ -32,6 +32,18 @@
             app:layout_constraintTop_toBottomOf="@+id/et_email" />
 
         <EditText
+            android:id="@+id/et_password_confirmation"
+            style="@style/EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/password_confirmation_hint"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="@+id/et_password"
+            app:layout_constraintStart_toStartOf="@+id/et_password"
+            app:layout_constraintTop_toBottomOf="@+id/et_password" />
+
+        <EditText
             android:id="@+id/et_email"
             style="@style/EditText"
             android:layout_width="match_parent"
@@ -43,38 +55,29 @@
             app:layout_constraintStart_toStartOf="@+id/txt_login"
             app:layout_constraintTop_toBottomOf="@id/txt_login" />
 
-        <TextView
-            android:id="@+id/txt_login"
-            style="@style/TextViewTitle"
+        <ImageView
+            android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sign_in"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="@dimen/small_padding"
+            android:minWidth="@dimen/ic_min_height_width"
+            android:minHeight="@dimen/ic_min_height_width"
+            android:src="@drawable/ic_back_arrow_primary_color"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/btn_sign_in_anonymously"
-            style="@style/TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sign_in_anonymously"
-            android:textAllCaps="true"
-            app:layout_constraintEnd_toEndOf="@+id/btn_sign_up"
-            app:layout_constraintStart_toStartOf="@+id/btn_sign_up"
-            app:layout_constraintTop_toBottomOf="@+id/btn_sign_up" />
 
         <TextView
-            android:id="@+id/btn_sign_up"
+            android:id="@+id/btn_sign_in"
             style="@style/TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sign_up_account"
+            android:text="@string/sign_in_account"
             android:textAllCaps="true"
             android:textColor="@color/colorAccent"
-            app:layout_constraintEnd_toEndOf="@id/btn_sign_in"
-            app:layout_constraintStart_toStartOf="@+id/btn_sign_in"
-            app:layout_constraintTop_toBottomOf="@id/btn_sign_in" />
+            app:layout_constraintEnd_toEndOf="@id/btn_sign_up"
+            app:layout_constraintStart_toStartOf="@+id/btn_sign_up"
+            app:layout_constraintTop_toBottomOf="@id/btn_sign_up" />
 
         <TextView
             android:id="@+id/txt_app_name"
@@ -97,6 +100,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="Version 1.0" />
+
+        <TextView
+            android:id="@+id/txt_login"
+            style="@style/TextViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

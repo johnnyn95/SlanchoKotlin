@@ -28,9 +28,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     private fun initNavigationSubscribers() {
         viewModel.navigateToMain.observe(this, Observer {
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
         })
         viewModel.navigateToSignIn.observe(this, Observer {
             startActivity(Intent(this, SignInActivity::class.java))
+            finish()
         })
     }
 

@@ -16,8 +16,9 @@
 
 package com.example.slancho.di
 
-import com.example.slancho.ui.signIn.SignInActivity
 import com.example.slancho.ui.main.MainActivity
+import com.example.slancho.ui.signIn.SignInActivity
+import com.example.slancho.ui.signUp.SignUpActivity
 import com.example.slancho.ui.splash.SplashActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -32,4 +33,7 @@ abstract class ActivityModule {
 
     @ContributesAndroidInjector
     abstract fun contributeSignInActivity(): SignInActivity
+
+    @ContributesAndroidInjector
+    abstract fun contributeSignUpActivity(): SignUpActivity
 }

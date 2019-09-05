@@ -1,4 +1,4 @@
-package com.example.slancho.ui.signIn
+package com.example.slancho.ui.signUp
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,16 +9,18 @@ import android.widget.Toast.LENGTH_SHORT
 import com.example.slancho.BuildConfig
 import com.example.slancho.R
 import com.example.slancho.common.BaseActivity
-import com.example.slancho.databinding.ActivitySignInBinding
+import com.example.slancho.databinding.ActivitySignUpBinding
 import com.example.slancho.ui.main.MainActivity
-import com.example.slancho.ui.signUp.SignUpActivity
+import com.example.slancho.ui.signIn.SignInActivity
 import dagger.android.AndroidInjection
 
-class SignInActivity : BaseActivity<ActivitySignInBinding>() {
+class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
 
-    private lateinit var viewModel: SignInActivityViewModel
+    private lateinit var viewModel: SignUpActivityViewModel
     private lateinit var email: String
     private lateinit var password: String
+    private lateinit var passwordConfirmation: String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -26,7 +28,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
     }
 
     override fun initFields() {
-        viewModel = getViewModel(SignInActivityViewModel::class.java)
+        viewModel = getViewModel(SignUpActivityViewModel::class.java)
     }
 
     override fun initViews() {
@@ -34,46 +36,39 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
     }
 
     override fun initListeners() {
-        getBinding().btnSignIn.setOnClickListener { signInWithEmailAndPassword() }
-        getBinding().btnSignInAnonymously.setOnClickListener { loginAnonymously() }
-        getBinding().btnSignUp.setOnClickListener { navigateToSignUp() }
+        getBinding().btnSignUp.setOnClickListener { signUpWithEmailAndPassword() }
+        getBinding().btnSignIn.setOnClickListener { navigateToSignIn() }
+        getBinding().btnBack.setOnClickListener { onBackPressed() }
     }
 
-    override fun getLayoutResId(): Int = R.layout.activity_sign_in
+    override fun getLayoutResId(): Int = R.layout.activity_sign_up
 
-    private fun signInWithEmailAndPassword() {
+    private fun signUpWithEmailAndPassword() {
         if (validateInputFields()) {
-            firebaseAuth.signInWithEmailAndPassword(email, password)
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) {
                     if (it.isSuccessful) {
-                        signInSuccessfulToast()
+                        signUpSuccessfulToast()
                         navigateToMain()
                     } else {
-                        signInFailedToast()
+                        signUpFailedToast()
                     }
                 }
         } else invalidInputFieldsAnimation()
     }
 
-    private fun loginAnonymously() {
-        firebaseAuth.signInAnonymously().addOnCompleteListener(this) {
-            if (it.isSuccessful) {
-                signInSuccessfulToast()
-                navigateToMain()
-            } else {
-                signInFailedToast()
-            }
-        }
-    }
-
     private fun fetchInputFields() {
         email = getBinding().etEmail.text.toString()
         password = getBinding().etPassword.text.toString()
+        passwordConfirmation = getBinding().etPasswordConfirmation.text.toString()
     }
 
     private fun validateInputFields(): Boolean {
         fetchInputFields()
-        return email.isNotEmpty() && password.isNotEmpty()
+        return email.isNotEmpty() &&
+                password.isNotEmpty() &&
+                passwordConfirmation.isNotEmpty() &&
+                passwordConfirmation == password
     }
 
     private fun invalidInputFieldsAnimation() {
@@ -84,11 +79,11 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
 
     private fun navigateToMain() = startActivity(Intent(this, MainActivity::class.java))
 
-    private fun navigateToSignUp() = startActivity(Intent(this, SignUpActivity::class.java))
+    private fun navigateToSignIn() = startActivity(Intent(this, SignInActivity::class.java))
 
-    private fun signInSuccessfulToast() =
-        Toast.makeText(baseContext, R.string.sign_in_successful, LENGTH_SHORT).show()
+    private fun signUpSuccessfulToast() =
+        Toast.makeText(baseContext, R.string.sign_up_successful, LENGTH_SHORT).show()
 
-    private fun signInFailedToast() =
-        Toast.makeText(baseContext, R.string.sign_in_failed, LENGTH_SHORT).show()
+    private fun signUpFailedToast() =
+        Toast.makeText(baseContext, R.string.sign_up_failed, LENGTH_SHORT).show()
 }

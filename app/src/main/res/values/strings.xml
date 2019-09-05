@@ -5,9 +5,12 @@
     <string name="sign_up">Sign up</string>
     <string name="sign_up_account">Don\'t have an account? Sign up</string>
     <string name="sign_in_account">Already have an account? Sign in</string>
-    <string name="sign_in_successful">Sign In Successful</string>
-    <string name="sign_in_failed">Sign In Failed</string>
+    <string name="sign_in_successful">Sign in successful</string>
+    <string name="sign_in_failed">Sign in failed</string>
+    <string name="sign_up_successful">Sign up successful</string>
+    <string name="sign_up_failed">Sign up failed</string>
     <string name="sign_in_anonymously">Continue without signing in</string>
     <string name="email_hint">Enter your email address</string>
     <string name="password_hint">Enter your password</string>
+    <string name="password_confirmation_hint">Enter your password again</string>
 </resources>

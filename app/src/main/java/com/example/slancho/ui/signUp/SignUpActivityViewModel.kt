@@ -1,10 +1,10 @@
-package com.example.slancho.ui.signIn
+package com.example.slancho.ui.signUp
 
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
 
-class SignInActivityViewModel @Inject constructor() : ViewModel() {
+class SignUpActivityViewModel @Inject constructor() : ViewModel() {
     @Inject
     lateinit var firebaseAuth: FirebaseAuth
 
