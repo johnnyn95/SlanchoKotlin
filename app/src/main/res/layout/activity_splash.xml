@@ -16,8 +16,8 @@
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             app:layout_constraintBottom_toTopOf="@id/txt_version"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toEndOf="@+id/txt_version"
+            app:layout_constraintStart_toStartOf="@+id/txt_version" />
 
         <TextView
             android:id="@+id/txt_version"
@@ -30,17 +30,17 @@
             tools:text="Version 1.0" />
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/anim_splash"
+            android:id="@+id/anim_splash_rainbow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="@dimen/anim_min_height_width"
             android:minHeight="@dimen/anim_min_height_width"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/txt_app_name"
+            app:layout_constraintEnd_toEndOf="@id/txt_app_name"
+            app:layout_constraintStart_toStartOf="@id/txt_app_name"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/txt_app_name"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:lottie_rawRes="@raw/splash_animation" />
+            app:lottie_rawRes="@raw/splash_animation_rainbow" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

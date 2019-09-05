@@ -10,6 +10,6 @@
     <dimen name="medium_text_size">16sp</dimen>
     <dimen name="large_text_size">24sp</dimen>
 
-    <dimen name="anim_min_height_width">224dp</dimen>
+    <dimen name="anim_min_height_width">112dp</dimen>
     <dimen name="ic_min_height_width">40dp</dimen>
 </resources>
