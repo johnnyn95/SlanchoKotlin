@@ -12,7 +12,7 @@ class SplashActivityViewModel @Inject constructor() : ViewModel() {
     val navigateToMain: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
     }
-    val navigateToLogin: MutableLiveData<Boolean> by lazy {
+    val navigateToSignIn: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
     }
 
@@ -20,13 +20,13 @@ class SplashActivityViewModel @Inject constructor() : ViewModel() {
         if (firebaseAuth.currentUser != null) {
             navigateToMain()
         } else {
-            navigateToLogin()
+            navigateToSignIn()
         }
     }
 
     fun navigateToMain() = navigateToMain.postValue(true)
 
-    fun navigateToLogin() = navigateToLogin.postValue(true)
+    fun navigateToSignIn() = navigateToSignIn.postValue(true)
 }
 
 

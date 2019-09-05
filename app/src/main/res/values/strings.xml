@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">Slancho</string>
-    <string name="login">Login</string>
-    <string name="login_successful">Login Successful</string>
-    <string name="login_failed">Login Failed</string>
-    <string name="login_anonymously">Login Anonymously</string>
+    <string name="app_version">Version %1$s</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="sign_up_account">Don\'t have an account? Sign up</string>
+    <string name="sign_in_account">Already have an account? Sign in</string>
+    <string name="sign_in_successful">Sign In Successful</string>
+    <string name="sign_in_failed">Sign In Failed</string>
+    <string name="sign_in_anonymously">Continue without signing in</string>
     <string name="email_hint">Enter your email address</string>
     <string name="password_hint">Enter your password</string>
 </resources>

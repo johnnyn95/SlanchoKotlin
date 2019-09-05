@@ -4,10 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.lifecycle.Observer
+import com.example.slancho.BuildConfig
 import com.example.slancho.R
 import com.example.slancho.common.BaseActivity
 import com.example.slancho.databinding.ActivitySplashBinding
-import com.example.slancho.ui.login.LoginActivity
+import com.example.slancho.ui.signIn.SignInActivity
 import com.example.slancho.ui.main.MainActivity
 import dagger.android.AndroidInjection
 
@@ -28,8 +29,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         viewModel.navigateToMain.observe(this, Observer {
             startActivity(Intent(this, MainActivity::class.java))
         })
-        viewModel.navigateToLogin.observe(this, Observer {
-            startActivity(Intent(this, LoginActivity::class.java))
+        viewModel.navigateToSignIn.observe(this, Observer {
+            startActivity(Intent(this, SignInActivity::class.java))
         })
     }
 
@@ -42,6 +43,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     }
 
     override fun initViews() {
+        getBinding().txtVersion.text = getString(R.string.app_version, BuildConfig.VERSION_NAME)
     }
 
     override fun initListeners() {}

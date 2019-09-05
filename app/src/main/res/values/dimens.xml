@@ -1,5 +1,6 @@
 <resources>
     // Padding
+    <dimen name="extra_small_padding">4dp</dimen>
     <dimen name="small_padding">8dp</dimen>
     <dimen name="medium_padding">16dp</dimen>
     <dimen name="large_padding">24dp</dimen>
@@ -8,4 +9,6 @@
     <dimen name="small_text_size">12sp</dimen>
     <dimen name="medium_text_size">16sp</dimen>
     <dimen name="large_text_size">24sp</dimen>
+
+    <dimen name="anim_min_height_width">224dp</dimen>
 </resources>

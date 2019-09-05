@@ -1,4 +1,4 @@
-package com.example.slancho.ui.login
+package com.example.slancho.ui.signIn
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,15 +6,16 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
+import com.example.slancho.BuildConfig
 import com.example.slancho.R
 import com.example.slancho.common.BaseActivity
-import com.example.slancho.databinding.ActivityLoginBinding
+import com.example.slancho.databinding.ActivitySignInBinding
 import com.example.slancho.ui.main.MainActivity
 import dagger.android.AndroidInjection
 
-class LoginActivity : BaseActivity<ActivityLoginBinding>() {
+class SignInActivity : BaseActivity<ActivitySignInBinding>() {
 
-    lateinit var viewModel: LoginActivityViewModel
+    lateinit var viewModel: SignInActivityViewModel
     lateinit var email: String
     lateinit var password: String
 
@@ -24,20 +25,21 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
 
     override fun initFields() {
-        viewModel = getViewModel(LoginActivityViewModel::class.java)
+        viewModel = getViewModel(SignInActivityViewModel::class.java)
     }
 
     override fun initViews() {
+        getBinding().txtVersion.text = getString(R.string.app_version, BuildConfig.VERSION_NAME)
     }
 
     override fun initListeners() {
-        getBinding().btnLogin.setOnClickListener { loginWithEmailAndPassword() }
-        getBinding().btnLoginAnonymously.setOnClickListener { loginAnonymously() }
+        getBinding().btnSignIn.setOnClickListener { signInWithEmailAndPassword() }
+        getBinding().btnSignInAnonymously.setOnClickListener { loginAnonymously() }
     }
 
-    override fun getLayoutResId(): Int = R.layout.activity_login
+    override fun getLayoutResId(): Int = R.layout.activity_sign_in
 
-    private fun loginWithEmailAndPassword() {
+    private fun signInWithEmailAndPassword() {
         if (validateInputFields()) {
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this) {
                 if (it.isSuccessful) {
@@ -80,8 +82,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     private fun navigateToMain() = startActivity(Intent(this, MainActivity::class.java))
 
     private fun loginSuccessfulToast() =
-        Toast.makeText(baseContext, R.string.login_failed, LENGTH_SHORT).show()
+        Toast.makeText(baseContext, R.string.sign_in_failed, LENGTH_SHORT).show()
 
     private fun loginFailedToast() =
-        Toast.makeText(baseContext, R.string.login_failed, LENGTH_SHORT).show()
+        Toast.makeText(baseContext, R.string.sign_in_failed, LENGTH_SHORT).show()
 }

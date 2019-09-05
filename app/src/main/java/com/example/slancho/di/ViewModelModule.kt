@@ -18,7 +18,7 @@ package com.example.slancho.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.slancho.ui.login.LoginActivityViewModel
+import com.example.slancho.ui.signIn.SignInActivityViewModel
 import com.example.slancho.ui.main.MainActivityViewModel
 import com.example.slancho.ui.main.MainFragmentViewModel
 import com.example.slancho.ui.splash.SplashActivityViewModel
@@ -42,8 +42,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(LoginActivityViewModel::class)
-    abstract fun bindLoginActivityViewModel(viewModel: LoginActivityViewModel): ViewModel
+    @ViewModelKey(SignInActivityViewModel::class)
+    abstract fun bindSignInActivityViewModel(viewModel: SignInActivityViewModel): ViewModel
 
     @Binds
     @IntoMap
