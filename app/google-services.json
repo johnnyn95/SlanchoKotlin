@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "427813470466",
+    "firebase_url": "https://slanchokotlin.firebaseio.com",
+    "project_id": "slanchokotlin",
+    "storage_bucket": "slanchokotlin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427813470466:android:aa3020be70f4cdc4",
+        "android_client_info": {
+          "package_name": "com.example.slancho"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "427813470466-e77adfhdjqsoi95m820km7f06j9j759d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.slancho",
+            "certificate_hash": "4ff2348f4ee9a2c61b271da65786cbc073168d60"
+          }
+        },
+        {
+          "client_id": "427813470466-d7vvgfangsvr79dvo0cik8es5b1at1jk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1m6SKmYTE5Hp_HnJgHXNCG_YQffRE2BQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "427813470466-d7vvgfangsvr79dvo0cik8es5b1at1jk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
