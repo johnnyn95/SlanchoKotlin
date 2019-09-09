@@ -13,4 +13,8 @@
     <string name="email_hint">Enter your email address</string>
     <string name="password_hint">Enter your password</string>
     <string name="password_confirmation_hint">Enter your password again</string>
+
+    <string name="weather">Weather</string>
+    <string name="news">News</string>
+    <string name="search">Search</string>
 </resources>

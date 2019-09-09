@@ -14,7 +14,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        initFragments()
+//        initFragments()
     }
 
     override fun getLayoutResId(): Int = R.layout.activity_main

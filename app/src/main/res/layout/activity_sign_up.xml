@@ -7,7 +7,7 @@
         android:id="@+id/grp_content_base"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.signIn.SignInActivity">
+        tools:context=".ui.signUp.SignUpActivity">
 
         <Button
             android:id="@+id/btn_sign_up"
