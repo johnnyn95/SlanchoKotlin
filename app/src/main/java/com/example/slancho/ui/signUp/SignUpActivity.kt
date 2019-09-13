@@ -32,7 +32,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
     }
 
     override fun initViews() {
-        getBinding().txtVersion.text = getString(R.string.app_version, BuildConfig.VERSION_NAME)
+        getBinding().txtVersion.text = getAppVersion()
     }
 
     override fun initListeners() {

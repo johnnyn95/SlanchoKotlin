@@ -6,7 +6,6 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
-import com.example.slancho.BuildConfig
 import com.example.slancho.R
 import com.example.slancho.common.BaseActivity
 import com.example.slancho.databinding.ActivitySignInBinding
@@ -31,7 +30,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
     }
 
     override fun initViews() {
-        getBinding().txtVersion.text = getString(R.string.app_version, BuildConfig.VERSION_NAME)
+        getBinding().txtVersion.text = getAppVersion()
     }
 
     override fun initListeners() {

@@ -3,49 +3,76 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.main.MainActivity">
+        android:animateLayoutChanges="true">
 
-        <View
-            android:id="@+id/view_toolbar_divider"
+        <androidx.drawerlayout.widget.DrawerLayout
+            android:id="@+id/grp_drawer"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorPrimaryDark"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            app:layout_constraintTop_toTopOf="parent"
-            app:theme="@style/ThemeOverlay.MaterialComponents.ActionBar">
-        </androidx.appcompat.widget.Toolbar>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".ui.main.MainActivity">
 
-        <FrameLayout
-            android:id="@+id/grp_fragment_container"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@android:color/transparent"
-            app:layout_constraintBottom_toTopOf="@+id/grp_bottom_nav"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            app:layout_constraintVertical_bias="0.0" />
+                <FrameLayout
+                    android:id="@+id/grp_fragment_container"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@android:color/transparent"
+                    app:layout_constraintBottom_toTopOf="@+id/grp_bottom_nav"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                    app:layout_constraintVertical_bias="0.0" />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/grp_bottom_nav"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:menu="@menu/main_bottom_nav"
-            app:itemBackground="@color/colorPrimary"
-            app:itemIconTint="@color/bottom_tab_selector"
-            app:itemTextColor="@color/bottom_tab_selector"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <View
+                    android:id="@+id/view_toolbar_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPrimaryDark"
+                    app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/colorPrimary"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:theme="@style/ThemeOverlay.MaterialComponents.ActionBar" />
+
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/grp_bottom_nav"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:itemBackground="@color/colorPrimary"
+                    app:itemIconTint="@color/bottom_tab_selector"
+                    app:itemTextColor="@color/bottom_tab_selector"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:menu="@menu/main_bottom_nav" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.navigation.NavigationView
+                android:id="@+id/view_navigation"
+                android:layout_width="304dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:background="@color/colorPrimaryDark"
+                android:fitsSystemWindows="true"
+                android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"
+                app:headerLayout="@layout/drawer_header"
+                app:itemBackground="@drawable/drawer_selected_item"
+                app:itemIconTint="@android:color/white"
+                app:itemTextColor="@android:color/white"
+                app:menu="@menu/drawer_menu" />
+
+        </androidx.drawerlayout.widget.DrawerLayout>
+    </FrameLayout>
 </layout>

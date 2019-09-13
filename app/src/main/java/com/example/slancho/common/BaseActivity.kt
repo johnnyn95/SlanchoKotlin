@@ -13,6 +13,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.example.slancho.BuildConfig
 import com.example.slancho.R
 import com.example.slancho.databinding.ActivityBaseBinding
 import com.example.slancho.di.Injectable
@@ -87,4 +88,7 @@ abstract class BaseActivity<B : ViewDataBinding> : AppCompatActivity(), Injectab
             }
         }
     }
+
+    protected fun getAppVersion(): String =
+        getString(R.string.app_version, BuildConfig.VERSION_NAME)
 }
