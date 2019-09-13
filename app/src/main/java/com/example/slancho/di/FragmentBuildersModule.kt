@@ -16,12 +16,12 @@
 
 package com.example.slancho.di
 
-import com.example.slancho.ui.main.MainFragment
+import com.example.slancho.ui.main.weather.WeatherFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class FragmentBuildersModule {
     @ContributesAndroidInjector
-    abstract fun contributeMainFragment(): MainFragment
+    abstract fun contributeWeatherFragment(): WeatherFragment
 }

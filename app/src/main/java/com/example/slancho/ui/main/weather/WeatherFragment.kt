@@ -1,4 +1,4 @@
-package com.example.slancho.ui.main
+package com.example.slancho.ui.main.weather
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,18 +9,22 @@ import com.example.slancho.R
 import com.example.slancho.common.BaseFragment
 import com.example.slancho.databinding.FragmentMainBinding
 
-class MainFragment : BaseFragment() {
-    override val fragmentTag: String get() = MainFragment::class.toString()
+class WeatherFragment : BaseFragment() {
+    override val fragmentTag: String get() = WeatherFragment::class.toString()
 
     lateinit var binding: FragmentMainBinding
 
     companion object {
-        fun newInstance(): MainFragment {
-            return MainFragment()
+        fun newInstance(): WeatherFragment {
+            return WeatherFragment()
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
         initFields()
         initViews()

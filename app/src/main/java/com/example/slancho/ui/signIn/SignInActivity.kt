@@ -23,6 +23,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+        checkForGrantedPermissions()
     }
 
     override fun initFields() {
