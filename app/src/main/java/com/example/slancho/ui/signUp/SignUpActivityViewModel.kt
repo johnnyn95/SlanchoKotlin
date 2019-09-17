@@ -1,15 +1,23 @@
 package com.example.slancho.ui.signUp
 
-import androidx.lifecycle.ViewModel
+import com.example.slancho.repository.user.UserDbRepository
+import com.example.slancho.ui.BaseAuthViewModel
+import com.example.slancho.utils.LocationManager
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import javax.inject.Inject
 
-class SignUpActivityViewModel @Inject constructor() : ViewModel() {
-    @Inject
-    lateinit var firebaseAuth: FirebaseAuth
+class SignUpActivityViewModel @Inject constructor(
+    locationManager: LocationManager,
+    firebaseAuth: FirebaseAuth
+    , userDbRepository: UserDbRepository
+) : BaseAuthViewModel(locationManager, firebaseAuth, userDbRepository) {
 
-    fun onScreenReady() {
+    override fun onScreenReady() {
+    }
 
+    fun signUpWithEmailAndPassword(firebaseUser: FirebaseUser) {
+        userDbRepository.insertUser(firebaseUser, false)
     }
 }
 

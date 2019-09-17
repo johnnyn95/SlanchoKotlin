@@ -3,12 +3,15 @@ package com.example.slancho.db.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 @Entity(tableName = "user")
-data class User (
+data class User(
     @ColumnInfo(name = "id")
+    val id: String = UUID.randomUUID().toString(),
     @PrimaryKey
-    var id: Long?
-) {
-
-}
+    @ColumnInfo(name = "authUID")
+    var authUID: String,
+    @ColumnInfo(name = "isAnonymous")
+    var isAnonymous: Boolean
+)

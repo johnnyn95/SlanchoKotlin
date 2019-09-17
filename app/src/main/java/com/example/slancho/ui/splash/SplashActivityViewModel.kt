@@ -1,32 +1,26 @@
 package com.example.slancho.ui.splash
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.util.Log
+import com.example.slancho.repository.user.UserDbRepository
+import com.example.slancho.ui.BaseAuthViewModel
+import com.example.slancho.utils.LocationManager
 import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
 
-class SplashActivityViewModel @Inject constructor() : ViewModel() {
-    @Inject
-    lateinit var firebaseAuth: FirebaseAuth
+class SplashActivityViewModel @Inject constructor(
+    locationManager: LocationManager,
+    firebaseAuth: FirebaseAuth,
+    userDbRepository: UserDbRepository
+) : BaseAuthViewModel(locationManager, firebaseAuth, userDbRepository) {
 
-    val navigateToMain: MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>()
-    }
-    val navigateToSignIn: MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>()
-    }
-
-    fun onScreenReady() {
+    override fun onScreenReady() {
         if (firebaseAuth.currentUser != null) {
             navigateToMain()
+            Log.d(SplashActivityViewModel::class.java.simpleName, firebaseAuth.currentUser!!.uid)
         } else {
             navigateToSignIn()
         }
     }
-
-    fun navigateToMain() = navigateToMain.postValue(true)
-
-    fun navigateToSignIn() = navigateToSignIn.postValue(true)
 }
 
 

@@ -46,6 +46,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
             firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) {
                     if (it.isSuccessful) {
+                        viewModel.signInWithEmailAndPassword(firebaseAuth.currentUser!!)
                         signInSuccessfulToast()
                         navigateToMain()
                     } else {
@@ -58,6 +59,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
     private fun loginAnonymously() {
         firebaseAuth.signInAnonymously().addOnCompleteListener(this) {
             if (it.isSuccessful) {
+                viewModel.signInAnonymously(firebaseAuth.currentUser!!)
                 signInSuccessfulToast()
                 navigateToMain()
             } else {

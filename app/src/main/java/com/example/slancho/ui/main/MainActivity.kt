@@ -1,9 +1,11 @@
 package com.example.slancho.ui.main
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity.LEFT
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.core.view.GravityCompat
@@ -56,10 +58,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun initListeners() {
         getBinding().viewNavigation.setNavigationItemSelectedListener {
             if (it.itemId == R.id.item_settings) {
+                // TODO implement settings screen
             }
             if (it.itemId == R.id.item_sign_out) {
                 viewModel.signOut()
             }
+            closeDrawer()
             false
         }
 
@@ -102,4 +106,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         getBinding().grpDrawer.setScrimColor(getColor(R.color.colorPrimary))
     }
 
+    @SuppressLint("RtlHardcoded")
+    private fun closeDrawer() {
+        if (getBinding().grpDrawer.isDrawerOpen(LEFT)) {
+            getBinding().grpDrawer.closeDrawer(LEFT)
+        }
+    }
 }

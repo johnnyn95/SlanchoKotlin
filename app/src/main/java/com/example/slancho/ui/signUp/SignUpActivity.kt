@@ -6,7 +6,6 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
-import com.example.slancho.BuildConfig
 import com.example.slancho.R
 import com.example.slancho.common.BaseActivity
 import com.example.slancho.databinding.ActivitySignUpBinding
@@ -48,6 +47,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) {
                     if (it.isSuccessful) {
+                        viewModel.signUpWithEmailAndPassword(firebaseAuth.currentUser!!)
                         signUpSuccessfulToast()
                         navigateToMain()
                     } else {
