@@ -9,18 +9,18 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.example.slancho.di.Injectable
 import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 /**
  * This Fragment is to be inherited by any fragment to initiate the injection.
  */
-abstract class BaseFragment : Fragment(), Injectable {
+abstract class BaseFragment : DaggerFragment(), Injectable {
 
     @Inject
     protected lateinit var viewModelFactory: ViewModelProvider.Factory

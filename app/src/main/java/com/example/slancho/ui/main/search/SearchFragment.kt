@@ -1,4 +1,4 @@
-package com.example.slancho.ui.main.weather
+package com.example.slancho.ui.main.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,16 +7,16 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.slancho.R
 import com.example.slancho.common.BaseFragment
-import com.example.slancho.databinding.FragmentWeatherBinding
+import com.example.slancho.databinding.FragmentSearchBinding
 
-class WeatherFragment : BaseFragment() {
-    override val fragmentTag: String get() = WeatherFragment::class.toString()
+class SearchFragment : BaseFragment() {
+    override val fragmentTag: String get() = SearchFragment::class.toString()
 
-    lateinit var binding: FragmentWeatherBinding
+    lateinit var binding: FragmentSearchBinding
 
     companion object {
-        fun newInstance(): WeatherFragment {
-            return WeatherFragment()
+        fun newInstance(): SearchFragment {
+            return SearchFragment()
         }
     }
 
@@ -25,7 +25,7 @@ class WeatherFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         initFields()
         initViews()
         initListeners()

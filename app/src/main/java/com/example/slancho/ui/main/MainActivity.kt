@@ -9,20 +9,31 @@ import android.view.Gravity.LEFT
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.slancho.R
 import com.example.slancho.common.BaseActivity
 import com.example.slancho.databinding.ActivityMainBinding
+import com.example.slancho.ui.main.news.NewsFragment
+import com.example.slancho.ui.main.search.SearchFragment
 import com.example.slancho.ui.main.weather.WeatherFragment
 import com.example.slancho.ui.signIn.SignInActivity
 import com.example.slancho.utils.LocationManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
-class MainActivity : BaseActivity<ActivityMainBinding>() {
+class MainActivity : BaseActivity<ActivityMainBinding>(),
+    BottomNavigationView.OnNavigationItemSelectedListener {
 
     lateinit var viewModel: MainActivityViewModel
     lateinit var weatherFragment: WeatherFragment
+    lateinit var searchFragment: SearchFragment
+    lateinit var newsFragment: NewsFragment
+    lateinit var activeFragment: Fragment
+
+    var activeItemId: Int = 0
 
     @Inject
     lateinit var locationManager: LocationManager
@@ -31,9 +42,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         checkForGrantedPermissions()
-        initToolbar()
-        initDrawer()
-//        initFragments()
         locationManager.getLastKnownLocation(object :
             LocationManager.OnLocationReceivedListener {
             override fun onLocationReceived(location: Location) {
@@ -53,6 +61,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     override fun initViews() {
+        initToolbar()
+        initBottomNavigation()
+        initDrawer()
+        initFragments()
     }
 
     override fun initListeners() {
@@ -66,6 +78,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             closeDrawer()
             false
         }
+
+        getBinding().grpBottomNav.setOnNavigationItemSelectedListener(this)
 
         viewModel.onSignOutClicked.observe(this, Observer {
             if (it) {
@@ -85,6 +99,54 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private fun initFragments() {
         weatherFragment = WeatherFragment.newInstance()
+        searchFragment = SearchFragment.newInstance()
+        newsFragment = NewsFragment.newInstance()
+
+        val manager = supportFragmentManager
+        for (fragment in listOf(
+            weatherFragment,
+            searchFragment,
+            newsFragment
+        )) {
+            manager.beginTransaction().add(
+                R.id.grp_fragment_container,
+                fragment,
+                fragment.javaClass.simpleName
+            )
+                .hide(fragment).commit()
+        }
+        activeFragment = weatherFragment
+        manager.beginTransaction().show(weatherFragment).commit()
+    }
+
+    override fun onNavigationItemSelected(menuItem: MenuItem): Boolean =
+        handleTabClick(menuItem.itemId)
+
+    private fun handleTabClick(itemId: Int): Boolean {
+        val replacement: Fragment?
+        activeItemId = itemId
+        when (activeItemId) {
+            R.id.action_weather -> replacement = weatherFragment
+            R.id.action_news -> replacement = newsFragment
+            R.id.action_search -> replacement = searchFragment
+            else -> return false
+        }
+
+        replaceActiveFragment(itemId, replacement)
+
+        return true
+    }
+
+    private fun replaceActiveFragment(itemId: Int, replacement: Fragment) {
+        supportFragmentManager.beginTransaction().hide(activeFragment).show(replacement).commit()
+        activeFragment = replacement
+        activeFragment.onResume()
+
+        if (getBinding().grpBottomNav.selectedItemId != itemId) {
+            getBinding().grpBottomNav.setOnNavigationItemSelectedListener(null)
+            getBinding().grpBottomNav.selectedItemId = itemId
+            getBinding().grpBottomNav.setOnNavigationItemSelectedListener(this)
+        }
     }
 
     private fun initToolbar() {
@@ -104,6 +166,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             headerView.findViewById<TextView>(R.id.txt_release_version).text = getAppVersion()
         }
         getBinding().grpDrawer.setScrimColor(getColor(R.color.colorPrimary))
+    }
+
+    private fun initBottomNavigation() {
+        getBinding().grpBottomNav.labelVisibilityMode =
+            LabelVisibilityMode.LABEL_VISIBILITY_SELECTED
     }
 
     @SuppressLint("RtlHardcoded")

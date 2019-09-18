@@ -20,6 +20,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.slancho.ui.signIn.SignInActivityViewModel
 import com.example.slancho.ui.main.MainActivityViewModel
+import com.example.slancho.ui.main.news.NewsFragmentViewModel
+import com.example.slancho.ui.main.search.SearchFragmentViewModel
 import com.example.slancho.ui.main.weather.WeatherFragmentViewModel
 import com.example.slancho.ui.signUp.SignUpActivityViewModel
 import com.example.slancho.ui.splash.SplashActivityViewModel
@@ -55,6 +57,16 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(WeatherFragmentViewModel::class)
     abstract fun bindWeatherFragmentViewModel(viewModel: WeatherFragmentViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SearchFragmentViewModel::class)
+    abstract fun bindSearchFragmentViewModel(viewModel: SearchFragmentViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(NewsFragmentViewModel::class)
+    abstract fun bindNewsFragmentViewModel(viewModel: NewsFragmentViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
