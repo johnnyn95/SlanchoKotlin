@@ -19,18 +19,21 @@ package com.example.slancho.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.example.slancho.db.dao.LastKnownLocationDao
 import com.example.slancho.db.dao.UserDao
+import com.example.slancho.db.model.LastKnownLocation
 import com.example.slancho.db.model.User
 
 /**
  * Main database description.
  */
 @Database(
-    entities = [User::class],
-    version = 1,
+    entities = [User::class, LastKnownLocation::class],
+    version = 2,
     exportSchema = false
 )
 abstract class SlanchoDb : RoomDatabase() {
     abstract fun userDao(): UserDao
+    abstract fun lastKnownLocationDao(): LastKnownLocationDao
 }
 

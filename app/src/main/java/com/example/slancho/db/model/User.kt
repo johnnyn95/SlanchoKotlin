@@ -2,6 +2,7 @@ package com.example.slancho.db.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import java.util.*
 
@@ -14,4 +15,7 @@ data class User(
     var authUID: String,
     @ColumnInfo(name = "isAnonymous")
     var isAnonymous: Boolean
-)
+) {
+    @Ignore
+    lateinit var lastKnownLocation: LastKnownLocation
+}

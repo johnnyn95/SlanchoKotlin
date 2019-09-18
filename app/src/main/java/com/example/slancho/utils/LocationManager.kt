@@ -1,6 +1,7 @@
 package com.example.slancho.utils
 
 import android.app.Application
+import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -38,7 +39,14 @@ class LocationManager @Inject constructor(var application: Application) {
         }
     }
 
-    fun getAddressFromLastKnownLocation(location: Location): String {
+    fun getAddressFromLastKnownLocation(location: Location): Address {
+        val geoCoder = Geocoder(application, Locale.getDefault())
+        val addresses =
+            geoCoder.getFromLocation(location.latitude, location.longitude, 1)
+        return addresses[0]
+    }
+
+    fun getFormattedAddressFromLastKnownLocation(location: Location): String {
         val geoCoder = Geocoder(application, Locale.getDefault())
         val addresses =
             geoCoder.getFromLocation(location.latitude, location.longitude, 1)

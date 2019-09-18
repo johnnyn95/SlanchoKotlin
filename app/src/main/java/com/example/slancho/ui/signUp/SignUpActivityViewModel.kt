@@ -17,7 +17,7 @@ class SignUpActivityViewModel @Inject constructor(
     }
 
     fun signUpWithEmailAndPassword(firebaseUser: FirebaseUser) {
-        userDbRepository.insertUser(firebaseUser, false)
+        userDbRepository.insertUser(firebaseUser.uid, false)
     }
 }
 

@@ -17,11 +17,11 @@ class SignInActivityViewModel @Inject constructor(
     }
 
     fun signInAnonymously(firebaseUser: FirebaseUser) {
-        userDbRepository.insertUser(firebaseUser, true)
+        userDbRepository.insertUser(firebaseUser.uid, true)
     }
 
     fun signInWithEmailAndPassword(firebaseUser: FirebaseUser) {
-        userDbRepository.insertUser(firebaseUser, false)
+        userDbRepository.insertUser(firebaseUser.uid, false)
     }
 }
 

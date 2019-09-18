@@ -20,6 +20,7 @@ import android.app.Application
 import androidx.room.Room
 import com.example.slancho.api.OpenWeatherMapService
 import com.example.slancho.db.SlanchoDb
+import com.example.slancho.db.dao.LastKnownLocationDao
 import com.example.slancho.db.dao.UserDao
 import com.example.slancho.utils.LocationManager
 import com.google.firebase.auth.FirebaseAuth
@@ -48,7 +49,7 @@ class AppModule {
     @Provides
     fun provideOpenWeatherMapService(): OpenWeatherMapService {
         return Retrofit.Builder()
-            .baseUrl("https://api.github.com/")
+            .baseUrl("https://community-open-weather-map.p.rapidapi.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(OpenWeatherMapService::class.java)
@@ -65,8 +66,11 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun providePasswordDao(db: SlanchoDb): UserDao = db.userDao()
+    fun provideUserDao(db: SlanchoDb): UserDao = db.userDao()
 
+    @Singleton
+    @Provides
+    fun provideLastKnownLocationDao(db: SlanchoDb): LastKnownLocationDao = db.lastKnownLocationDao()
 
     @Singleton
     @Provides

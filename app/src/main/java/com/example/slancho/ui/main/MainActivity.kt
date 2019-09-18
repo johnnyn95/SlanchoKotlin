@@ -2,9 +2,7 @@ package com.example.slancho.ui.main
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity.LEFT
 import android.view.MenuItem
 import android.widget.TextView
@@ -23,34 +21,23 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import dagger.android.AndroidInjection
 import javax.inject.Inject
+import kotlin.coroutines.suspendCoroutine
 
 class MainActivity : BaseActivity<ActivityMainBinding>(),
     BottomNavigationView.OnNavigationItemSelectedListener {
 
-    lateinit var viewModel: MainActivityViewModel
-    lateinit var weatherFragment: WeatherFragment
-    lateinit var searchFragment: SearchFragment
-    lateinit var newsFragment: NewsFragment
-    lateinit var activeFragment: Fragment
+    private lateinit var viewModel: MainActivityViewModel
+    private lateinit var weatherFragment: WeatherFragment
+    private lateinit var searchFragment: SearchFragment
+    private lateinit var newsFragment: NewsFragment
+    private lateinit var activeFragment: Fragment
 
-    var activeItemId: Int = 0
-
-    @Inject
-    lateinit var locationManager: LocationManager
+    private var activeItemId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         checkForGrantedPermissions()
-        locationManager.getLastKnownLocation(object :
-            LocationManager.OnLocationReceivedListener {
-            override fun onLocationReceived(location: Location) {
-                Log.d(
-                    MainActivity::class.java.simpleName,
-                    locationManager.getAddressFromLastKnownLocation(location)
-                )
-            }
-        })
         viewModel.onScreenReady()
     }
 
@@ -123,17 +110,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         handleTabClick(menuItem.itemId)
 
     private fun handleTabClick(itemId: Int): Boolean {
-        val replacement: Fragment?
-        activeItemId = itemId
-        when (activeItemId) {
-            R.id.action_weather -> replacement = weatherFragment
-            R.id.action_news -> replacement = newsFragment
-            R.id.action_search -> replacement = searchFragment
+        val replacement: Fragment? = when (activeItemId) {
+            R.id.action_weather -> weatherFragment
+            R.id.action_news -> newsFragment
+            R.id.action_search -> searchFragment
             else -> return false
         }
-
-        replaceActiveFragment(itemId, replacement)
-
+        activeItemId = itemId
+        replaceActiveFragment(itemId, replacement!!)
         return true
     }
 
