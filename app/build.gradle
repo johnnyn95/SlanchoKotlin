@@ -80,6 +80,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$arch_components"
     implementation "androidx.lifecycle:lifecycle-common-java8:$arch_components"
     implementation 'androidx.room:room-runtime:2.1.0'
+    implementation "androidx.room:room-coroutines:$coroutines_version"
     implementation 'android.arch.work:work-runtime:1.0.1'
     testImplementation "androidx.arch.core:core-testing:$arch_components"
 

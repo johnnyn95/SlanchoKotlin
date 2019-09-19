@@ -3,14 +3,7 @@ package com.example.slancho.repository.user
 import com.example.slancho.db.model.User
 
 interface UserRepository {
+    suspend fun insertUser(authUID: String, isAnonymous: Boolean)
 
-    fun insertUser(authUID: String, isAnonymous: Boolean)
-
-    fun getUserByAuthUID(authUID: String, callback: GetUserCallback)
-
-    fun updateUserLastKnownLocation(user: User)
-
-    interface GetUserCallback {
-        fun onUserLoaded(user: User)
-    }
+    suspend fun getUserByAuthUID(authUID: String) : User
 }

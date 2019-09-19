@@ -12,6 +12,9 @@ import com.example.slancho.databinding.ActivitySignInBinding
 import com.example.slancho.ui.main.MainActivity
 import com.example.slancho.ui.signUp.SignUpActivity
 import dagger.android.AndroidInjection
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class SignInActivity : BaseActivity<ActivitySignInBinding>() {
 
@@ -34,7 +37,10 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
     }
 
     override fun initListeners() {
-        getBinding().btnSignIn.setOnClickListener { signInWithEmailAndPassword() }
+        getBinding().btnSignIn.setOnClickListener {
+            signInWithEmailAndPassword()
+            hideKeyboard()
+        }
         getBinding().btnSignInAnonymously.setOnClickListener { loginAnonymously() }
         getBinding().btnSignUp.setOnClickListener { navigateToSignUp() }
     }
@@ -46,9 +52,12 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
             firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) {
                     if (it.isSuccessful) {
-                        viewModel.signInWithEmailAndPassword(firebaseAuth.currentUser!!)
-                        signInSuccessfulToast()
-                        navigateToMain()
+                        GlobalScope.launch(Dispatchers.IO) {
+                            viewModel.signInWithEmailAndPassword(firebaseAuth.currentUser!!)
+                        }.invokeOnCompletion {
+                            signInSuccessfulToast()
+                            navigateToMain()
+                        }
                     } else {
                         signInFailedToast()
                     }
@@ -59,9 +68,12 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
     private fun loginAnonymously() {
         firebaseAuth.signInAnonymously().addOnCompleteListener(this) {
             if (it.isSuccessful) {
-                viewModel.signInAnonymously(firebaseAuth.currentUser!!)
-                signInSuccessfulToast()
-                navigateToMain()
+                GlobalScope.launch(Dispatchers.IO) {
+                    viewModel.signInAnonymously(firebaseAuth.currentUser!!)
+                }.invokeOnCompletion {
+                    signInSuccessfulToast()
+                    navigateToMain()
+                }
             } else {
                 signInFailedToast()
             }

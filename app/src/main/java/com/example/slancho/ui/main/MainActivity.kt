@@ -16,12 +16,9 @@ import com.example.slancho.ui.main.news.NewsFragment
 import com.example.slancho.ui.main.search.SearchFragment
 import com.example.slancho.ui.main.weather.WeatherFragment
 import com.example.slancho.ui.signIn.SignInActivity
-import com.example.slancho.utils.LocationManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import dagger.android.AndroidInjection
-import javax.inject.Inject
-import kotlin.coroutines.suspendCoroutine
 
 class MainActivity : BaseActivity<ActivityMainBinding>(),
     BottomNavigationView.OnNavigationItemSelectedListener {

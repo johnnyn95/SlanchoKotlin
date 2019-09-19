@@ -16,11 +16,11 @@ class SignInActivityViewModel @Inject constructor(
     override fun onScreenReady() {
     }
 
-    fun signInAnonymously(firebaseUser: FirebaseUser) {
+    suspend fun signInAnonymously(firebaseUser: FirebaseUser) {
         userDbRepository.insertUser(firebaseUser.uid, true)
     }
 
-    fun signInWithEmailAndPassword(firebaseUser: FirebaseUser) {
+    suspend fun signInWithEmailAndPassword(firebaseUser: FirebaseUser) {
         userDbRepository.insertUser(firebaseUser.uid, false)
     }
 }

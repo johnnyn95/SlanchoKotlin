@@ -16,7 +16,7 @@ class SignUpActivityViewModel @Inject constructor(
     override fun onScreenReady() {
     }
 
-    fun signUpWithEmailAndPassword(firebaseUser: FirebaseUser) {
+    suspend fun signUpWithEmailAndPassword(firebaseUser: FirebaseUser) {
         userDbRepository.insertUser(firebaseUser.uid, false)
     }
 }

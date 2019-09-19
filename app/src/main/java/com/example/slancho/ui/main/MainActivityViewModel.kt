@@ -2,10 +2,12 @@ package com.example.slancho.ui.main
 
 import com.example.slancho.db.model.User
 import com.example.slancho.repository.user.UserDbRepository
-import com.example.slancho.repository.user.UserRepository
 import com.example.slancho.ui.BaseAuthViewModel
 import com.example.slancho.utils.LocationManager
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainActivityViewModel @Inject constructor(
@@ -19,16 +21,12 @@ class MainActivityViewModel @Inject constructor(
 
     override fun onScreenReady() {
         firebaseAuth.addAuthStateListener(this)
-        fetchCurrentUser()
+        GlobalScope.launch(Dispatchers.IO) {
+            currentUser = fetchCurrentUser()
+        }
     }
 
-    fun fetchCurrentUser() {
-        userDbRepository.getUserByAuthUID(firebaseAuth.currentUser!!.uid,
-            object : UserRepository.GetUserCallback {
-                override fun onUserLoaded(user: User) {
-                    currentUser = user
-                }
-            })
+    private suspend fun fetchCurrentUser(): User {
+        return userDbRepository.getUserByAuthUID(firebaseAuth.currentUser!!.uid)
     }
-
 }

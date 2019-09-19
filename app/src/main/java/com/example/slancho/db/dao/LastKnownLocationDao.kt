@@ -13,5 +13,4 @@ interface LastKnownLocationDao {
 
     @Query("SELECT * FROM lastKnownLocation WHERE userId =:userId")
     fun getLastKnownLocationForUserByUserId(userId: String): LastKnownLocation
-
 }

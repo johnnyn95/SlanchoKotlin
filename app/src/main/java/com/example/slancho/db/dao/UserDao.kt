@@ -13,5 +13,4 @@ interface UserDao {
 
     @Query("SELECT * FROM user WHERE authUID =:authUID")
     fun getUserByAuthUID(authUID: String): User
-
 }
