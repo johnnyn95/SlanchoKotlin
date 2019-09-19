@@ -107,14 +107,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         handleTabClick(menuItem.itemId)
 
     private fun handleTabClick(itemId: Int): Boolean {
-        val replacement: Fragment? = when (activeItemId) {
-            R.id.action_weather -> weatherFragment
-            R.id.action_news -> newsFragment
-            R.id.action_search -> searchFragment
+        val replacement: Fragment?
+        activeItemId = itemId
+        when (activeItemId) {
+            R.id.action_weather -> replacement = weatherFragment
+            R.id.action_news -> replacement = newsFragment
+            R.id.action_search -> replacement = searchFragment
             else -> return false
         }
-        activeItemId = itemId
-        replaceActiveFragment(itemId, replacement!!)
+        replaceActiveFragment(itemId, replacement)
         return true
     }
 

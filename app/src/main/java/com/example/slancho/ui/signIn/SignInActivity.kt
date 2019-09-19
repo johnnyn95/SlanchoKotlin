@@ -12,8 +12,8 @@ import com.example.slancho.databinding.ActivitySignInBinding
 import com.example.slancho.ui.main.MainActivity
 import com.example.slancho.ui.signUp.SignUpActivity
 import dagger.android.AndroidInjection
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class SignInActivity : BaseActivity<ActivitySignInBinding>() {
@@ -52,12 +52,12 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
             firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) {
                     if (it.isSuccessful) {
-                        GlobalScope.launch(Dispatchers.IO) {
+                        CoroutineScope(Dispatchers.IO).launch {
                             viewModel.signInWithEmailAndPassword(firebaseAuth.currentUser!!)
-                        }.invokeOnCompletion {
-                            signInSuccessfulToast()
-                            navigateToMain()
                         }
+                        signInSuccessfulToast()
+                        navigateToMain()
+
                     } else {
                         signInFailedToast()
                     }
@@ -68,12 +68,12 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
     private fun loginAnonymously() {
         firebaseAuth.signInAnonymously().addOnCompleteListener(this) {
             if (it.isSuccessful) {
-                GlobalScope.launch(Dispatchers.IO) {
+                CoroutineScope(Dispatchers.IO).launch {
                     viewModel.signInAnonymously(firebaseAuth.currentUser!!)
-                }.invokeOnCompletion {
-                    signInSuccessfulToast()
-                    navigateToMain()
                 }
+                signInSuccessfulToast()
+                navigateToMain()
+
             } else {
                 signInFailedToast()
             }

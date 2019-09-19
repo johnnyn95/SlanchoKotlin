@@ -12,8 +12,8 @@ import com.example.slancho.databinding.ActivitySignUpBinding
 import com.example.slancho.ui.main.MainActivity
 import com.example.slancho.ui.signIn.SignInActivity
 import dagger.android.AndroidInjection
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
@@ -53,12 +53,11 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) {
                     if (it.isSuccessful) {
-                        GlobalScope.launch(Dispatchers.IO) {
+                        CoroutineScope(Dispatchers.IO).launch {
                             viewModel.signUpWithEmailAndPassword(firebaseAuth.currentUser!!)
-                        }.invokeOnCompletion {
-                            signUpSuccessfulToast()
-                            navigateToMain()
                         }
+                        signUpSuccessfulToast()
+                        navigateToMain()
                     } else {
                         signUpFailedToast()
                     }
