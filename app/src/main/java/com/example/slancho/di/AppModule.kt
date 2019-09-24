@@ -19,6 +19,8 @@ package com.example.slancho.di
 import android.app.Application
 import androidx.room.Room
 import com.example.slancho.api.OpenWeatherMapService
+import com.example.slancho.api.interceptors.OpenWeatherMapInterceptor
+import com.example.slancho.common.FlavorConstants
 import com.example.slancho.db.SlanchoDb
 import com.example.slancho.db.dao.LastKnownLocationDao
 import com.example.slancho.db.dao.UserDao
@@ -37,9 +39,13 @@ import javax.inject.Singleton
 class AppModule {
     @Singleton
     @Provides
-    fun provideOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideOkHttpClient(
+        interceptor: HttpLoggingInterceptor,
+        openWeatherMapInterceptor: OpenWeatherMapInterceptor
+    ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(interceptor)
+            .addInterceptor(openWeatherMapInterceptor)
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
             .build()
@@ -49,11 +55,15 @@ class AppModule {
     @Provides
     fun provideOpenWeatherMapService(): OpenWeatherMapService {
         return Retrofit.Builder()
-            .baseUrl("https://community-open-weather-map.p.rapidapi.com/")
+            .baseUrl(FlavorConstants.ENV.getOpenWeatherMapApiUrl())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(OpenWeatherMapService::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun provideOpenWeatherMapInterceptor(): OpenWeatherMapInterceptor = OpenWeatherMapInterceptor()
 
     @Singleton
     @Provides

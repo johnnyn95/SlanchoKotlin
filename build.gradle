@@ -12,7 +12,7 @@ buildscript {
     // Do not increment dagger version, next version has a bug
     ext.dagger_version = '2.23.2'
     ext.glide_version = "4.9.0"
-    ext.joda_version = '2.10.2'
+    ext.joda_version = '2.10.3'
     ext.lottie_version = "3.0.7"
     ext.firebase_version = "19.0.0"
     ext.location_version = "17.0.0"
