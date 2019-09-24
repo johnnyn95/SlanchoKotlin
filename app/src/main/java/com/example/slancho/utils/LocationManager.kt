@@ -6,15 +6,17 @@ import android.location.Geocoder
 import android.location.Location
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 
 class LocationManager @Inject constructor(var application: Application) {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var lastKnownLocation: Location
+    private var lastKnownLocation: Location? = null
 
     init {
         initFusedLocationClient()
@@ -27,21 +29,28 @@ class LocationManager @Inject constructor(var application: Application) {
         }
     }
 
-    fun getLastKnownLocation() {
-        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-            if (location != null) {
-                lastKnownLocation = location
-                return@addOnSuccessListener
+    private suspend fun getLastKnownLocation() {
+        withContext(IO) {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                if (location != null) {
+                    lastKnownLocation = location
+                    return@addOnSuccessListener
+                }
             }
         }
-
     }
 
-    fun getAddressFromLastKnownLocation(): Address {
-        getLastKnownLocation()
-        val geoCoder = Geocoder(application, Locale.getDefault())
-        val addresses =
-            geoCoder.getFromLocation(lastKnownLocation.latitude, lastKnownLocation.longitude, 1)
-        return addresses[0]
+    suspend fun getAddressFromLastKnownLocation(): Address {
+        return withContext(IO) {
+            getLastKnownLocation()
+            val geoCoder = Geocoder(application, Locale.getDefault())
+            val addresses =
+                geoCoder.getFromLocation(
+                    lastKnownLocation!!.latitude,
+                    lastKnownLocation!!.longitude,
+                    1
+                )
+            addresses[0]
+        }
     }
 }

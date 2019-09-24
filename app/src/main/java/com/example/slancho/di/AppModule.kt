@@ -26,6 +26,8 @@ import com.example.slancho.db.dao.LastKnownLocationDao
 import com.example.slancho.db.dao.UserDao
 import com.example.slancho.utils.LocationManager
 import com.google.firebase.auth.FirebaseAuth
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -53,12 +55,25 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideOpenWeatherMapService(): OpenWeatherMapService {
+    fun provideGson(): Gson = GsonBuilder().create()
+
+    @Singleton
+    @Provides
+    fun provideOpenWeatherMapService(client: OkHttpClient, gson: Gson): OpenWeatherMapService {
         return Retrofit.Builder()
             .baseUrl(FlavorConstants.ENV.getOpenWeatherMapApiUrl())
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(client)
             .build()
             .create(OpenWeatherMapService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideInterceptor(): HttpLoggingInterceptor {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
+        return interceptor
     }
 
     @Singleton
@@ -85,7 +100,6 @@ class AppModule {
     @Singleton
     @Provides
     fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
-
 
     @Singleton
     @Provides

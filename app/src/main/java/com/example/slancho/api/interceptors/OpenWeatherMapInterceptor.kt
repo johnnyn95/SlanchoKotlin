@@ -5,14 +5,19 @@ import okhttp3.Interceptor
 import okhttp3.Response
 
 class OpenWeatherMapInterceptor : Interceptor {
+
     companion object {
         const val HEADER = "x-rapidapi-key"
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        //        val httpUrl = request.url.newBuilder().addQueryParameter()
         val request = chain.request()
-        request.newBuilder().addHeader(HEADER, Environment.Environments.DEV.getOpenWeatherMapKey())
+        if (request.header(HEADER) == null) {
+            val newRequest = request.newBuilder()
+                .addHeader(HEADER, Environment.Environments.DEV.getOpenWeatherMapKey()).build()
+            return chain.proceed(newRequest)
+        }
         return chain.proceed(request)
     }
+
 }

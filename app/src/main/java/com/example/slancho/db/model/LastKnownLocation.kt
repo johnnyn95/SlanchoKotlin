@@ -3,6 +3,7 @@ package com.example.slancho.db.model
 import android.location.Address
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "lastKnownLocation")
@@ -29,4 +30,7 @@ data class LastKnownLocation(
         address.countryName,
         address.countryCode
     )
+
+    @Ignore
+    fun getFormattedLocation(): String = "${this.city},${this.country}"
 }
