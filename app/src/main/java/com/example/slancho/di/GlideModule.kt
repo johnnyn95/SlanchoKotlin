@@ -4,4 +4,4 @@ import com.bumptech.glide.module.AppGlideModule
 import dagger.Module
 
 @Module
-class GlideModule : AppGlideModule() {}
+class GlideModule : AppGlideModule()

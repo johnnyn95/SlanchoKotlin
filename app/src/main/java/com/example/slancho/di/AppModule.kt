@@ -27,6 +27,7 @@ import com.example.slancho.db.SlanchoDb
 import com.example.slancho.db.dao.LastKnownLocationDao
 import com.example.slancho.db.dao.UserDao
 import com.example.slancho.utils.LocationManager
+import com.example.slancho.utils.PermissionsManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -138,4 +139,8 @@ class AppModule {
     @Singleton
     @Provides
     fun provideLocationManager(app: Application): LocationManager = LocationManager(app)
+
+    @Singleton
+    @Provides
+    fun providePermissionsManager(app: Application): PermissionsManager = PermissionsManager(app)
 }

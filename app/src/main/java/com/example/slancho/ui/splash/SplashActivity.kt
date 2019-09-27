@@ -8,8 +8,8 @@ import com.example.slancho.BuildConfig
 import com.example.slancho.R
 import com.example.slancho.common.BaseActivity
 import com.example.slancho.databinding.ActivitySplashBinding
-import com.example.slancho.ui.signIn.SignInActivity
 import com.example.slancho.ui.main.MainActivity
+import com.example.slancho.ui.signIn.SignInActivity
 import dagger.android.AndroidInjection
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
@@ -22,6 +22,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         initNavigationSubscribers()
+        if (!permissionsManager.checkForGrantedPermissions(this)) {
+            permissionsManager.initRequestPermissionsProcess(this)
+        }
         postDelayedOnScreenReady()
     }
 

@@ -15,7 +15,7 @@ class MainActivityViewModel @Inject constructor(
     locationManager: LocationManager,
     firebaseAuth: FirebaseAuth,
     userDbRepository: UserDbRepository,
-    var openWeatherMapApiRepository: OpenWeatherMapApiRepository
+    private var openWeatherMapApiRepository: OpenWeatherMapApiRepository
 ) : BaseAuthViewModel(locationManager, firebaseAuth, userDbRepository),
     FirebaseAuth.AuthStateListener {
 

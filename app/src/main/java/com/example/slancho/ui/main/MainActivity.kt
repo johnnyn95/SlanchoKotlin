@@ -35,7 +35,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        checkForGrantedPermissions()
         viewModel.onScreenReady()
     }
 
