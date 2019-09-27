@@ -19,7 +19,9 @@ package com.example.slancho.di
 import android.app.Application
 import androidx.room.Room
 import com.example.slancho.api.OpenWeatherMapService
+import com.example.slancho.api.RapidApiOpenWeatherMapService
 import com.example.slancho.api.interceptors.OpenWeatherMapInterceptor
+import com.example.slancho.api.interceptors.RapidApiOpenWeatherMapInterceptor
 import com.example.slancho.common.FlavorConstants
 import com.example.slancho.db.SlanchoDb
 import com.example.slancho.db.dao.LastKnownLocationDao
@@ -42,12 +44,10 @@ class AppModule {
     @Singleton
     @Provides
     fun provideOkHttpClient(
-        interceptor: HttpLoggingInterceptor,
-        openWeatherMapInterceptor: OpenWeatherMapInterceptor
+        interceptor: HttpLoggingInterceptor
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(interceptor)
-            .addInterceptor(openWeatherMapInterceptor)
             .readTimeout(30, TimeUnit.SECONDS)
             .connectTimeout(30, TimeUnit.SECONDS)
             .build()
@@ -59,13 +59,42 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideOpenWeatherMapService(client: OkHttpClient, gson: Gson): OpenWeatherMapService {
+    fun provideOpenWeatherMapService(
+        client: OkHttpClient,
+        gson: Gson,
+        openWeatherMapInterceptor: OpenWeatherMapInterceptor
+    ): OpenWeatherMapService {
+
+        val newClient = client.newBuilder()
+            .addInterceptor(openWeatherMapInterceptor)
+            .build()
+
         return Retrofit.Builder()
             .baseUrl(FlavorConstants.ENV.getOpenWeatherMapApiUrl())
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .client(client)
+            .client(newClient)
             .build()
             .create(OpenWeatherMapService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRapidApiOpenWeatherMapService(
+        client: OkHttpClient,
+        gson: Gson,
+        rapidApiOpenWeatherMapInterceptor: RapidApiOpenWeatherMapInterceptor
+    ): RapidApiOpenWeatherMapService {
+
+        val newClient = client.newBuilder()
+            .addInterceptor(rapidApiOpenWeatherMapInterceptor)
+            .build()
+
+        return Retrofit.Builder()
+            .baseUrl(FlavorConstants.ENV.getRapidApiOpenWeatherMapApiUrl())
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(newClient)
+            .build()
+            .create(RapidApiOpenWeatherMapService::class.java)
     }
 
     @Singleton
@@ -79,6 +108,11 @@ class AppModule {
     @Singleton
     @Provides
     fun provideOpenWeatherMapInterceptor(): OpenWeatherMapInterceptor = OpenWeatherMapInterceptor()
+
+    @Singleton
+    @Provides
+    fun provideRapidApiOpenWeatherMapInterceptor(): RapidApiOpenWeatherMapInterceptor =
+        RapidApiOpenWeatherMapInterceptor()
 
     @Singleton
     @Provides

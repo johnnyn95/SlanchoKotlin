@@ -33,4 +33,7 @@ data class LastKnownLocation(
 
     @Ignore
     fun getFormattedLocation(): String = "${this.city},${this.country}"
+
+    @Ignore
+    fun getFormattedCityAndCountryCode() = "${this.city},${this.countryCode}"
 }

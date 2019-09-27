@@ -25,7 +25,7 @@ import com.example.slancho.db.model.LastKnownLocation
 import com.example.slancho.db.model.User
 
 /**
- * Main database description.
+ * WeatherMainResponse database description.
  */
 @Database(
     entities = [User::class, LastKnownLocation::class],
