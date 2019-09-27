@@ -7,8 +7,10 @@ import retrofit2.http.Query
 
 interface OpenWeatherMapService {
     @GET("forecast")
-    fun getForecastForXDaysByCityName(
-        @Query("q") location: String,
+    fun getForecastForNumberOfDays(
+        @Query("q") location: String?,
+        @Query("lat") latitude: Double?,
+        @Query("lon") longitude: Double?,
         @Query("cnt") numberOfDays: Int
     ): Call<OpenWeatherMapForecastResponse>
 }

@@ -11,12 +11,17 @@ class OpenWeatherMapApiRepository @Inject constructor(
     private val openWeatherMapService: OpenWeatherMapService,
     private val rapidApiOpenWeatherMapService: RapidApiOpenWeatherMapService
 ) : OpenWeatherMapRepository {
-
-    override suspend fun getForecastForXDaysByCityName(location: String, numberOfDays: Int) {
+    override suspend fun getForecastWeatherDataByCityAndCountryCode(location: String) {
         withContext(IO) {
             try {
                 val response =
-                    openWeatherMapService.getForecastForXDaysByCityName(location, numberOfDays)
+                    // TODO fetch numbers of days from settings
+                    openWeatherMapService.getForecastForNumberOfDays(
+                        location,
+                        null,
+                        null,
+                        7
+                    )
                         .execute()
                 if (response.isSuccessful) {
                     // TODO parse the data
@@ -27,7 +32,27 @@ class OpenWeatherMapApiRepository @Inject constructor(
         }
     }
 
-    override suspend fun getForecastWeatherData(
+    override suspend fun getForecastWeatherDataByLocation(latitude: Double, longitude: Double) {
+        withContext(IO) {
+            try {
+                val response =
+                    // TODO fetch numbers of days from settings
+                    openWeatherMapService.getForecastForNumberOfDays(
+                        null,
+                        latitude,
+                        longitude,
+                        7
+                    ).execute()
+                if (response.isSuccessful) {
+                    // TODO parse the data
+                }
+            } catch (e: IOException) {
+
+            }
+        }
+    }
+
+    override suspend fun getRapidApiForecastWeatherData(
         location: String,
         latitude: Double,
         longitude: Double
@@ -39,8 +64,7 @@ class OpenWeatherMapApiRepository @Inject constructor(
                         location,
                         latitude,
                         longitude
-                    )
-                        .execute()
+                    ).execute()
                 if (response.isSuccessful) {
                     // TODO parse the data
                 }

@@ -26,14 +26,17 @@ class MainActivityViewModel @Inject constructor(
         CoroutineScope(IO).launch {
             currentUser = fetchCurrentUser()
             if (currentUser != null) {
-//                openWeatherMapApiRepository.getForecastWeatherData(
-//                    currentUser!!.lastKnownLocation.getFormattedLocation(),
-//                    currentUser!!.lastKnownLocation.latitude,
-//                    currentUser!!.lastKnownLocation.longitude
-//                )
-                openWeatherMapApiRepository.getForecastForXDaysByCityName(
-                    currentUser!!.lastKnownLocation.getFormattedCityAndCountryCode(),
-                    16
+                openWeatherMapApiRepository.getRapidApiForecastWeatherData(
+                    currentUser!!.lastKnownLocation.getFormattedLocation(),
+                    currentUser!!.lastKnownLocation.latitude,
+                    currentUser!!.lastKnownLocation.longitude
+                )
+                openWeatherMapApiRepository.getForecastWeatherDataByLocation(
+                    currentUser!!.lastKnownLocation.latitude,
+                    currentUser!!.lastKnownLocation.longitude
+                )
+                openWeatherMapApiRepository.getForecastWeatherDataByCityAndCountryCode(
+                    currentUser!!.lastKnownLocation.getFormattedCityAndCountryCode()
                 )
             }
         }

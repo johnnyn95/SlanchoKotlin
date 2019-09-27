@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="186dp"
-    android:background="@color/colorPrimaryDark"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
-
-    <ImageView
-        android:id="@+id/img_program_logo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/ic_sun" />
+    android:layout_height="wrap_content"
+    android:minHeight="186dp"
+    android:theme="@style/NavbarHeader">
 
     <TextView
         android:id="@+id/txt_app_name"
@@ -24,8 +16,11 @@
         android:fontFamily="@font/rubik_medium"
         android:text="@string/app_name"
         android:textAllCaps="true"
-        android:textColor="@android:color/white"
-        android:textSize="18sp" />
+        android:textColor="@color/textColor"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/anim_splash_rainbow"/>
 
     <TextView
         android:id="@+id/txt_release_version"
@@ -33,12 +28,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
-        android:textColor="@android:color/white"
+        android:textColor="@color/textColor"
+        app:layout_constraintBottom_toTopOf="@id/view_toolbar_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:text="Release 1.0" />
 
     <View
         android:id="@+id/view_toolbar_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorPrimary" />
-</LinearLayout>
+        android:background="@color/white_ashy"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/anim_splash_rainbow"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/txt_release_version"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/nav_header_animation" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

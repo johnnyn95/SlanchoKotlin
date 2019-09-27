@@ -19,6 +19,7 @@ package com.example.slancho.di
 import com.example.slancho.ui.main.news.NewsFragment
 import com.example.slancho.ui.main.search.SearchFragment
 import com.example.slancho.ui.main.weather.WeatherFragment
+import com.example.slancho.ui.settings.SettingsFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -32,4 +33,7 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeNewsFragment(): NewsFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeSettingsFragment(): SettingsFragment
 }

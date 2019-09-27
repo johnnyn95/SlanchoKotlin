@@ -15,6 +15,7 @@ import com.example.slancho.databinding.ActivityMainBinding
 import com.example.slancho.ui.main.news.NewsFragment
 import com.example.slancho.ui.main.search.SearchFragment
 import com.example.slancho.ui.main.weather.WeatherFragment
+import com.example.slancho.ui.settings.SettingsActivity
 import com.example.slancho.ui.signIn.SignInActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
@@ -54,7 +55,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
     override fun initListeners() {
         getBinding().viewNavigation.setNavigationItemSelectedListener {
             if (it.itemId == R.id.item_settings) {
-                // TODO implement settings screen
+                startActivity(Intent(this, SettingsActivity::class.java))
             }
             if (it.itemId == R.id.item_sign_out) {
                 viewModel.signOut()
@@ -138,7 +139,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
             supportActionBar?.setDefaultDisplayHomeAsUpEnabled(true)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             supportActionBar?.setHomeButtonEnabled(true)
-            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
+            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_primary_color)
         }
     }
 

@@ -1,7 +1,9 @@
 package com.example.slancho.repository.openWeatherMap
 
 interface OpenWeatherMapRepository {
-    suspend fun getForecastWeatherData(location: String, latitude: Double, longitude: Double)
+    suspend fun getRapidApiForecastWeatherData(location: String, latitude: Double, longitude: Double)
 
-    suspend fun getForecastForXDaysByCityName(location: String, numberOfDays: Int)
+    suspend fun getForecastWeatherDataByLocation(latitude: Double, longitude: Double)
+
+    suspend fun getForecastWeatherDataByCityAndCountryCode(location: String)
 }
