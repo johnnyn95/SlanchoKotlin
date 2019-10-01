@@ -6,6 +6,9 @@ import com.example.slancho.common.BaseActivity
 import com.example.slancho.databinding.SettingsActivityBinding
 
 class SettingsActivity : BaseActivity<SettingsActivityBinding>() {
+
+    override val TAG: String get() = SettingsActivity::class.java.simpleName
+
     override fun initFields() {
     }
 

@@ -14,6 +14,8 @@ import dagger.android.AndroidInjection
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
+    override val TAG: String get() = SplashActivity::class.java.simpleName
+
     lateinit var viewModel: SplashActivityViewModel
     private lateinit var handler: Handler
     private lateinit var runnable: Runnable

@@ -10,9 +10,10 @@ import com.example.slancho.common.BaseFragment
 import com.example.slancho.databinding.FragmentNewsBinding
 
 class NewsFragment : BaseFragment() {
-    override val fragmentTag: String get() = NewsFragment::class.toString()
+    override val TAG: String get() = NewsFragment::class.toString()
 
     lateinit var binding: FragmentNewsBinding
+    lateinit var viewModel: NewsFragmentViewModel
 
     companion object {
         fun newInstance(): NewsFragment {
@@ -32,7 +33,9 @@ class NewsFragment : BaseFragment() {
         return binding.root
     }
 
-    override fun initFields() {}
+    override fun initFields() {
+        viewModel = getViewModel(NewsFragmentViewModel::class.java)
+    }
 
     override fun initViews() {}
 

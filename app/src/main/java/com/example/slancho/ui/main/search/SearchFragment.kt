@@ -10,9 +10,10 @@ import com.example.slancho.common.BaseFragment
 import com.example.slancho.databinding.FragmentSearchBinding
 
 class SearchFragment : BaseFragment() {
-    override val fragmentTag: String get() = SearchFragment::class.toString()
+    override val TAG: String get() = SearchFragment::class.toString()
 
     lateinit var binding: FragmentSearchBinding
+    lateinit var viewModel: SearchFragmentViewModel
 
     companion object {
         fun newInstance(): SearchFragment {
@@ -32,7 +33,9 @@ class SearchFragment : BaseFragment() {
         return binding.root
     }
 
-    override fun initFields() {}
+    override fun initFields() {
+        viewModel = getViewModel(SearchFragmentViewModel::class.java)
+    }
 
     override fun initViews() {}
 

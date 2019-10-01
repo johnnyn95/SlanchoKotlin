@@ -10,9 +10,10 @@ import com.example.slancho.common.BaseFragment
 import com.example.slancho.databinding.FragmentWeatherBinding
 
 class WeatherFragment : BaseFragment() {
-    override val fragmentTag: String get() = WeatherFragment::class.toString()
+    override val TAG: String get() = WeatherFragment::class.toString()
 
     lateinit var binding: FragmentWeatherBinding
+    lateinit var viewModel: WeatherFragmentViewModel
 
     companion object {
         fun newInstance(): WeatherFragment {
@@ -32,7 +33,9 @@ class WeatherFragment : BaseFragment() {
         return binding.root
     }
 
-    override fun initFields() {}
+    override fun initFields() {
+        viewModel = getViewModel(WeatherFragmentViewModel::class.java)
+    }
 
     override fun initViews() {}
 

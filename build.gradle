@@ -15,7 +15,7 @@ buildscript {
     ext.lottie_version = "3.0.7"
     ext.firebase_version = "19.0.0"
     ext.location_version = "17.0.0"
-
+    ext.timber_version = "4.7.1"
     repositories {
         google()
         jcenter()

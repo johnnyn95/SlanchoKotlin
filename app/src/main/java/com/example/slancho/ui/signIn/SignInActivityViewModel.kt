@@ -2,7 +2,6 @@ package com.example.slancho.ui.signIn
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import com.example.slancho.repository.user.UserDbRepository
 import com.example.slancho.ui.BaseAuthViewModel
 import com.example.slancho.utils.LocationManager
@@ -11,6 +10,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -19,6 +19,8 @@ class SignInActivityViewModel @Inject constructor(
     locationManager: LocationManager,
     userDbRepository: UserDbRepository
 ) : BaseAuthViewModel(locationManager, firebaseAuth, userDbRepository) {
+
+    override val TAG: String get() = SignInActivityViewModel::class.java.simpleName
 
     override fun onScreenReady(context: Context) {
     }
@@ -42,7 +44,7 @@ class SignInActivityViewModel @Inject constructor(
             signInWithGoogle(googleSignInAccount!!)
             navigateToMain()
         } catch (e: ApiException) {
-            Log.w(
+            Timber.w(
                 SignInActivityViewModel::class.java.simpleName,
                 "Failed Google Sign in {${e.statusCode}}"
             )

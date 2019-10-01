@@ -22,20 +22,13 @@ import javax.inject.Inject
  * This Activity is to be inherited by any activity to initiate the injection.
  */
 abstract class BaseActivity<B : ViewDataBinding> : DaggerAppCompatActivity(), Injectable {
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    @Inject
-    lateinit var firebaseAuth: FirebaseAuth
-
-    @Inject
-    lateinit var vibrationManager: VibrationManager
-
-    @Inject
-    lateinit var permissionsManager: PermissionsManager
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject lateinit var firebaseAuth: FirebaseAuth
+    @Inject lateinit var vibrationManager: VibrationManager
+    @Inject lateinit var permissionsManager: PermissionsManager
 
     private lateinit var inheritanceBinding: B
-
     private lateinit var baseBinding: ActivityBaseBinding
 
     protected fun <T : ViewModel> getViewModel(cls: Class<T>): T {
@@ -66,6 +59,9 @@ abstract class BaseActivity<B : ViewDataBinding> : DaggerAppCompatActivity(), In
     protected abstract fun initListeners()
 
     protected abstract fun getLayoutResId(): Int
+
+    protected abstract val TAG: String
+
 
     fun hideKeyboard() {
         if (currentFocus != null) {

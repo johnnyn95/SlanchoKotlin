@@ -28,6 +28,8 @@ abstract class BaseAuthViewModel constructor(
 
     abstract fun onScreenReady(context: Context)
 
+    abstract val TAG: String
+
     override fun onAuthStateChanged(p0: FirebaseAuth) {
         if (firebaseAuth.currentUser == null) {
             navigateToSignIn()

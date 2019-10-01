@@ -24,6 +24,8 @@ import dagger.android.AndroidInjection
 class MainActivity : BaseActivity<ActivityMainBinding>(),
     BottomNavigationView.OnNavigationItemSelectedListener {
 
+    override val TAG: String get() = MainActivity::class.java.simpleName
+
     private lateinit var viewModel: MainActivityViewModel
     private lateinit var weatherFragment: WeatherFragment
     private lateinit var searchFragment: SearchFragment
