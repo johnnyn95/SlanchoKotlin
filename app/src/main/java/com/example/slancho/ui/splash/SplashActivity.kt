@@ -54,7 +54,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     override fun initListeners() {}
 
     private fun postDelayedOnScreenReady() {
-        runnable = Runnable { viewModel.onScreenReady() }
+        runnable = Runnable { viewModel.onScreenReady(this) }
         handler.postDelayed(runnable, 1000)
     }
 }

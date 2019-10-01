@@ -6,7 +6,7 @@ import com.example.slancho.db.model.LastKnownLocation
 import com.example.slancho.db.model.User
 import com.example.slancho.utils.LocationManager
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class UserDbRepository @Inject constructor(
@@ -16,7 +16,7 @@ class UserDbRepository @Inject constructor(
 ) :
     UserRepository {
     override suspend fun insertUser(authUID: String, isAnonymous: Boolean) {
-        withContext(IO) {
+        runBlocking(IO) {
             val user = User(authUID = authUID, isAnonymous = isAnonymous)
             val address = locationManager.getAddressFromLastKnownLocation()
             val lastKnownLocation = LastKnownLocation(userId = user.id, address = address)
@@ -26,7 +26,7 @@ class UserDbRepository @Inject constructor(
     }
 
     override suspend fun getUserByAuthUID(authUID: String): User? {
-        return withContext(IO) {
+        return runBlocking(IO) {
             val user: User? = userDao.getUserByAuthUID(authUID)
             if (user != null) {
                 val address = locationManager.getAddressFromLastKnownLocation()

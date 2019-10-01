@@ -1,5 +1,6 @@
 package com.example.slancho.ui.signUp
 
+import android.content.Context
 import com.example.slancho.repository.user.UserDbRepository
 import com.example.slancho.ui.BaseAuthViewModel
 import com.example.slancho.utils.LocationManager
@@ -13,7 +14,7 @@ class SignUpActivityViewModel @Inject constructor(
     , userDbRepository: UserDbRepository
 ) : BaseAuthViewModel(locationManager, firebaseAuth, userDbRepository) {
 
-    override fun onScreenReady() {
+    override fun onScreenReady(context: Context) {
     }
 
     suspend fun signUpWithEmailAndPassword(firebaseUser: FirebaseUser) {

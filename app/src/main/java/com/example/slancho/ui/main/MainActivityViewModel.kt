@@ -1,14 +1,14 @@
 package com.example.slancho.ui.main
 
-import com.example.slancho.db.model.User
+import android.content.Context
+import android.util.Log
 import com.example.slancho.repository.openWeatherMap.OpenWeatherMapApiRepository
 import com.example.slancho.repository.user.UserDbRepository
 import com.example.slancho.ui.BaseAuthViewModel
 import com.example.slancho.utils.LocationManager
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class MainActivityViewModel @Inject constructor(
@@ -19,13 +19,11 @@ class MainActivityViewModel @Inject constructor(
 ) : BaseAuthViewModel(locationManager, firebaseAuth, userDbRepository),
     FirebaseAuth.AuthStateListener {
 
-    private var currentUser: User? = null
-
-    override fun onScreenReady() {
-        firebaseAuth.addAuthStateListener(this)
-        CoroutineScope(IO).launch {
-            currentUser = fetchCurrentUser()
-            if (currentUser != null) {
+    override fun onScreenReady(context: Context) {
+        registerAuthListeners()
+        runBlocking(IO) {
+            try {
+                fetchCurrentUser(context)
                 openWeatherMapApiRepository.getRapidApiForecastWeatherData(
                     currentUser!!.lastKnownLocation.getFormattedLocation(),
                     currentUser!!.lastKnownLocation.latitude,
@@ -38,11 +36,17 @@ class MainActivityViewModel @Inject constructor(
                 openWeatherMapApiRepository.getForecastWeatherDataByCityAndCountryCode(
                     currentUser!!.lastKnownLocation.getFormattedCityAndCountryCode()
                 )
+
+            } catch (e: NullPointerException) {
+                Log.w(MainActivityViewModel::class.java.simpleName, "Failed to fetch user$e")
+                navigateToSignIn()
             }
         }
     }
 
-    private suspend fun fetchCurrentUser(): User? {
-        return userDbRepository.getUserByAuthUID(firebaseAuth.currentUser!!.uid)
+    private fun registerAuthListeners() {
+        if (firebaseAuth.currentUser != null) {
+            firebaseAuth.addAuthStateListener(this)
+        }
     }
 }

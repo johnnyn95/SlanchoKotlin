@@ -6,17 +6,23 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
+import androidx.lifecycle.Observer
 import com.example.slancho.R
 import com.example.slancho.common.BaseActivity
 import com.example.slancho.databinding.ActivitySignInBinding
 import com.example.slancho.ui.main.MainActivity
 import com.example.slancho.ui.signUp.SignUpActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import dagger.android.AndroidInjection
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class SignInActivity : BaseActivity<ActivitySignInBinding>() {
+    companion object {
+        const val GOOGLE_SIGN_IN_REQUEST_CODE = 12345
+    }
 
     private lateinit var viewModel: SignInActivityViewModel
     private lateinit var email: String
@@ -25,6 +31,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+        initNavigationSubscribers()
     }
 
     override fun initFields() {
@@ -40,18 +47,26 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
             signInWithEmailAndPassword()
             hideKeyboard()
         }
+        getBinding().btnGoogleSignIn.setOnClickListener { signInWithGoogle() }
         getBinding().btnSignInAnonymously.setOnClickListener { loginAnonymously() }
         getBinding().btnSignUp.setOnClickListener { navigateToSignUp() }
     }
 
     override fun getLayoutResId(): Int = R.layout.activity_sign_in
 
+    private fun initNavigationSubscribers() {
+        viewModel.navigateToMain.observe(this, Observer {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        })
+    }
+
     private fun signInWithEmailAndPassword() {
         if (validateInputFields()) {
             firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) {
                     if (it.isSuccessful) {
-                        CoroutineScope(Dispatchers.IO).launch {
+                        CoroutineScope(IO).launch {
                             viewModel.signInWithEmailAndPassword(firebaseAuth.currentUser!!)
                         }
                         signInSuccessfulToast()
@@ -67,7 +82,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
     private fun loginAnonymously() {
         firebaseAuth.signInAnonymously().addOnCompleteListener(this) {
             if (it.isSuccessful) {
-                CoroutineScope(Dispatchers.IO).launch {
+                CoroutineScope(IO).launch {
                     viewModel.signInAnonymously(firebaseAuth.currentUser!!)
                 }
                 signInSuccessfulToast()
@@ -104,4 +119,19 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
 
     private fun signInFailedToast() =
         Toast.makeText(baseContext, R.string.sign_in_failed, LENGTH_SHORT).show()
+
+    private fun signInWithGoogle() {
+        val googleSignInClient = GoogleSignIn.getClient(this, viewModel.signInWithGoogle())
+        startActivityForResult(googleSignInClient.signInIntent, GOOGLE_SIGN_IN_REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK && requestCode == GOOGLE_SIGN_IN_REQUEST_CODE) {
+            runBlocking {
+                viewModel.handleGoogleSignInResult(data)
+                signInSuccessfulToast()
+            }
+        }
+    }
 }

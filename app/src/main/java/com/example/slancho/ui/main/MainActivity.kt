@@ -35,7 +35,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        viewModel.onScreenReady()
+        initNavigationSubscribers()
+        viewModel.onScreenReady(this)
     }
 
     override fun getLayoutResId(): Int = R.layout.activity_main
@@ -57,18 +58,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                 startActivity(Intent(this, SettingsActivity::class.java))
             }
             if (it.itemId == R.id.item_sign_out) {
-                viewModel.signOut()
+                viewModel.signOut(this)
             }
             closeDrawer()
             false
         }
+    }
 
+    private fun initNavigationSubscribers() {
         getBinding().grpBottomNav.setOnNavigationItemSelectedListener(this)
-
-        viewModel.onSignOutClicked.observe(this, Observer {
-            if (it) {
-                startActivity(Intent(this, SignInActivity::class.java))
-            }
+        viewModel.navigateToSignIn.observe(this, Observer {
+            startActivity(Intent(this, SignInActivity::class.java))
+            finish()
         })
     }
 
@@ -96,8 +97,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
                 R.id.grp_fragment_container,
                 fragment,
                 fragment.javaClass.simpleName
-            )
-                .hide(fragment).commit()
+            ).hide(fragment).commit()
         }
         activeFragment = weatherFragment
         manager.beginTransaction().show(weatherFragment).commit()
