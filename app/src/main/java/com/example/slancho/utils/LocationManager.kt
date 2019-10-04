@@ -40,7 +40,7 @@ class LocationManager @Inject constructor(var application: Application) {
         }
     }
 
-    suspend fun getAddressFromLastKnownLocation(): Address {
+    suspend fun getAddressFromLastKnownLocation(): Address? {
         return withContext(IO) {
             getLastKnownLocation()
             val geoCoder = Geocoder(application, Locale.getDefault())
@@ -50,7 +50,11 @@ class LocationManager @Inject constructor(var application: Application) {
                     lastKnownLocation!!.longitude,
                     1
                 )
-            addresses[0]
+            if (addresses.size > 0) {
+                addresses[0]
+            } else {
+                null
+            }
         }
     }
 }

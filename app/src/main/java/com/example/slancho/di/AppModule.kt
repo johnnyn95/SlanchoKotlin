@@ -28,6 +28,7 @@ import com.example.slancho.db.dao.LastKnownLocationDao
 import com.example.slancho.db.dao.UserDao
 import com.example.slancho.utils.LocationManager
 import com.example.slancho.utils.PermissionsManager
+import com.example.slancho.utils.SharedPreferencesManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -108,7 +109,8 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideOpenWeatherMapInterceptor(): OpenWeatherMapInterceptor = OpenWeatherMapInterceptor()
+    fun provideOpenWeatherMapInterceptor(sharedPreferencesManager: SharedPreferencesManager): OpenWeatherMapInterceptor =
+        OpenWeatherMapInterceptor().setup(sharedPreferencesManager)
 
     @Singleton
     @Provides
@@ -143,4 +145,8 @@ class AppModule {
     @Singleton
     @Provides
     fun providePermissionsManager(app: Application): PermissionsManager = PermissionsManager(app)
+
+    @Singleton
+    @Provides
+    fun provideSharedPreferencesManager(app: Application) = SharedPreferencesManager(app)
 }

@@ -21,17 +21,26 @@
     <string name="search">Search</string>
 
     <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
+    <string name="general_settings">General Settings</string>
+    <string name="optional_settings">Optional Settings</string>
 
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
+    <string name="location">Location</string>
+    <string name="location_key">location</string>
+    <string name="temperature_unit">Temperature Unit</string>
+    <string name="temperature_unit_key">temperature_unit_key</string>
+    <string name="temperature_unit_default_value">metric</string>
 
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="language">Language</string>
+    <string name="language_key">language</string>
+    <string name="language_default_value">en</string>
+    
+    <string name="fetch_data_title">Fetch weather data in the background</string>
+    <string name="fetch_data_key">fetch_data_key</string>
+    <string name="fetch_data_summary_on">Application will fetch weather data in the background</string>
+    <string name="fetch_data_summary_off">Application will not fetch weather data in the background</string>
+
+    <string name="forecast_data_for_days">Forecast data for number of days</string>
+    <string name="forecast_data_for_days_key">forecast_data_for_days</string>
+    <string name="forecast_data_for_days_default_value">7</string>
+
 </resources>

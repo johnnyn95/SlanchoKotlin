@@ -1,12 +1,86 @@
 <resources>
-    <!-- Reply Preference -->
-    <string-array name="reply_entries">
-        <item>Reply</item>
-        <item>Reply to all</item>
+    <string-array name="temperature_unit_entries">
+        <item>Celsius</item>
+        <item>Fahrenheit</item>
+        <item>Kelvin</item>
     </string-array>
 
-    <string-array name="reply_values">
-        <item>reply</item>
-        <item>reply_all</item>
+    <string-array name="temperature_unit_values">
+        <item>metric</item>
+        <item>imperial</item>
+        <item>kelvin</item>
     </string-array>
+
+    <string-array name="language_entries">
+        <item>Arabic</item>
+        <item>Bulgarian</item>
+        <item>Catalan</item>
+        <item>Czech</item>
+        <item>German</item>
+        <item>Greek</item>
+        <item>English</item>
+        <item>Persian(Farsi)</item>
+        <item>Finnish</item>
+        <item>French</item>
+        <item>Galician</item>
+        <item>Croatian</item>
+        <item>Hungarian</item>
+        <item>Italian</item>
+        <item>Japanese</item>
+        <item>Korean</item>
+        <item>Latvian</item>
+        <item>Lithuanian</item>
+        <item>Macedonian</item>
+        <item>Dutch</item>
+        <item>Polish</item>
+        <item>Portuguese</item>
+        <item>Romanian</item>
+        <item>Russian</item>
+        <item>Swedish</item>
+        <item>Slovak</item>
+        <item>Slovenian</item>
+        <item>Spanish</item>
+        <item>Turkish</item>
+        <item>Ukrainian</item>
+        <item>Vietnamese</item>
+        <item>Chinese Simplified</item>
+        <item>Chinese Traditional</item>
+    </string-array>
+
+    <string-array name="language_values">
+        <item>ar</item>
+        <item>bg</item>
+        <item>ca</item>
+        <item>cz</item>
+        <item>de</item>
+        <item>el</item>
+        <item>en</item>
+        <item>fa</item>
+        <item>fi</item>
+        <item>fr</item>
+        <item>gl</item>
+        <item>hr</item>
+        <item>hu</item>
+        <item>it</item>
+        <item>ja</item>
+        <item>kr</item>
+        <item>la</item>
+        <item>lt</item>
+        <item>mk</item>
+        <item>nl</item>
+        <item>pl</item>
+        <item>pt</item>
+        <item>ro</item>
+        <item>ru</item>
+        <item>se</item>
+        <item>sk</item>
+        <item>sl</item>
+        <item>es</item>
+        <item>tr</item>
+        <item>ua</item>
+        <item>vi</item>
+        <item>zh_cn</item>
+        <item>zh_tw</item>
+    </string-array>
+
 </resources>

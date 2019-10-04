@@ -19,8 +19,11 @@ class UserDbRepository @Inject constructor(
         runBlocking(IO) {
             val user = User(authUID = authUID, isAnonymous = isAnonymous)
             val address = locationManager.getAddressFromLastKnownLocation()
-            val lastKnownLocation = LastKnownLocation(userId = user.id, address = address)
-            lastKnownLocationDao.insert(lastKnownLocation)
+            if (address != null) {
+                val lastKnownLocation = LastKnownLocation(userId = user.id, address = address)
+                lastKnownLocationDao.insert(lastKnownLocation)
+                user.lastKnownLocation = lastKnownLocation
+            }
             userDao.insert(user)
         }
     }
@@ -30,9 +33,11 @@ class UserDbRepository @Inject constructor(
             val user: User? = userDao.getUserByAuthUID(authUID)
             if (user != null) {
                 val address = locationManager.getAddressFromLastKnownLocation()
-                val lastKnownLocation = LastKnownLocation(userId = user.id, address = address)
-                lastKnownLocationDao.insert(lastKnownLocation)
-                user.lastKnownLocation = lastKnownLocation
+                if (address != null) {
+                    val lastKnownLocation = LastKnownLocation(userId = user.id, address = address)
+                    lastKnownLocationDao.insert(lastKnownLocation)
+                    user.lastKnownLocation = lastKnownLocation
+                }
                 user
             } else null
         }

@@ -14,38 +14,51 @@
   ~ limitations under the License.
   -->
 
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="@string/messages_header">
-
+    <PreferenceCategory app:title="@string/general_settings">
         <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
+            app:icon="@drawable/ic_location_primary_color"
+            app:key="@string/location_key"
+            app:title="@string/location"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
-            app:defaultValue="reply"
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
-            app:key="reply"
-            app:title="@string/reply_title"
+            app:defaultValue="@string/temperature_unit_default_value"
+            app:entries="@array/temperature_unit_entries"
+            app:entryValues="@array/temperature_unit_values"
+            app:icon="@drawable/ic_snowflake_primary_color"
+            app:key="@string/temperature_unit_key"
+            app:title="@string/temperature_unit"
             app:useSimpleSummaryProvider="true" />
 
+        <ListPreference
+            app:defaultValue="@string/language_default_value"
+            app:entries="@array/language_entries"
+            app:entryValues="@array/language_values"
+            app:icon="@drawable/ic_language_primary_color"
+            app:key="@string/language_key"
+            app:title="@string/language"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:icon="@drawable/ic_sync_primary_color"
+            app:key="@string/fetch_data_key"
+            app:summaryOff="@string/fetch_data_summary_off"
+            app:summaryOn="@string/fetch_data_summary_on"
+            app:title="@string/fetch_data_title" />
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/sync_header">
-
-        <SwitchPreferenceCompat
-            app:key="sync"
-            app:title="@string/sync_title" />
-
-        <SwitchPreferenceCompat
-            app:dependency="sync"
-            app:key="attachment"
-            app:summaryOff="@string/attachment_summary_off"
-            app:summaryOn="@string/attachment_summary_on"
-            app:title="@string/attachment_title" />
-
+    <PreferenceCategory app:title="@string/optional_settings">
+        <SeekBarPreference
+            android:max="16"
+            app:adjustable="true"
+            app:defaultValue="7"
+            app:icon="@drawable/ic_calendar_number_of_days_primary_color"
+            app:key="@string/forecast_data_for_days_key"
+            app:min="1"
+            app:title="@string/forecast_data_for_days" />
     </PreferenceCategory>
 
 </PreferenceScreen>

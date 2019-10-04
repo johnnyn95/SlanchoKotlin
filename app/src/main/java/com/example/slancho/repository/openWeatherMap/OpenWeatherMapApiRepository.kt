@@ -2,6 +2,7 @@ package com.example.slancho.repository.openWeatherMap
 
 import com.example.slancho.api.OpenWeatherMapService
 import com.example.slancho.api.RapidApiOpenWeatherMapService
+import com.example.slancho.utils.SharedPreferencesManager
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 import java.io.IOException
@@ -9,20 +10,19 @@ import javax.inject.Inject
 
 class OpenWeatherMapApiRepository @Inject constructor(
     private val openWeatherMapService: OpenWeatherMapService,
-    private val rapidApiOpenWeatherMapService: RapidApiOpenWeatherMapService
+    private val rapidApiOpenWeatherMapService: RapidApiOpenWeatherMapService,
+    private val sharedPreferencesManager: SharedPreferencesManager
 ) : OpenWeatherMapRepository {
     override suspend fun getForecastWeatherDataByCityAndCountryCode(location: String) {
         withContext(IO) {
             try {
                 val response =
-                    // TODO fetch numbers of days from settings
                     openWeatherMapService.getForecastForNumberOfDays(
                         location,
                         null,
                         null,
-                        7
-                    )
-                        .execute()
+                        sharedPreferencesManager.forecastDataForDaysValue
+                    ).execute()
                 if (response.isSuccessful) {
                     // TODO parse the data
                 }
@@ -36,12 +36,11 @@ class OpenWeatherMapApiRepository @Inject constructor(
         withContext(IO) {
             try {
                 val response =
-                    // TODO fetch numbers of days from settings
                     openWeatherMapService.getForecastForNumberOfDays(
                         null,
                         latitude,
                         longitude,
-                        7
+                        sharedPreferencesManager.forecastDataForDaysValue
                     ).execute()
                 if (response.isSuccessful) {
                     // TODO parse the data
