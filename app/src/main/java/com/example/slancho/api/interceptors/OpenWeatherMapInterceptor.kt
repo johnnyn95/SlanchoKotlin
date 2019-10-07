@@ -2,6 +2,7 @@ package com.example.slancho.api.interceptors
 
 import android.annotation.SuppressLint
 import com.example.slancho.api.Environment
+import com.example.slancho.api.TemperatureUnit
 import com.example.slancho.utils.SharedPreferencesManager
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
@@ -28,7 +29,7 @@ class OpenWeatherMapInterceptor : Interceptor {
         var request = chain.request()
         val httpUrl = request.url
         var newUrl = appendApiKey(httpUrl)
-        if (sharedPreferencesManager.tempUnitValue.isNotEmpty()) {
+        if (sharedPreferencesManager.tempUnitValue.isNotEmpty() && sharedPreferencesManager.tempUnitValue != TemperatureUnit.Kelvin.value) {
             newUrl = appendTempUnit(newUrl)
         }
         if (sharedPreferencesManager.langValue.isNotEmpty()) {
@@ -58,4 +59,5 @@ class OpenWeatherMapInterceptor : Interceptor {
             .addQueryParameter(QUERY_PARAMETER_LANG, sharedPreferencesManager.langValue)
             .build()
     }
+
 }
