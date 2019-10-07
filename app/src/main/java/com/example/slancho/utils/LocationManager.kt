@@ -10,10 +10,16 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
+import java.io.IOException
 import java.util.*
 import javax.inject.Inject
 
 class LocationManager @Inject constructor(var application: Application) {
+
+    companion object {
+        val TAG = LocationManager::class.java.simpleName
+    }
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var lastKnownLocation: Location? = null
@@ -36,6 +42,7 @@ class LocationManager @Inject constructor(var application: Application) {
                     lastKnownLocation = location
                     return@addOnSuccessListener
                 }
+                Timber.w(TAG, "Couldn't fetch Location")
             }
         }
     }
@@ -44,15 +51,21 @@ class LocationManager @Inject constructor(var application: Application) {
         return withContext(IO) {
             getLastKnownLocation()
             val geoCoder = Geocoder(application, Locale.getDefault())
-            val addresses =
-                geoCoder.getFromLocation(
-                    lastKnownLocation!!.latitude,
-                    lastKnownLocation!!.longitude,
-                    1
-                )
-            if (addresses.size > 0) {
-                addresses[0]
-            } else {
+            try {
+                val addresses =
+                    geoCoder.getFromLocation(
+                        lastKnownLocation!!.latitude,
+                        lastKnownLocation!!.longitude,
+                        1
+                    )
+                if (addresses.size > 0) {
+                    addresses[0]
+                } else {
+                    Timber.w(TAG, "No address found for this Location")
+                    null
+                }
+            } catch (e: IOException) {
+                Timber.w(TAG, "Couldn't fetch Address from Location")
                 null
             }
         }

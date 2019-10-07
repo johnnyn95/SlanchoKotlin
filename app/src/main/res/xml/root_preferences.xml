@@ -41,13 +41,6 @@
             app:key="@string/language_key"
             app:title="@string/language"
             app:useSimpleSummaryProvider="true" />
-
-        <SwitchPreferenceCompat
-            app:icon="@drawable/ic_sync_primary_color"
-            app:key="@string/fetch_data_key"
-            app:summaryOff="@string/fetch_data_summary_off"
-            app:summaryOn="@string/fetch_data_summary_on"
-            app:title="@string/fetch_data_title" />
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/optional_settings">
@@ -58,7 +51,15 @@
             app:icon="@drawable/ic_calendar_number_of_days_primary_color"
             app:key="@string/forecast_data_for_days_key"
             app:min="1"
+            app:showSeekBarValue="true"
             app:title="@string/forecast_data_for_days" />
+
+        <SwitchPreferenceCompat
+            app:icon="@drawable/ic_sync_primary_color"
+            app:key="@string/fetch_data_key"
+            app:summaryOff="@string/fetch_data_summary_off"
+            app:summaryOn="@string/fetch_data_summary_on"
+            app:title="@string/fetch_data_title" />
     </PreferenceCategory>
 
 </PreferenceScreen>

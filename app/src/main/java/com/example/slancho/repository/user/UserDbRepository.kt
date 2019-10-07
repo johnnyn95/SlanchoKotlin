@@ -7,6 +7,7 @@ import com.example.slancho.db.model.User
 import com.example.slancho.utils.LocationManager
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 import javax.inject.Inject
 
 class UserDbRepository @Inject constructor(
@@ -15,6 +16,11 @@ class UserDbRepository @Inject constructor(
     var lastKnownLocationDao: LastKnownLocationDao
 ) :
     UserRepository {
+
+    companion object {
+        val TAG = UserDbRepository::class.java.simpleName
+    }
+
     override suspend fun insertUser(authUID: String, isAnonymous: Boolean) {
         runBlocking(IO) {
             val user = User(authUID = authUID, isAnonymous = isAnonymous)
@@ -37,9 +43,15 @@ class UserDbRepository @Inject constructor(
                     val lastKnownLocation = LastKnownLocation(userId = user.id, address = address)
                     lastKnownLocationDao.insert(lastKnownLocation)
                     user.lastKnownLocation = lastKnownLocation
+                } else {
+                    user.lastKnownLocation =
+                        lastKnownLocationDao.getLastKnownLocationForUserByUserId(userId = user.id)
                 }
                 user
-            } else null
+            } else {
+                Timber.w(TAG,"Couldn't fetch User")
+                null
+            }
         }
     }
 }
