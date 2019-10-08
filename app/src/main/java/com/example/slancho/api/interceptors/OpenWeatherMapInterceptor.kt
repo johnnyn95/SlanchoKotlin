@@ -35,7 +35,6 @@ class OpenWeatherMapInterceptor : Interceptor {
         if (sharedPreferencesManager.langValue.isNotEmpty()) {
             newUrl = appendLang(newUrl)
         }
-        Timber.d("interceptor", newUrl.toString())
         val requestBuilder = request.newBuilder().url(newUrl)
         request = requestBuilder.build()
         return chain.proceed(request)

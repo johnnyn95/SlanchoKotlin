@@ -17,5 +17,5 @@ data class User(
     var isAnonymous: Boolean
 ) {
     @Ignore
-    lateinit var lastKnownLocation: LastKnownLocation
+    var lastKnownLocation: LastKnownLocation? = null
 }

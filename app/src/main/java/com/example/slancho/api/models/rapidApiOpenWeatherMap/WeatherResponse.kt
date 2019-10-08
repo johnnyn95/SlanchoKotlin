@@ -5,26 +5,19 @@ import com.google.gson.annotations.SerializedName
 
 class WeatherResponse(
     @SerializedName("dt")
-    @Expose
-    var dateTime: Long?,
+    @Expose var dateTime: Long?,
     @SerializedName("main")
-    @Expose
-    var weatherMain: WeatherMainResponse?,
+    @Expose var weatherMain: WeatherMainResponse?,
     @SerializedName("weather")
-    @Expose
-    var weatherInfo: List<WeatherInfoResponse>?,
+    @Expose var weatherInfo: List<WeatherInfoResponse>?,
     @SerializedName("clouds")
-    @Expose
-    var clouds: CloudsResponse?,
+    @Expose var clouds: CloudsResponse?,
     @SerializedName("wind")
-    @Expose
-    var wind: WindResponse?,
+    @Expose var wind: WindResponse?,
     @SerializedName("rain")
-    @Expose
-    var rain: RainResponse?,
+    @Expose var rain: RainResponse?,
     @SerializedName("dt_txt")
-    @Expose
-    var dateTimeText: String?
+    @Expose var dateTimeText: String?
 )
 
 

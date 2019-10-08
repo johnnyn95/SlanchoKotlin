@@ -5,27 +5,19 @@ import com.google.gson.annotations.SerializedName
 
 class CityResponse(
     @SerializedName("geoname_id")
-    @Expose
-    var cityId: Long?,
+    @Expose var cityId: Long?,
     @SerializedName("name")
-    @Expose
-    var name: String?,
+    @Expose var name: String?,
     @SerializedName("coord")
-    @Expose
-    var coordinatesResponse: CoordinatesResponse?,
+    @Expose var coordinatesResponse: CoordinatesResponse?,
     @SerializedName("country")
-    @Expose
-    var countryCode: String?,
+    @Expose var countryCode: String?,
     @SerializedName("sunrise")
-    @Expose
-    var sunrise: Long?,
+    @Expose var sunrise: Long?,
     @SerializedName("sunset")
-    @Expose
-    var sunset: Long?,
+    @Expose var sunset: Long?,
     @SerializedName("population")
-    @Expose
-    var population: Long?,
+    @Expose var population: Long?,
     @SerializedName("timezone")
-    @Expose
-    var timezone: Long?
+    @Expose var timezone: Long?
 )
