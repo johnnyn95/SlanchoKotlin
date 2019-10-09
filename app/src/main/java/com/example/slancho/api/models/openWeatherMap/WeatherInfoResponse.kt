@@ -5,15 +5,11 @@ import com.google.gson.annotations.SerializedName
 
 class WeatherInfoResponse(
     @SerializedName("id")
-    @Expose
-    var id: Long?,
+    @Expose var id: Long?,
     @SerializedName("main")
-    @Expose
-    var main: String?,
+    @Expose var main: String?,
     @SerializedName("description")
-    @Expose
-    var description: String?,
+    @Expose var description: String?,
     @SerializedName("icon")
-    @Expose
-    var icon: String?
+    @Expose var icon: String?
 )

@@ -12,5 +12,5 @@ interface LastKnownLocationDao {
     fun insert(lastKnownLocation: LastKnownLocation)
 
     @Query("SELECT * FROM lastKnownLocation WHERE userId =:userId")
-    fun getLastKnownLocationForUserByUserId(userId: String): LastKnownLocation
+    fun getLastKnownLocationForUserByUserId(userId: String): LastKnownLocation?
 }

@@ -24,6 +24,8 @@ import com.example.slancho.api.interceptors.OpenWeatherMapInterceptor
 import com.example.slancho.api.interceptors.RapidApiOpenWeatherMapInterceptor
 import com.example.slancho.common.FlavorConstants
 import com.example.slancho.db.SlanchoDb
+import com.example.slancho.db.dao.CityDao
+import com.example.slancho.db.dao.ForecastDao
 import com.example.slancho.db.dao.LastKnownLocationDao
 import com.example.slancho.db.dao.UserDao
 import com.example.slancho.utils.LocationManager
@@ -133,6 +135,14 @@ class AppModule {
     @Singleton
     @Provides
     fun provideLastKnownLocationDao(db: SlanchoDb): LastKnownLocationDao = db.lastKnownLocationDao()
+
+    @Singleton
+    @Provides
+    fun providesForecastDao(db: SlanchoDb): ForecastDao = db.forecastDao()
+
+    @Singleton
+    @Provides
+    fun providesCityDao(db: SlanchoDb): CityDao = db.cityDao()
 
     @Singleton
     @Provides

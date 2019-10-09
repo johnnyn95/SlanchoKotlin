@@ -22,19 +22,17 @@ class SignInActivityViewModel @Inject constructor(
 
     override val TAG: String get() = SignInActivityViewModel::class.java.simpleName
 
-    override fun onScreenReady(context: Context) {
+    override fun onScreenReady(context: Context, userId: String) {
     }
 
-    suspend fun signInAnonymously(firebaseUser: FirebaseUser) {
+    suspend fun signInWithFirebase(firebaseUser: FirebaseUser) {
         userDbRepository.insertUser(firebaseUser.uid, true)
-    }
-
-    suspend fun signInWithEmailAndPassword(firebaseUser: FirebaseUser) {
-        userDbRepository.insertUser(firebaseUser.uid, false)
+        handleSignIn(userDbRepository.getUserByAuthUID(firebaseUser.uid))
     }
 
     private suspend fun signInWithGoogle(googleSignInAccount: GoogleSignInAccount) {
         userDbRepository.insertUser(googleSignInAccount.id!!, false)
+        handleSignIn(userDbRepository.getUserByAuthUID(googleSignInAccount.id!!))
     }
 
     suspend fun handleGoogleSignInResult(data: Intent?) {
@@ -42,12 +40,8 @@ class SignInActivityViewModel @Inject constructor(
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             val googleSignInAccount = task.getResult(ApiException::class.java)
             signInWithGoogle(googleSignInAccount!!)
-            navigateToMain()
         } catch (e: ApiException) {
-            Timber.w(
-                SignInActivityViewModel::class.java.simpleName,
-                "Failed Google Sign in {${e.statusCode}}"
-            )
+            Timber.w(TAG, "Failed Google Sign in {${e.statusCode}}")
         }
     }
 

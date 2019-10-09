@@ -37,19 +37,52 @@ class UserDbRepository @Inject constructor(
     override suspend fun getUserByAuthUID(authUID: String): User? {
         return runBlocking(IO) {
             val user: User? = userDao.getUserByAuthUID(authUID)
+            val lastKnownLocation: LastKnownLocation?
             if (user != null) {
+                // Tries to fetch the current location
                 val address = locationManager.getAddressFromLastKnownLocation()
                 if (address != null) {
-                    val lastKnownLocation = LastKnownLocation(userId = user.id, address = address)
+                    lastKnownLocation = LastKnownLocation(userId = user.id, address = address)
                     lastKnownLocationDao.insert(lastKnownLocation)
                     user.lastKnownLocation = lastKnownLocation
                 } else {
-                    user.lastKnownLocation =
+                    // Uses the last known location
+                    lastKnownLocation =
                         lastKnownLocationDao.getLastKnownLocationForUserByUserId(userId = user.id)
+                    if (lastKnownLocation != null) {
+                        user.lastKnownLocation = lastKnownLocation
+                    }
                 }
                 user
             } else {
-                Timber.w(TAG,"Couldn't fetch User")
+                Timber.w(TAG, "Couldn't fetch User")
+                null
+            }
+        }
+    }
+
+    override suspend fun getUserById(id: String): User? {
+        return runBlocking(IO) {
+            val user: User? = userDao.getUserById(id)
+            val lastKnownLocation: LastKnownLocation?
+            if (user != null) {
+                // Tries to fetch the current location
+                val address = locationManager.getAddressFromLastKnownLocation()
+                if (address != null) {
+                    lastKnownLocation = LastKnownLocation(userId = user.id, address = address)
+                    lastKnownLocationDao.insert(lastKnownLocation)
+                    user.lastKnownLocation = lastKnownLocation
+                } else {
+                    // Uses the last known location
+                    lastKnownLocation =
+                        lastKnownLocationDao.getLastKnownLocationForUserByUserId(userId = user.id)
+                    if (lastKnownLocation != null) {
+                        user.lastKnownLocation = lastKnownLocation
+                    }
+                }
+                user
+            } else {
+                Timber.w(TAG, "Couldn't fetch User")
                 null
             }
         }

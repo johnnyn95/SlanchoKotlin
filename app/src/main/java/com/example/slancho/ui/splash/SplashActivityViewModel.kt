@@ -6,6 +6,7 @@ import com.example.slancho.ui.BaseAuthViewModel
 import com.example.slancho.utils.LocationManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class SplashActivityViewModel @Inject constructor(
@@ -16,9 +17,11 @@ class SplashActivityViewModel @Inject constructor(
 
     override val TAG: String get() = SplashActivityViewModel::class.java.simpleName
 
-    override fun onScreenReady(context: Context) {
+    override fun onScreenReady(context: Context, userId: String) {
         if (firebaseAuth.currentUser != null || GoogleSignIn.getLastSignedInAccount(context) != null) {
-            navigateToMain()
+            runBlocking {
+                fetchCurrentUser(context)
+            }
         } else {
             navigateToSignIn()
         }

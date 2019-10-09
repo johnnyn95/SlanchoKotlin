@@ -16,11 +16,13 @@ class SignUpActivityViewModel @Inject constructor(
 
     override val TAG: String get() = SignUpActivityViewModel::class.java.simpleName
 
-    override fun onScreenReady(context: Context) {
+    override fun onScreenReady(context: Context, userId: String) {
     }
 
     suspend fun signUpWithEmailAndPassword(firebaseUser: FirebaseUser) {
         userDbRepository.insertUser(firebaseUser.uid, false)
+        val user = userDbRepository.getUserByAuthUID(firebaseUser.uid)
+        handleSignUp(user)
     }
 }
 

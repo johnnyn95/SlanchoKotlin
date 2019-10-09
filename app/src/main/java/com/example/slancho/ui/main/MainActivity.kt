@@ -16,13 +16,17 @@ import com.example.slancho.ui.main.news.NewsFragment
 import com.example.slancho.ui.main.search.SearchFragment
 import com.example.slancho.ui.main.weather.WeatherFragment
 import com.example.slancho.ui.settings.SettingsActivity
-import com.example.slancho.ui.signIn.SignInActivity
+import com.example.slancho.utils.NavigationUtils.Companion.initSignInActivityIntent
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import dagger.android.AndroidInjection
 
 class MainActivity : BaseActivity<ActivityMainBinding>(),
     BottomNavigationView.OnNavigationItemSelectedListener {
+
+    companion object {
+        const val EXTRA_USER_ID = "extra_user_id"
+    }
 
     override val TAG: String get() = MainActivity::class.java.simpleName
 
@@ -33,18 +37,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
     private lateinit var activeFragment: Fragment
 
     private var activeItemId: Int = 0
+    var userId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         initNavigationSubscribers()
-        viewModel.onScreenReady(this)
+        viewModel.onScreenReady(this, userId)
     }
 
     override fun getLayoutResId(): Int = R.layout.activity_main
 
     override fun initFields() {
         viewModel = getViewModel(MainActivityViewModel::class.java)
+        if (intent != null && intent.hasExtra(EXTRA_USER_ID)) {
+            userId = intent.getStringExtra(EXTRA_USER_ID)!!
+        }
     }
 
     override fun initViews() {
@@ -70,7 +78,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
     private fun initNavigationSubscribers() {
         getBinding().grpBottomNav.setOnNavigationItemSelectedListener(this)
         viewModel.navigateToSignIn.observe(this, Observer {
-            startActivity(Intent(this, SignInActivity::class.java))
+            startActivity(initSignInActivityIntent(this))
             finish()
         })
     }

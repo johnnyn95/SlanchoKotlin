@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity(tableName = "user")
-data class User(
+data class User constructor(
     @ColumnInfo(name = "id")
     val id: String = UUID.randomUUID().toString(),
     @PrimaryKey
@@ -17,5 +17,6 @@ data class User(
     var isAnonymous: Boolean
 ) {
     @Ignore
-    lateinit var lastKnownLocation: LastKnownLocation
+    var lastKnownLocation: LastKnownLocation? = null
+
 }

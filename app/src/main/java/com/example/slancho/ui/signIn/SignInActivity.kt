@@ -10,8 +10,8 @@ import androidx.lifecycle.Observer
 import com.example.slancho.R
 import com.example.slancho.common.BaseActivity
 import com.example.slancho.databinding.ActivitySignInBinding
-import com.example.slancho.ui.main.MainActivity
-import com.example.slancho.ui.signUp.SignUpActivity
+import com.example.slancho.utils.NavigationUtils.Companion.initMainActivityIntent
+import com.example.slancho.utils.NavigationUtils.Companion.initSignUpActivityIntent
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import dagger.android.AndroidInjection
 import kotlinx.coroutines.CoroutineScope
@@ -59,7 +59,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
 
     private fun initNavigationSubscribers() {
         viewModel.navigateToMain.observe(this, Observer {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(initMainActivityIntent(this, it))
             finish()
         })
     }
@@ -70,10 +70,9 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
                 .addOnCompleteListener(this) {
                     if (it.isSuccessful) {
                         CoroutineScope(IO).launch {
-                            viewModel.signInWithEmailAndPassword(firebaseAuth.currentUser!!)
+                            viewModel.signInWithFirebase(firebaseAuth.currentUser!!)
                         }
                         signInSuccessfulToast()
-                        navigateToMain()
 
                     } else {
                         signInFailedToast()
@@ -86,11 +85,9 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
         firebaseAuth.signInAnonymously().addOnCompleteListener(this) {
             if (it.isSuccessful) {
                 CoroutineScope(IO).launch {
-                    viewModel.signInAnonymously(firebaseAuth.currentUser!!)
+                    viewModel.signInWithFirebase(firebaseAuth.currentUser!!)
                 }
                 signInSuccessfulToast()
-                navigateToMain()
-
             } else {
                 signInFailedToast()
             }
@@ -113,9 +110,7 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
         getBinding().grpContentBase.startAnimation(animation)
     }
 
-    private fun navigateToMain() = startActivity(Intent(this, MainActivity::class.java))
-
-    private fun navigateToSignUp() = startActivity(Intent(this, SignUpActivity::class.java))
+    private fun navigateToSignUp() = startActivity(initSignUpActivityIntent(this))
 
     private fun signInSuccessfulToast() =
         Toast.makeText(baseContext, R.string.sign_in_successful, LENGTH_SHORT).show()

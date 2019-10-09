@@ -1,26 +1,19 @@
 package com.example.slancho.api.models.openWeatherMap
 
-
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 class WeatherResponse(
     @SerializedName("dt")
-    @Expose
-    var dateTime: Long?,
+    @Expose var dateTime: Long?,
     @SerializedName("main")
-    @Expose
-    var weatherMainResponse: WeatherMainResponse?,
+    @Expose var weatherMainResponse: WeatherMainResponse?,
     @SerializedName("weatherInfo")
-    @Expose
-    var weatherInfo: List<WeatherInfoResponse>,
+    @Expose var weatherInfo: List<WeatherInfoResponse>,
     @SerializedName("cloud")
-    @Expose
-    var cloudResponse: CloudResponse,
+    @Expose var cloudsResponse: CloudsResponse,
     @SerializedName("wind")
-    @Expose
-    var windResponse: WindResponse?,
+    @Expose var windResponse: WindResponse?,
     @SerializedName("dt_txt")
-    @Expose
-    var dateTimeTxt: String?
+    @Expose var dateTimeTxt: String?
 )
