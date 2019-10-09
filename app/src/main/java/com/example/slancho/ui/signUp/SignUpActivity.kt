@@ -6,11 +6,13 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
+import androidx.lifecycle.Observer
 import com.example.slancho.R
 import com.example.slancho.common.BaseActivity
 import com.example.slancho.databinding.ActivitySignUpBinding
 import com.example.slancho.ui.main.MainActivity
 import com.example.slancho.ui.signIn.SignInActivity
+import com.example.slancho.utils.NavigationUtils.Companion.initMainActivityIntent
 import dagger.android.AndroidInjection
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,6 +31,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
+        initNavigationSubscribers()
     }
 
     override fun initFields() {
@@ -50,6 +53,13 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
 
     override fun getLayoutResId(): Int = R.layout.activity_sign_up
 
+    private fun initNavigationSubscribers() {
+        viewModel.navigateToMain.observe(this, Observer {
+            startActivity(initMainActivityIntent(this,it))
+            finish()
+        })
+    }
+
     private fun signUpWithEmailAndPassword() {
         if (validateInputFields()) {
             firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -59,7 +69,6 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
                             viewModel.signUpWithEmailAndPassword(firebaseAuth.currentUser!!)
                         }
                         signUpSuccessfulToast()
-                        navigateToMain()
                     } else {
                         signUpFailedToast()
                     }

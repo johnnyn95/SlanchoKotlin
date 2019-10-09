@@ -35,8 +35,10 @@ data class Forecast(
         openWeatherMapForecastResponse.message!!,
         openWeatherMapForecastResponse.numberOfDays!!,
         openWeatherMapForecastResponse.city!!.name!!,
-        openWeatherMapForecastResponse.city!!.cityId!!
+        if (openWeatherMapForecastResponse.city!!.cityId != null)
+            openWeatherMapForecastResponse.city!!.cityId!!
+        else Random(123456).nextLong()
     ) {
-        this.city = City(openWeatherMapForecastResponse.city!!)
+        this.city = City(openWeatherMapForecastResponse.city!!, this.cityId)
     }
 }

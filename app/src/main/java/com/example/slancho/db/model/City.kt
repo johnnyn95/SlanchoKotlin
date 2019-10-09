@@ -13,29 +13,29 @@ data class City(
     @ColumnInfo(name = "name")
     val name: String,
     @ColumnInfo(name = "latitude")
-    val latitude: Double,
+    val latitude: Double?,
     @ColumnInfo(name = "longitude")
-    val longitude: Double,
+    val longitude: Double?,
     @ColumnInfo(name = "countryCode")
-    val countryCode: String,
+    val countryCode: String?,
     @ColumnInfo(name = "population")
-    val population: Long,
+    val population: Long?,
     @ColumnInfo(name = "timezone")
-    val timezone: Long,
+    val timezone: Long?,
     @ColumnInfo(name = "sunrise")
-    val sunrise: Long,
+    val sunrise: Long?,
     @ColumnInfo(name = "sunset")
-    val sunset: Long
+    val sunset: Long?
 ) {
-    constructor(cityResponse: CityResponse) : this(
-        cityResponse.cityId!!,
+    constructor(cityResponse: CityResponse, cityId: Long) : this(
+        cityId,
         cityResponse.name!!,
-        cityResponse.coordinatesResponse!!.lat!!,
-        cityResponse.coordinatesResponse!!.lon!!,
-        cityResponse.countryCode!!,
-        cityResponse.population!!,
-        cityResponse.timezone!!,
-        cityResponse.sunrise!!,
-        cityResponse.sunset!!
+        cityResponse.coordinatesResponse!!.lat,
+        cityResponse.coordinatesResponse!!.lon,
+        cityResponse.countryCode,
+        cityResponse.population,
+        cityResponse.timezone,
+        cityResponse.sunrise,
+        cityResponse.sunset
     )
 }

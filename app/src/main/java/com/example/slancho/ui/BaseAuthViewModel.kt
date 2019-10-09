@@ -16,19 +16,19 @@ abstract class BaseAuthViewModel constructor(
     var userDbRepository: UserDbRepository
 ) : ViewModel(), FirebaseAuth.AuthStateListener {
 
-    val navigateToMain: MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>()
+    abstract val TAG: String
+
+    val navigateToMain: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
     }
 
     val navigateToSignIn: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>()
     }
 
-    protected var currentUser: User? = null
+    lateinit var currentUser: User
 
-    abstract fun onScreenReady(context: Context)
-
-    abstract val TAG: String
+    abstract fun onScreenReady(context: Context, userId: String)
 
     override fun onAuthStateChanged(p0: FirebaseAuth) {
         if (firebaseAuth.currentUser == null) {
@@ -36,7 +36,10 @@ abstract class BaseAuthViewModel constructor(
         }
     }
 
-    fun navigateToMain() = navigateToMain.postValue(true)
+    private fun navigateToMain(user: User) {
+        navigateToMain.postValue(user.id)
+    }
+
 
     fun navigateToSignIn() = navigateToSignIn.postValue(true)
 
@@ -49,7 +52,6 @@ abstract class BaseAuthViewModel constructor(
             GoogleSignIn.getClient(context, signInWithGoogle()).signOut()
                 .addOnSuccessListener { navigateToSignIn() }
         }
-
     }
 
     fun signInWithGoogle(): GoogleSignInOptions {
@@ -59,8 +61,8 @@ abstract class BaseAuthViewModel constructor(
     }
 
     protected suspend fun fetchCurrentUser(context: Context) {
-        val userId = fetchCurrentLoggedUserId(context)
-        currentUser = userDbRepository.getUserByAuthUID(userId)
+        val user = userDbRepository.getUserByAuthUID(fetchCurrentLoggedUserId(context))
+        handleSignIn(user)
     }
 
     private fun fetchCurrentLoggedUserId(context: Context): String {
@@ -72,5 +74,19 @@ abstract class BaseAuthViewModel constructor(
             userId = GoogleSignIn.getLastSignedInAccount(context)!!.id!!
         }
         return userId
+    }
+
+    protected fun handleSignIn(user: User?) {
+        if (user != null) {
+            navigateToMain(user)
+        } else {
+            navigateToSignIn()
+        }
+    }
+
+    fun handleSignUp(user: User?) {
+        if (user != null) {
+            navigateToMain(user)
+        }
     }
 }

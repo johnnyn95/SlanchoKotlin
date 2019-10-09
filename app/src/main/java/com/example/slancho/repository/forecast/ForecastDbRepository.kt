@@ -35,7 +35,7 @@ class ForecastDbRepository @Inject constructor(
     override suspend fun getLatestForecastByLatLong(lat: Double, long: Double): Forecast {
         return runBlocking(IO) {
             val city = cityDao.getCityByLatLong(lat, long)
-            val forecast: Forecast = forecastDao.getLatestForecastByCityId(city.id)
+            val forecast: Forecast = forecastDao.getLatestForecastByCityId(city.id!!)
             forecast.city = city
             forecast
         }

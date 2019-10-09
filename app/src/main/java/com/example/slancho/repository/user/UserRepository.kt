@@ -6,4 +6,7 @@ interface UserRepository {
     suspend fun insertUser(authUID: String, isAnonymous: Boolean)
 
     suspend fun getUserByAuthUID(authUID: String) : User?
+
+    suspend fun getUserById(id: String) : User?
+
 }

@@ -1,6 +1,5 @@
 package com.example.slancho.ui.splash
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.lifecycle.Observer
@@ -8,8 +7,8 @@ import com.example.slancho.BuildConfig
 import com.example.slancho.R
 import com.example.slancho.common.BaseActivity
 import com.example.slancho.databinding.ActivitySplashBinding
-import com.example.slancho.ui.main.MainActivity
-import com.example.slancho.ui.signIn.SignInActivity
+import com.example.slancho.utils.NavigationUtils.Companion.initMainActivityIntent
+import com.example.slancho.utils.NavigationUtils.Companion.initSignInActivityIntent
 import dagger.android.AndroidInjection
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
@@ -32,11 +31,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     private fun initNavigationSubscribers() {
         viewModel.navigateToMain.observe(this, Observer {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(initMainActivityIntent(this, it))
             finish()
         })
         viewModel.navigateToSignIn.observe(this, Observer {
-            startActivity(Intent(this, SignInActivity::class.java))
+            startActivity(initSignInActivityIntent(this))
             finish()
         })
     }
@@ -56,7 +55,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     override fun initListeners() {}
 
     private fun postDelayedOnScreenReady() {
-        runnable = Runnable { viewModel.onScreenReady(this) }
+        runnable = Runnable { viewModel.onScreenReady(this, "") }
         handler.postDelayed(runnable, 1000)
     }
 }

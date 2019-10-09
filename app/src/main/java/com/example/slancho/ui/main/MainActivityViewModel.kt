@@ -23,22 +23,14 @@ class MainActivityViewModel @Inject constructor(
 
     override val TAG: String get() = MainActivityViewModel::class.java.simpleName
 
-    override fun onScreenReady(context: Context) {
+    override fun onScreenReady(context: Context, userId: String) {
         registerAuthListeners()
         runBlocking(IO) {
             try {
-                fetchCurrentUser(context)
-                if (currentUser != null) {
-                    Timber.d(TAG, "Fetched user${currentUser!!.authUID}")
-                    openWeatherMapApiRepository.getForecastWeatherDataByLocation(
-                        currentUser!!.lastKnownLocation!!.latitude,
-                        currentUser!!.lastKnownLocation!!.longitude
-                    )
-                    val forecast =
-                        forecastDbRepository.getLatestForecastByCityName(currentUser!!.lastKnownLocation!!.city)
-                }
+                fetchCurrentUser(userId)
+                fetchForecastData()
             } catch (e: NullPointerException) {
-                Timber.w(TAG, "Failed to fetch user$e")
+                Timber.e(TAG, "Failed to fetch user $e")
                 navigateToSignIn()
             }
         }
@@ -48,5 +40,24 @@ class MainActivityViewModel @Inject constructor(
         if (firebaseAuth.currentUser != null) {
             firebaseAuth.addAuthStateListener(this)
         }
+    }
+
+    private suspend fun fetchCurrentUser(userId: String) {
+        val user = userDbRepository.getUserById(userId)
+        if (user != null) {
+            currentUser = user
+            Timber.d(TAG, "Fetched user${currentUser.authUID}")
+        }
+    }
+
+    private suspend fun fetchForecastData() {
+        openWeatherMapApiRepository
+            .getForecastWeatherDataByLocation(
+                currentUser.lastKnownLocation!!.latitude,
+                currentUser.lastKnownLocation!!.longitude
+            )
+        openWeatherMapApiRepository.getForecastWeatherDataByCityAndCountryCode(currentUser.lastKnownLocation!!.getFormattedCityAndCountryCode())
+        val forecast =
+            forecastDbRepository.getLatestForecastByCityName(currentUser.lastKnownLocation!!.city)
     }
 }
