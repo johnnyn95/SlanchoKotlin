@@ -1,8 +1,10 @@
 package com.example.slancho.ui.main
 
 import android.content.Context
+import com.example.slancho.db.model.User
 import com.example.slancho.repository.forecast.ForecastDbRepository
 import com.example.slancho.repository.openWeatherMap.OpenWeatherMapApiRepository
+import com.example.slancho.repository.rapidApiOpenWeatherMap.RapidApiOpenWeatherMapApiRepository
 import com.example.slancho.repository.user.UserDbRepository
 import com.example.slancho.ui.BaseAuthViewModel
 import com.example.slancho.utils.LocationManager
@@ -17,6 +19,7 @@ class MainActivityViewModel @Inject constructor(
     firebaseAuth: FirebaseAuth,
     userDbRepository: UserDbRepository,
     private var openWeatherMapApiRepository: OpenWeatherMapApiRepository,
+    private var rapidApiOpenWeatherMapRepository: RapidApiOpenWeatherMapApiRepository,
     private var forecastDbRepository: ForecastDbRepository
 ) : BaseAuthViewModel(locationManager, firebaseAuth, userDbRepository),
     FirebaseAuth.AuthStateListener {
@@ -28,7 +31,6 @@ class MainActivityViewModel @Inject constructor(
         runBlocking(IO) {
             try {
                 fetchCurrentUser(userId)
-                fetchForecastData()
             } catch (e: NullPointerException) {
                 Timber.e(TAG, "Failed to fetch user $e")
                 navigateToSignIn()
@@ -46,18 +48,27 @@ class MainActivityViewModel @Inject constructor(
         val user = userDbRepository.getUserById(userId)
         if (user != null) {
             currentUser = user
+            fetchForecastData(currentUser)
             Timber.d(TAG, "Fetched user${currentUser.authUID}")
         }
     }
 
-    private suspend fun fetchForecastData() {
-        openWeatherMapApiRepository
-            .getForecastWeatherDataByLocation(
-                currentUser.lastKnownLocation!!.latitude,
-                currentUser.lastKnownLocation!!.longitude
-            )
-        openWeatherMapApiRepository.getForecastWeatherDataByCityAndCountryCode(currentUser.lastKnownLocation!!.getFormattedCityAndCountryCode())
+    private suspend fun fetchForecastData(user: User) {
+        openWeatherMapApiRepository.getThreeHourForecastByLocation(
+            user.lastKnownLocation!!.latitude,
+            user.lastKnownLocation!!.longitude
+        )
+
+//        rapidApiOpenWeatherMapRepository.getRapidApiThreeHourForecastByLocation(
+//            user.lastKnownLocation!!.latitude,
+//            user.lastKnownLocation!!.longitude
+//        )
+
+//        openWeatherMapApiRepository.getThreeHourForecastByCityAndCountryCode(user.lastKnownLocation!!.getFormattedCityAndCountryCode())
+
+//        rapidApiOpenWeatherMapRepository.getRapidApiThreeHourForecastByCityAndCountryCode(user.lastKnownLocation!!.getFormattedCityAndCountryCode())
+
         val forecast =
-            forecastDbRepository.getLatestForecastByCityName(currentUser.lastKnownLocation!!.city)
+            forecastDbRepository.getLatestForecastByCityName(user.lastKnownLocation!!.city)
     }
 }

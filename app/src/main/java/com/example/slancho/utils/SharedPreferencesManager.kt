@@ -10,6 +10,12 @@ class SharedPreferencesManager @Inject constructor(var application: Application)
     companion object {
         const val fetchDataDefaultValue = false
         const val forecastDataForDaysDefaultValue = 7
+
+        // 3 hour forecast allows 8 periods daily; 8 x 5 = 40 (Max periods for 3H forecast)
+        private const val periodsForADay = 8
+        const val threeHourForecastMaxDays = 5
+        const val numberOfPeriodsForThreeHourForecastDefaultValue =
+            periodsForADay * threeHourForecastMaxDays
     }
 
     private lateinit var locationKey: String
@@ -22,13 +28,15 @@ class SharedPreferencesManager @Inject constructor(var application: Application)
     lateinit var langValue: String
 
     private lateinit var fetchDataKey: String
-    private var fetchDataValue: Boolean = fetchDataDefaultValue
+    private var fetchDataValue = fetchDataDefaultValue
 
     private lateinit var forecastDataForDaysKey: String
-    var forecastDataForDaysValue: Int = forecastDataForDaysDefaultValue
+    var forecastDataForDaysValue = forecastDataForDaysDefaultValue
 
     private var sharedPreferences: SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(application.baseContext)
+
+    var numberOfPeriodsForThreeHourForecastValue = numberOfPeriodsForThreeHourForecastDefaultValue
 
     init {
         initSharedPreferenceKeys()
@@ -52,5 +60,15 @@ class SharedPreferencesManager @Inject constructor(var application: Application)
         fetchDataValue = sharedPreferences.getBoolean(fetchDataKey, fetchDataDefaultValue)
         forecastDataForDaysValue =
             sharedPreferences.getInt(forecastDataForDaysKey, forecastDataForDaysDefaultValue)
+        numberOfPeriodsForThreeHourForecastValue = calculatePeriods(forecastDataForDaysValue)
+    }
+
+    /**
+     * Maximum of 5 days allowed in 3 hour forecast
+     */
+    private fun calculatePeriods(forecastDataForDaysValue: Int): Int {
+        return if (forecastDataForDaysValue <= threeHourForecastMaxDays) {
+            forecastDataForDaysValue * periodsForADay
+        } else numberOfPeriodsForThreeHourForecastDefaultValue
     }
 }

@@ -3,7 +3,6 @@ package com.example.slancho.db.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.slancho.api.models.openWeatherMap.CityResponse
 
 @Entity(tableName = "city")
 data class City(
@@ -27,13 +26,37 @@ data class City(
     @ColumnInfo(name = "sunset")
     val sunset: Long?
 ) {
-    constructor(cityResponse: CityResponse, cityId: Long) : this(
+    /**
+     * Used by OpenWeatherMap Api
+     */
+    constructor(
+        cityResponse: com.example.slancho.api.models.openWeatherMap.CityResponse,
+        cityId: Long
+    ) : this(
         cityId,
         cityResponse.name!!,
         cityResponse.coordinatesResponse!!.lat,
         cityResponse.coordinatesResponse!!.lon,
         cityResponse.countryCode,
-        cityResponse.population,
+        if (cityResponse.population != null) cityResponse.population else 0,
+        cityResponse.timezone,
+        cityResponse.sunrise,
+        cityResponse.sunset
+    )
+
+    /**
+     * Used by RapidApiOpenWeatherMap Api
+     */
+    constructor(
+        cityResponse: com.example.slancho.api.models.rapidApiOpenWeatherMap.CityResponse,
+        cityId: Long
+    ) : this(
+        cityId,
+        cityResponse.name!!,
+        cityResponse.coordinatesResponse!!.lat,
+        cityResponse.coordinatesResponse!!.lon,
+        cityResponse.countryCode,
+        if (cityResponse.population != null) cityResponse.population else 0,
         cityResponse.timezone,
         cityResponse.sunrise,
         cityResponse.sunset

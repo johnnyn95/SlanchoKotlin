@@ -14,7 +14,8 @@ class RapidApiOpenWeatherMapInterceptor : Interceptor {
         val request = chain.request()
         if (request.header(HEADER) == null) {
             val newRequest = request.newBuilder()
-                .addHeader(HEADER, Environment.Environments.DEV.getRapidApiOpenWeatherMapKey()).build()
+                .addHeader(HEADER, Environment.Environments.DEV.getRapidApiOpenWeatherMapKey())
+                .build()
             return chain.proceed(newRequest)
         }
         return chain.proceed(request)

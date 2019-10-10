@@ -20,14 +20,14 @@ class ForecastDbRepository @Inject constructor(
     override suspend fun insertForecast(forecast: Forecast) {
         runBlocking(IO) {
             forecastDao.insert(forecast)
-            cityDao.insert(forecast.city)
+            cityDao.insert(forecast.city!!)
         }
     }
 
     override suspend fun getLatestForecastByCityName(cityName: String): Forecast {
         return runBlocking(IO) {
             val forecast: Forecast = forecastDao.getLatestForecastByCityName(cityName)
-            forecast.city = cityDao.getCityByCityName(cityName)
+            forecast.city = cityDao.getCityByCityName(forecast.cityName)
             forecast
         }
     }

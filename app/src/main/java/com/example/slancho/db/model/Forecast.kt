@@ -4,7 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.example.slancho.api.models.openWeatherMap.OpenWeatherMapForecastResponse
+import com.example.slancho.api.ForecastType
+import com.example.slancho.api.models.openWeatherMap.OpenWeatherMapThreeHourForecastResponse
+import com.example.slancho.api.models.rapidApiOpenWeatherMap.RapidApiOpenWeatherMapTheeHourForecastResponse
 import java.util.*
 
 @Entity(tableName = "forecast")
@@ -23,22 +25,57 @@ data class Forecast(
     @ColumnInfo(name = "cityName")
     val cityName: String,
     @ColumnInfo(name = "cityId")
-    val cityId: Long
+    val cityId: Long,
+    @ColumnInfo(name = "forecastType")
+    val forecastType: String
 ) {
-    @Ignore
-    lateinit var city: City
+    companion object {
+        // Existing City Id +1 in order not to "randomly" create existing city
+        const val RANDOM_SEED: Long = 7270111
+    }
 
-    constructor(openWeatherMapForecastResponse: OpenWeatherMapForecastResponse) : this(
+    @Ignore
+    var city: City? = null
+
+    /**
+     * Used for the Three hour forecast by the OpenWeather Api
+     */
+    constructor(
+        openWeatherMapThreeHourForecastResponse: OpenWeatherMapThreeHourForecastResponse,
+        forecastType: ForecastType
+    ) : this(
         UUID.randomUUID().toString(),
         System.currentTimeMillis(),
-        openWeatherMapForecastResponse.cod!!,
-        openWeatherMapForecastResponse.message!!,
-        openWeatherMapForecastResponse.numberOfDays!!,
-        openWeatherMapForecastResponse.city!!.name!!,
-        if (openWeatherMapForecastResponse.city!!.cityId != null)
-            openWeatherMapForecastResponse.city!!.cityId!!
-        else Random(123456).nextLong()
+        openWeatherMapThreeHourForecastResponse.cod!!,
+        openWeatherMapThreeHourForecastResponse.message!!,
+        if (openWeatherMapThreeHourForecastResponse.numberOfPeriods != null) openWeatherMapThreeHourForecastResponse.numberOfPeriods!! else 0,
+        openWeatherMapThreeHourForecastResponse.city!!.name!!,
+        if (openWeatherMapThreeHourForecastResponse.city!!.cityId != null)
+            openWeatherMapThreeHourForecastResponse.city!!.cityId!!
+        else Random(RANDOM_SEED).nextLong(),
+        forecastType.value
     ) {
-        this.city = City(openWeatherMapForecastResponse.city!!, this.cityId)
+        this.city = City(openWeatherMapThreeHourForecastResponse.city!!, this.cityId)
+    }
+
+    /**
+     * Used for the Three hour forecast by the RapidApiOpenWeather Api
+     */
+    constructor(
+        rapidApiThreeHourForecastResponse: RapidApiOpenWeatherMapTheeHourForecastResponse,
+        forecastType: ForecastType
+    ) : this(
+        UUID.randomUUID().toString(),
+        System.currentTimeMillis(),
+        rapidApiThreeHourForecastResponse.cod!!,
+        rapidApiThreeHourForecastResponse.message!!,
+        if (rapidApiThreeHourForecastResponse.numberOfPeriods != null) rapidApiThreeHourForecastResponse.numberOfPeriods!! else 0,
+        rapidApiThreeHourForecastResponse.city!!.name!!,
+        if (rapidApiThreeHourForecastResponse.city!!.cityId != null)
+            rapidApiThreeHourForecastResponse.city!!.cityId!!
+        else Random(RANDOM_SEED).nextLong(),
+        forecastType.value
+    ) {
+        this.city = City(rapidApiThreeHourForecastResponse.city!!, this.cityId)
     }
 }

@@ -1,9 +1,10 @@
-package com.example.slancho.repository.openWeatherMap
+package com.example.slancho.repository.rapidApiOpenWeatherMap
 
 import com.example.slancho.api.ForecastType
-import com.example.slancho.api.OpenWeatherMapService
+import com.example.slancho.api.RapidApiOpenWeatherMapService
 import com.example.slancho.db.model.Forecast
 import com.example.slancho.repository.forecast.ForecastDbRepository
+import com.example.slancho.repository.rapidApiOpenWeatherMap.RapidApiOpenWeatherMapRepository
 import com.example.slancho.utils.SharedPreferencesManager
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
@@ -11,21 +12,24 @@ import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
-class OpenWeatherMapApiRepository @Inject constructor(
-    private val openWeatherMapService: OpenWeatherMapService,
+class RapidApiOpenWeatherMapApiRepository @Inject constructor(
+    private val rapidApiOpenWeatherMapService: RapidApiOpenWeatherMapService,
     private val sharedPreferencesManager: SharedPreferencesManager,
     private val forecastDbRepository: ForecastDbRepository
-) : OpenWeatherMapRepository {
+) : RapidApiOpenWeatherMapRepository {
 
     companion object {
-        val TAG = OpenWeatherMapApiRepository::class.java.simpleName
+        val TAG = RapidApiOpenWeatherMapApiRepository::class.java.simpleName
     }
 
-    override suspend fun getThreeHourForecastByLocation(latitude: Double, longitude: Double) {
+    override suspend fun getRapidApiThreeHourForecastByLocation(
+        latitude: Double,
+        longitude: Double
+    ) {
         withContext(IO) {
             try {
                 val response =
-                    openWeatherMapService.getThreeHourForecastForNumberOfPeriods(
+                    rapidApiOpenWeatherMapService.getThreeHourForecastWeatherData(
                         null, latitude, longitude,
                         sharedPreferencesManager.numberOfPeriodsForThreeHourForecastValue
                     ).execute()
@@ -39,11 +43,11 @@ class OpenWeatherMapApiRepository @Inject constructor(
         }
     }
 
-    override suspend fun getThreeHourForecastByCityAndCountryCode(location: String) {
+    override suspend fun getRapidApiThreeHourForecastByCityAndCountryCode(location: String) {
         withContext(IO) {
             try {
                 val response =
-                    openWeatherMapService.getThreeHourForecastForNumberOfPeriods(
+                    rapidApiOpenWeatherMapService.getThreeHourForecastWeatherData(
                         location, null, null,
                         sharedPreferencesManager.numberOfPeriodsForThreeHourForecastValue
                     ).execute()
