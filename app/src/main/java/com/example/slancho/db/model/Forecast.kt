@@ -6,6 +6,7 @@ import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.example.slancho.api.ForecastType
 import com.example.slancho.api.models.openWeatherMap.OpenWeatherMapThreeHourForecastResponse
+import com.example.slancho.api.models.rapidApiOpenWeatherMap.RapidApiOpenWeatherMapDailyForecastResponse
 import com.example.slancho.api.models.rapidApiOpenWeatherMap.RapidApiOpenWeatherMapTheeHourForecastResponse
 import java.util.*
 
@@ -77,5 +78,26 @@ data class Forecast(
         forecastType.value
     ) {
         this.city = City(rapidApiThreeHourForecastResponse.city!!, this.cityId)
+    }
+
+    /**
+     * Used for the Daily forecast by the RapidApiOpenWeather Api
+     */
+    constructor(
+        rapidApiOpenWeatherMapDailyForecastResponse: RapidApiOpenWeatherMapDailyForecastResponse,
+        forecastType: ForecastType
+    ) : this(
+        UUID.randomUUID().toString(),
+        System.currentTimeMillis(),
+        rapidApiOpenWeatherMapDailyForecastResponse.cod!!,
+        rapidApiOpenWeatherMapDailyForecastResponse.message!!,
+        if (rapidApiOpenWeatherMapDailyForecastResponse.numberOfPeriods != null) rapidApiOpenWeatherMapDailyForecastResponse.numberOfPeriods!! else 0,
+        rapidApiOpenWeatherMapDailyForecastResponse.city!!.name!!,
+        if (rapidApiOpenWeatherMapDailyForecastResponse.city!!.cityId != null)
+            rapidApiOpenWeatherMapDailyForecastResponse.city!!.cityId!!
+        else Random(RANDOM_SEED).nextLong(),
+        forecastType.value
+    ) {
+        this.city = City(rapidApiOpenWeatherMapDailyForecastResponse.city!!, this.cityId)
     }
 }

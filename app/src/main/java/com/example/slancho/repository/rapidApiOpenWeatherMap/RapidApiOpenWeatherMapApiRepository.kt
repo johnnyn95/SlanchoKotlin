@@ -4,7 +4,6 @@ import com.example.slancho.api.ForecastType
 import com.example.slancho.api.RapidApiOpenWeatherMapService
 import com.example.slancho.db.model.Forecast
 import com.example.slancho.repository.forecast.ForecastDbRepository
-import com.example.slancho.repository.rapidApiOpenWeatherMap.RapidApiOpenWeatherMapRepository
 import com.example.slancho.utils.SharedPreferencesManager
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
@@ -60,4 +59,41 @@ class RapidApiOpenWeatherMapApiRepository @Inject constructor(
             }
         }
     }
+
+    override suspend fun getRapidApiDailyForecastByLocation(latitude: Double, longitude: Double) {
+        withContext(IO) {
+            try {
+                val response =
+                    rapidApiOpenWeatherMapService.getDailyForecastWeatherData(
+                        null, latitude, longitude,
+                        sharedPreferencesManager.forecastDataForDaysValue
+                    ).execute()
+                if (response.isSuccessful) {
+                    val forecast = Forecast(response.body()!!, ForecastType.Daily)
+                    forecastDbRepository.insertForecast(forecast)
+                }
+            } catch (e: IOException) {
+                Timber.e(TAG, "Couldn't fetch the forecast data! $e")
+            }
+        }
+    }
+
+    override suspend fun getRapidApiDailyForecastByCityAndCountryCode(location: String) {
+        withContext(IO) {
+            try {
+                val response =
+                    rapidApiOpenWeatherMapService.getDailyForecastWeatherData(
+                        location, null, null,
+                        sharedPreferencesManager.forecastDataForDaysValue
+                    ).execute()
+                if (response.isSuccessful) {
+                    val forecast = Forecast(response.body()!!, ForecastType.Daily)
+                    forecastDbRepository.insertForecast(forecast)
+                }
+            } catch (e: IOException) {
+                Timber.e(TAG, "Couldn't fetch the forecast data! $e")
+            }
+        }
+    }
+
 }

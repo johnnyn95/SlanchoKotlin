@@ -1,5 +1,6 @@
 package com.example.slancho.api
 
+import com.example.slancho.api.models.rapidApiOpenWeatherMap.RapidApiOpenWeatherMapDailyForecastResponse
 import com.example.slancho.api.models.rapidApiOpenWeatherMap.RapidApiOpenWeatherMapTheeHourForecastResponse
 import retrofit2.Call
 import retrofit2.http.GET
@@ -13,4 +14,12 @@ interface RapidApiOpenWeatherMapService {
         @Query("lon") longitude: Double?,
         @Query("cnt") numberOfPeriods: Int
     ): Call<RapidApiOpenWeatherMapTheeHourForecastResponse>
+
+    @GET("forecast/daily")
+    fun getDailyForecastWeatherData(
+        @Query("q") location: String?,
+        @Query("lat") latitude: Double?,
+        @Query("lon") longitude: Double?,
+        @Query("cnt") numberOfDays: Int
+    ): Call<RapidApiOpenWeatherMapDailyForecastResponse>
 }

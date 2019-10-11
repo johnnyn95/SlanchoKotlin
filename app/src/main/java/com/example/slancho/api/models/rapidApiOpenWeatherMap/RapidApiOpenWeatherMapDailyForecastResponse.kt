@@ -3,7 +3,7 @@ package com.example.slancho.api.models.rapidApiOpenWeatherMap
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class RapidApiOpenWeatherMapTheeHourForecastResponse(
+class RapidApiOpenWeatherMapDailyForecastResponse(
     @SerializedName("cod")
     @Expose var cod: String?,
     @SerializedName("message")
@@ -13,6 +13,6 @@ class RapidApiOpenWeatherMapTheeHourForecastResponse(
     @SerializedName("cnt")
     @Expose var numberOfPeriods: Int? = null,
     @SerializedName("list")
-    @Expose var threeHourWeatherList: List<ThreeHourWeatherResponse>?
+    @Expose var dailyWeatherList: List<DailyWeatherResponse>?
 )
 
