@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 /**
  * A generic RecyclerView adapter that uses Data Binding & DiffUtil.
  *
- * @param <T> Type of the items in the weatherList
+ * @param <T> Type of the items in the list
  * @param <V> The of the ViewDataBinding
 </V></T> */
 abstract class DataListAdapter<T, V : ViewDataBinding>(var items: List<T>?) :

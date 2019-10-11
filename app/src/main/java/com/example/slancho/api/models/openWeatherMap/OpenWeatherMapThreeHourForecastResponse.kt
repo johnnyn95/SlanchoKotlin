@@ -13,7 +13,7 @@ class OpenWeatherMapThreeHourForecastResponse(
     @SerializedName("city")
     @Expose var city: CityResponse?,
     @SerializedName("list")
-    @Expose var weatherList: List<WeatherResponse>?
+    @Expose var threeHourWeatherList: List<ThreeHourWeatherResponse>?
 )
 
 

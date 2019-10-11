@@ -29,7 +29,7 @@ import com.example.slancho.db.model.LastKnownLocation
 import com.example.slancho.db.model.User
 
 /**
- * WeatherMainResponse database description.
+ * Main database description.
  */
 @Database(
     entities = [
