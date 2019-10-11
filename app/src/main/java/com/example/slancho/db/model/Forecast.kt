@@ -21,8 +21,8 @@ data class Forecast(
     val cod: String,
     @ColumnInfo(name = "message")
     val message: Double,
-    @ColumnInfo(name = "fetchedForNumberOfDays")
-    val fetchedForNumberOfDays: Int,
+    @ColumnInfo(name = "fetchedForNumberOfPeriods")
+    val fetchedForNumberOfPeriods: Int,
     @ColumnInfo(name = "cityName")
     val cityName: String,
     @ColumnInfo(name = "cityId")

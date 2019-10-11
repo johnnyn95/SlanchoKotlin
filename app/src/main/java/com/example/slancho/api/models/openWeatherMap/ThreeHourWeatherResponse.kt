@@ -9,9 +9,9 @@ class ThreeHourWeatherResponse(
     @SerializedName("main")
     @Expose var threeHourWeatherMainResponse: ThreeHourWeatherMainResponse?,
     @SerializedName("weatherInfo")
-    @Expose var weatherInfo: List<WeatherInfoResponse>,
+    @Expose var weatherInfo: List<WeatherInfoResponse>?,
     @SerializedName("cloud")
-    @Expose var cloudsResponse: CloudsResponse,
+    @Expose var cloudsResponse: CloudsResponse?,
     @SerializedName("wind")
     @Expose var windResponse: WindResponse?,
     @SerializedName("dt_txt")
