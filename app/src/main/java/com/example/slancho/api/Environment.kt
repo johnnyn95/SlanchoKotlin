@@ -4,7 +4,7 @@ interface Environment {
     enum class Environments : Environment {
         DEV {
             override fun getRapidApiOpenWeatherMapApiUrl(): String =
-                "http://community-open-weather-map.p.rapidapi.com/"
+                "https://community-open-weather-map.p.rapidapi.com/"
 
             override fun getRapidApiOpenWeatherMapKey(): String =
                 "b3428ecd82msh318a7a12b562910p1d3125jsne4c7a43ba7cf"
@@ -18,7 +18,7 @@ interface Environment {
         },
         PROD {
             override fun getRapidApiOpenWeatherMapApiUrl(): String =
-                "http://community-open-weather-map.p.rapidapi.com/"
+                "https://community-open-weather-map.p.rapidapi.com/"
 
             override fun getRapidApiOpenWeatherMapKey(): String =
                 "b3428ecd82msh318a7a12b562910p1d3125jsne4c7a43ba7cf"

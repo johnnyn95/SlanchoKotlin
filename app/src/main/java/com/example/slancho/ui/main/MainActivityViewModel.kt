@@ -9,6 +9,7 @@ import com.example.slancho.repository.user.UserDbRepository
 import com.example.slancho.ui.BaseAuthViewModel
 import com.example.slancho.utils.LocationManager
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
@@ -59,14 +60,14 @@ class MainActivityViewModel @Inject constructor(
             user.lastKnownLocation!!.longitude
         )
 
-//        rapidApiOpenWeatherMapRepository.getRapidApiThreeHourForecastByLocation(
-//            user.lastKnownLocation!!.latitude,
-//            user.lastKnownLocation!!.longitude
-//        )
+        rapidApiOpenWeatherMapRepository.getRapidApiThreeHourForecastByLocation(
+            user.lastKnownLocation!!.latitude,
+            user.lastKnownLocation!!.longitude
+        )
 
-//        openWeatherMapApiRepository.getThreeHourForecastByCityAndCountryCode(user.lastKnownLocation!!.getFormattedCityAndCountryCode())
+        openWeatherMapApiRepository.getThreeHourForecastByCityAndCountryCode(user.lastKnownLocation!!.getFormattedCityAndCountryCode())
 
-//        rapidApiOpenWeatherMapRepository.getRapidApiThreeHourForecastByCityAndCountryCode(user.lastKnownLocation!!.getFormattedCityAndCountryCode())
+        rapidApiOpenWeatherMapRepository.getRapidApiThreeHourForecastByCityAndCountryCode(user.lastKnownLocation!!.getFormattedCityAndCountryCode())
 
         val forecast =
             forecastDbRepository.getLatestForecastByCityName(user.lastKnownLocation!!.city)
