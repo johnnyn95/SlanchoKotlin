@@ -8,8 +8,8 @@ import com.example.slancho.api.models.openWeatherMap.ThreeHourWeatherResponse
 import com.example.slancho.api.models.rapidApiOpenWeatherMap.DailyWeatherResponse
 import java.util.*
 
-@Entity(tableName = "forecastData")
-data class ForecastData(
+@Entity(tableName = "forecastInfo")
+data class ForecastInfo(
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: String,
@@ -60,7 +60,6 @@ data class ForecastData(
     val weatherIcon: String?
 ) {
 
-
     /**
      * Used for creation of Daily Forecast data object
      */
@@ -74,7 +73,36 @@ data class ForecastData(
         theeHourWeatherResponse.threeHourWeatherMainResponse!!.temp,
         theeHourWeatherResponse.threeHourWeatherMainResponse!!.tempMin,
         theeHourWeatherResponse.threeHourWeatherMainResponse!!.tempMax,
-        null, null,null,
+        null, null, null,
+        null, null,
+        theeHourWeatherResponse.threeHourWeatherMainResponse!!.pressure,
+        theeHourWeatherResponse.threeHourWeatherMainResponse!!.seaLevel,
+        theeHourWeatherResponse.threeHourWeatherMainResponse!!.grndLevel,
+        theeHourWeatherResponse.threeHourWeatherMainResponse!!.humidity,
+        theeHourWeatherResponse.cloudsResponse!!.all,
+        theeHourWeatherResponse.windResponse!!.speed,
+        theeHourWeatherResponse.windResponse!!.deg,
+        theeHourWeatherResponse.dateTimeTxt,
+        theeHourWeatherResponse.weatherInfo!!.first().id,
+        theeHourWeatherResponse.weatherInfo!!.first().main,
+        theeHourWeatherResponse.weatherInfo!!.first().description,
+        theeHourWeatherResponse.weatherInfo!!.first().icon
+    )
+
+    /**
+     * Used for creation of Daily Forecast data object from RapidApi
+     */
+    constructor(
+        theeHourWeatherResponse: com.example.slancho.api.models.rapidApiOpenWeatherMap.ThreeHourWeatherResponse,
+        forecastId: String
+    ) : this(
+        UUID.randomUUID().toString(),
+        forecastId,
+        theeHourWeatherResponse.dateTime,
+        theeHourWeatherResponse.threeHourWeatherMainResponse!!.temp,
+        theeHourWeatherResponse.threeHourWeatherMainResponse!!.tempMin,
+        theeHourWeatherResponse.threeHourWeatherMainResponse!!.tempMax,
+        null, null, null,
         null, null,
         theeHourWeatherResponse.threeHourWeatherMainResponse!!.pressure,
         theeHourWeatherResponse.threeHourWeatherMainResponse!!.seaLevel,

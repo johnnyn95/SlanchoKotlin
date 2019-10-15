@@ -9,6 +9,7 @@ import com.example.slancho.api.models.openWeatherMap.OpenWeatherMapThreeHourFore
 import com.example.slancho.api.models.rapidApiOpenWeatherMap.RapidApiOpenWeatherMapDailyForecastResponse
 import com.example.slancho.api.models.rapidApiOpenWeatherMap.RapidApiOpenWeatherMapTheeHourForecastResponse
 import java.util.*
+import kotlin.collections.ArrayList
 
 @Entity(tableName = "forecast")
 data class Forecast(
@@ -38,6 +39,9 @@ data class Forecast(
     @Ignore
     var city: City? = null
 
+    @Ignore
+    var forecastInfo: ArrayList<ForecastInfo>? = null
+
     /**
      * Used for the Three hour forecast by the OpenWeather Api
      */
@@ -57,6 +61,11 @@ data class Forecast(
         forecastType.value
     ) {
         this.city = City(openWeatherMapThreeHourForecastResponse.city!!, this.cityId)
+        val forecastInfo = arrayListOf<ForecastInfo>()
+        openWeatherMapThreeHourForecastResponse.threeHourWeatherList!!.stream().forEach {
+            forecastInfo.add(ForecastInfo(it, this.id))
+        }
+        this.forecastInfo = forecastInfo
     }
 
     /**
@@ -78,6 +87,11 @@ data class Forecast(
         forecastType.value
     ) {
         this.city = City(rapidApiThreeHourForecastResponse.city!!, this.cityId)
+        val forecastInfo = arrayListOf<ForecastInfo>()
+        rapidApiThreeHourForecastResponse.threeHourWeatherList!!.stream().forEach {
+            forecastInfo.add(ForecastInfo(it, this.id))
+        }
+        this.forecastInfo = forecastInfo
     }
 
     /**
@@ -99,5 +113,10 @@ data class Forecast(
         forecastType.value
     ) {
         this.city = City(rapidApiOpenWeatherMapDailyForecastResponse.city!!, this.cityId)
+        val forecastInfo = arrayListOf<ForecastInfo>()
+        rapidApiOpenWeatherMapDailyForecastResponse.dailyWeatherList!!.stream().forEach {
+            forecastInfo.add(ForecastInfo(it, this.id))
+        }
+        this.forecastInfo = forecastInfo
     }
 }

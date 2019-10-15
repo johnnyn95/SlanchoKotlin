@@ -7,17 +7,17 @@ class ThreeHourWeatherResponse(
     @SerializedName("dt")
     @Expose var dateTime: Long?,
     @SerializedName("main")
-    @Expose var threeHourWeatherMain: ThreeHourWeatherMainResponse?,
+    @Expose var threeHourWeatherMainResponse: ThreeHourWeatherMainResponse?,
     @SerializedName("weather")
     @Expose var weatherInfo: List<WeatherInfoResponse>?,
     @SerializedName("clouds")
-    @Expose var clouds: CloudsResponse?,
+    @Expose var cloudsResponse: CloudsResponse?,
     @SerializedName("wind")
-    @Expose var wind: WindResponse?,
+    @Expose var windResponse: WindResponse?,
     @SerializedName("rain")
-    @Expose var rain: RainResponse?,
+    @Expose var rainResponse: RainResponse?,
     @SerializedName("dt_txt")
-    @Expose var dateTimeText: String?
+    @Expose var dateTimeTxt: String?
 )
 
 

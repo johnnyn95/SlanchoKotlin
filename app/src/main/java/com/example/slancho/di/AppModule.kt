@@ -28,6 +28,7 @@ import com.example.slancho.db.dao.CityDao
 import com.example.slancho.db.dao.ForecastDao
 import com.example.slancho.db.dao.LastKnownLocationDao
 import com.example.slancho.db.dao.UserDao
+import com.example.slancho.db.dao.ForecastInfoDao
 import com.example.slancho.utils.LocationManager
 import com.example.slancho.utils.PermissionsManager
 import com.example.slancho.utils.SharedPreferencesManager
@@ -143,6 +144,10 @@ class AppModule {
     @Singleton
     @Provides
     fun providesCityDao(db: SlanchoDb): CityDao = db.cityDao()
+
+    @Singleton
+    @Provides
+    fun providesForecastInfoDao(db: SlanchoDb): ForecastInfoDao = db.forecastInfoDao()
 
     @Singleton
     @Provides

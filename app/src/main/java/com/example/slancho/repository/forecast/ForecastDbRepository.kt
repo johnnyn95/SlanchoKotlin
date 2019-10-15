@@ -2,6 +2,7 @@ package com.example.slancho.repository.forecast
 
 import com.example.slancho.db.dao.CityDao
 import com.example.slancho.db.dao.ForecastDao
+import com.example.slancho.db.dao.ForecastInfoDao
 import com.example.slancho.db.model.Forecast
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.runBlocking
@@ -9,7 +10,8 @@ import javax.inject.Inject
 
 class ForecastDbRepository @Inject constructor(
     var forecastDao: ForecastDao,
-    var cityDao: CityDao
+    var cityDao: CityDao,
+    var forecastInfoDao: ForecastInfoDao
 ) :
     ForecastRepository {
 
@@ -21,6 +23,7 @@ class ForecastDbRepository @Inject constructor(
         runBlocking(IO) {
             forecastDao.insert(forecast)
             cityDao.insert(forecast.city!!)
+            forecastInfoDao.insertForecastDataList(forecast.forecastInfo!!.toList())
         }
     }
 
@@ -28,6 +31,11 @@ class ForecastDbRepository @Inject constructor(
         return runBlocking(IO) {
             val forecast: Forecast = forecastDao.getLatestForecastByCityName(cityName)
             forecast.city = cityDao.getCityByCityName(forecast.cityName)
+            forecast.forecastInfo!!.addAll(
+                forecastInfoDao.getLatestForecastDataListByForecastId(
+                    forecast.id
+                )
+            )
             forecast
         }
     }
@@ -35,8 +43,13 @@ class ForecastDbRepository @Inject constructor(
     override suspend fun getLatestForecastByLatLong(lat: Double, long: Double): Forecast {
         return runBlocking(IO) {
             val city = cityDao.getCityByLatLong(lat, long)
-            val forecast: Forecast = forecastDao.getLatestForecastByCityId(city.id!!)
+            val forecast: Forecast = forecastDao.getLatestForecastByCityId(city.id)
             forecast.city = city
+            forecast.forecastInfo!!.addAll(
+                forecastInfoDao.getLatestForecastDataListByForecastId(
+                    forecast.id
+                )
+            )
             forecast
         }
     }

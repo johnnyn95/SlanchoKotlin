@@ -19,14 +19,8 @@ package com.example.slancho.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.slancho.db.dao.CityDao
-import com.example.slancho.db.dao.ForecastDao
-import com.example.slancho.db.dao.LastKnownLocationDao
-import com.example.slancho.db.dao.UserDao
-import com.example.slancho.db.model.City
-import com.example.slancho.db.model.Forecast
-import com.example.slancho.db.model.LastKnownLocation
-import com.example.slancho.db.model.User
+import com.example.slancho.db.dao.*
+import com.example.slancho.db.model.*
 
 /**
  * Main database description.
@@ -36,9 +30,10 @@ import com.example.slancho.db.model.User
         User::class,
         LastKnownLocation::class,
         Forecast::class,
-        City::class
+        City::class,
+        ForecastInfo::class
     ],
-    version = 8,
+    version = 9,
     exportSchema = false
 )
 abstract class SlanchoDb : RoomDatabase() {
@@ -46,5 +41,6 @@ abstract class SlanchoDb : RoomDatabase() {
     abstract fun lastKnownLocationDao(): LastKnownLocationDao
     abstract fun forecastDao(): ForecastDao
     abstract fun cityDao(): CityDao
+    abstract fun forecastInfoDao(): ForecastInfoDao
 }
 
