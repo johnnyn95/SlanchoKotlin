@@ -24,11 +24,7 @@ import com.example.slancho.api.interceptors.OpenWeatherMapInterceptor
 import com.example.slancho.api.interceptors.RapidApiOpenWeatherMapInterceptor
 import com.example.slancho.common.FlavorConstants
 import com.example.slancho.db.SlanchoDb
-import com.example.slancho.db.dao.CityDao
-import com.example.slancho.db.dao.ForecastDao
-import com.example.slancho.db.dao.LastKnownLocationDao
-import com.example.slancho.db.dao.UserDao
-import com.example.slancho.db.dao.ForecastInfoDao
+import com.example.slancho.db.dao.*
 import com.example.slancho.utils.LocationManager
 import com.example.slancho.utils.PermissionsManager
 import com.example.slancho.utils.SharedPreferencesManager

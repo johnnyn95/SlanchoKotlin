@@ -1,18 +1,18 @@
 package com.example.slancho
 
-import android.app.Activity
 import android.app.Application
 import com.example.slancho.di.AppInjector
 import com.google.firebase.FirebaseApp
+import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
+import dagger.android.HasAndroidInjector
 import net.danlew.android.joda.JodaTimeAndroid
 import timber.log.Timber
 import javax.inject.Inject
 
-class SlanchoApp : Application(), HasActivityInjector {
+class SlanchoApp : Application(), HasAndroidInjector {
     @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
     override fun onCreate() {
         super.onCreate()
@@ -28,6 +28,7 @@ class SlanchoApp : Application(), HasActivityInjector {
         )
     }
 
-    override fun activityInjector(): DispatchingAndroidInjector<Activity> =
+    override fun androidInjector(): AndroidInjector<Any> =
         dispatchingAndroidInjector
+
 }

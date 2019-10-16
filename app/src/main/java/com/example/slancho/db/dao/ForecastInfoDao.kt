@@ -1,9 +1,6 @@
 package com.example.slancho.db.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.slancho.db.model.ForecastInfo
 
 @Dao
@@ -12,8 +9,12 @@ interface ForecastInfoDao {
     fun insert(forecastInfo: ForecastInfo)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertForecastDataList(forecastInfoList: List<ForecastInfo>)
+    fun insertForecastInfoList(vararg forecastInfoList: ForecastInfo)
 
-    @Query("SELECT * FROM forecastInfo WHERE forecastId =:forecastId")
-    fun getLatestForecastDataListByForecastId(forecastId: String): List<ForecastInfo>
+//    @Transaction
+//    fun insertForecastInfoList(forecastInfoList: List<ForecastInfo>) =
+//        forecastInfoList.forEach { insert(it) }
+//
+//    @Query("SELECT * FROM forecastInfo WHERE forecastId =:forecastId")
+//    fun getLatestForecastDataListByForecastId(forecastId: String): List<ForecastInfo>
 }

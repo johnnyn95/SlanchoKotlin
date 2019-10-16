@@ -23,7 +23,7 @@ class ForecastDbRepository @Inject constructor(
         runBlocking(IO) {
             forecastDao.insert(forecast)
             cityDao.insert(forecast.city!!)
-            forecastInfoDao.insertForecastDataList(forecast.forecastInfo!!.toList())
+            forecastInfoDao.insertForecastInfoList(*forecast.forecastInfo!!.toTypedArray())
         }
     }
 
@@ -31,11 +31,11 @@ class ForecastDbRepository @Inject constructor(
         return runBlocking(IO) {
             val forecast: Forecast = forecastDao.getLatestForecastByCityName(cityName)
             forecast.city = cityDao.getCityByCityName(forecast.cityName)
-            forecast.forecastInfo!!.addAll(
-                forecastInfoDao.getLatestForecastDataListByForecastId(
-                    forecast.id
-                )
-            )
+//            forecast.forecastInfo!!.addAll(
+//                forecastInfoDao.getLatestForecastDataListByForecastId(
+//                    forecast.id
+//                )
+//            )
             forecast
         }
     }
@@ -45,11 +45,11 @@ class ForecastDbRepository @Inject constructor(
             val city = cityDao.getCityByLatLong(lat, long)
             val forecast: Forecast = forecastDao.getLatestForecastByCityId(city.id)
             forecast.city = city
-            forecast.forecastInfo!!.addAll(
-                forecastInfoDao.getLatestForecastDataListByForecastId(
-                    forecast.id
-                )
-            )
+//            forecast.forecastInfo!!.addAll(
+//                forecastInfoDao.getLatestForecastDataListByForecastId(
+//                    forecast.id
+//                )
+//            )
             forecast
         }
     }
