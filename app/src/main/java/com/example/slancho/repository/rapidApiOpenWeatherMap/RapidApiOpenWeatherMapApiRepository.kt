@@ -30,7 +30,8 @@ class RapidApiOpenWeatherMapApiRepository @Inject constructor(
                 val response =
                     rapidApiOpenWeatherMapService.getThreeHourForecastWeatherData(
                         null, latitude, longitude,
-                        sharedPreferencesManager.numberOfPeriodsForThreeHourForecastValue
+                        sharedPreferencesManager.numberOfPeriodsForThreeHourForecastValue,
+                        sharedPreferencesManager.tempUnitValue
                     ).execute()
                 if (response.isSuccessful) {
                     val forecast = Forecast(response.body()!!, ForecastType.ThreeHour)
@@ -48,7 +49,8 @@ class RapidApiOpenWeatherMapApiRepository @Inject constructor(
                 val response =
                     rapidApiOpenWeatherMapService.getThreeHourForecastWeatherData(
                         location, null, null,
-                        sharedPreferencesManager.numberOfPeriodsForThreeHourForecastValue
+                        sharedPreferencesManager.numberOfPeriodsForThreeHourForecastValue,
+                        sharedPreferencesManager.tempUnitValue
                     ).execute()
                 if (response.isSuccessful) {
                     val forecast = Forecast(response.body()!!, ForecastType.ThreeHour)
@@ -66,7 +68,8 @@ class RapidApiOpenWeatherMapApiRepository @Inject constructor(
                 val response =
                     rapidApiOpenWeatherMapService.getDailyForecastWeatherData(
                         null, latitude, longitude,
-                        sharedPreferencesManager.forecastDataForDaysValue
+                        sharedPreferencesManager.forecastDataForDaysValue,
+                        sharedPreferencesManager.tempUnitValue
                     ).execute()
                 if (response.isSuccessful) {
                     val forecast = Forecast(response.body()!!, ForecastType.Daily)
@@ -84,7 +87,8 @@ class RapidApiOpenWeatherMapApiRepository @Inject constructor(
                 val response =
                     rapidApiOpenWeatherMapService.getDailyForecastWeatherData(
                         location, null, null,
-                        sharedPreferencesManager.forecastDataForDaysValue
+                        sharedPreferencesManager.forecastDataForDaysValue,
+                        sharedPreferencesManager.tempUnitValue
                     ).execute()
                 if (response.isSuccessful) {
                     val forecast = Forecast(response.body()!!, ForecastType.Daily)

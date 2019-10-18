@@ -53,7 +53,8 @@ data class Forecast(
         System.currentTimeMillis(),
         openWeatherMapThreeHourForecastResponse.cod!!,
         openWeatherMapThreeHourForecastResponse.message!!,
-        if (openWeatherMapThreeHourForecastResponse.numberOfPeriods != null) openWeatherMapThreeHourForecastResponse.numberOfPeriods!! else 0,
+        if (openWeatherMapThreeHourForecastResponse.numberOfPeriods != null)
+            openWeatherMapThreeHourForecastResponse.numberOfPeriods!! else 0,
         openWeatherMapThreeHourForecastResponse.city!!.name!!,
         if (openWeatherMapThreeHourForecastResponse.city!!.cityId != null)
             openWeatherMapThreeHourForecastResponse.city!!.cityId!!
@@ -79,7 +80,8 @@ data class Forecast(
         System.currentTimeMillis(),
         rapidApiThreeHourForecastResponse.cod!!,
         rapidApiThreeHourForecastResponse.message!!,
-        if (rapidApiThreeHourForecastResponse.numberOfPeriods != null) rapidApiThreeHourForecastResponse.numberOfPeriods!! else 0,
+        if (rapidApiThreeHourForecastResponse.numberOfPeriods != null)
+            rapidApiThreeHourForecastResponse.numberOfPeriods!! else 0,
         rapidApiThreeHourForecastResponse.city!!.name!!,
         if (rapidApiThreeHourForecastResponse.city!!.cityId != null)
             rapidApiThreeHourForecastResponse.city!!.cityId!!
@@ -105,7 +107,8 @@ data class Forecast(
         System.currentTimeMillis(),
         rapidApiOpenWeatherMapDailyForecastResponse.cod!!,
         rapidApiOpenWeatherMapDailyForecastResponse.message!!,
-        if (rapidApiOpenWeatherMapDailyForecastResponse.numberOfPeriods != null) rapidApiOpenWeatherMapDailyForecastResponse.numberOfPeriods!! else 0,
+        if (rapidApiOpenWeatherMapDailyForecastResponse.numberOfPeriods != null)
+            rapidApiOpenWeatherMapDailyForecastResponse.numberOfPeriods!! else 0,
         rapidApiOpenWeatherMapDailyForecastResponse.city!!.name!!,
         if (rapidApiOpenWeatherMapDailyForecastResponse.city!!.cityId != null)
             rapidApiOpenWeatherMapDailyForecastResponse.city!!.cityId!!

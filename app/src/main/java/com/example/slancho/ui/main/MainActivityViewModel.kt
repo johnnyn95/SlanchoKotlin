@@ -54,26 +54,12 @@ class MainActivityViewModel @Inject constructor(
     }
 
     private suspend fun fetchForecastData(user: User) {
-//        openWeatherMapApiRepository.getThreeHourForecastByLocation(
-//            user.lastKnownLocation!!.latitude,
-//            user.lastKnownLocation!!.longitude
-//        )
-//
-//        rapidApiOpenWeatherMapRepository.getRapidApiThreeHourForecastByLocation(
-//            user.lastKnownLocation!!.latitude,
-//            user.lastKnownLocation!!.longitude
-//        )
-//
-//        openWeatherMapApiRepository.getThreeHourForecastByCityAndCountryCode(user.lastKnownLocation!!.getFormattedCityAndCountryCode())
-//
-//        rapidApiOpenWeatherMapRepository.getRapidApiThreeHourForecastByCityAndCountryCode(user.lastKnownLocation!!.getFormattedCityAndCountryCode())
-
-        rapidApiOpenWeatherMapRepository.getRapidApiDailyForecastByCityAndCountryCode(user.lastKnownLocation!!.getFormattedCityAndCountryCode())
-
-        rapidApiOpenWeatherMapRepository.getRapidApiDailyForecastByLocation(
+        openWeatherMapApiRepository.getThreeHourForecastByLocation(
             user.lastKnownLocation!!.latitude,
             user.lastKnownLocation!!.longitude
         )
+
+        rapidApiOpenWeatherMapRepository.getRapidApiDailyForecastByCityAndCountryCode(user.lastKnownLocation!!.getFormattedCityAndCountryCode())
 
         val forecast =
             forecastDbRepository.getLatestForecastByCityName(user.lastKnownLocation!!.city)
