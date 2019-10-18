@@ -40,7 +40,7 @@ data class Forecast(
     var city: City? = null
 
     @Ignore
-    var forecastInfo: ArrayList<ForecastInfo>? = null
+    var forecastInfo: ArrayList<ForecastInfo> = ArrayList()
 
     /**
      * Used for the Three hour forecast by the OpenWeather Api
