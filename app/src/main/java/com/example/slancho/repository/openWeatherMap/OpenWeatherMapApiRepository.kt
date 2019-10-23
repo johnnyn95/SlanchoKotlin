@@ -1,6 +1,5 @@
 package com.example.slancho.repository.openWeatherMap
 
-import com.example.slancho.api.ForecastType
 import com.example.slancho.api.OpenWeatherMapService
 import com.example.slancho.db.model.Forecast
 import com.example.slancho.repository.forecast.ForecastDbRepository
@@ -30,11 +29,12 @@ class OpenWeatherMapApiRepository @Inject constructor(
                         sharedPreferencesManager.numberOfPeriodsForThreeHourForecastValue
                     ).execute()
                 if (response.isSuccessful) {
-                    val forecast = Forecast(response.body()!!, ForecastType.ThreeHour)
+                    val forecast =
+                        Forecast.createForecastFromThreeHourResponse(response.body()!!)
                     forecastDbRepository.insertForecast(forecast)
                 }
             } catch (e: IOException) {
-                Timber.e(TAG, "Couldn't fetch the forecast data! $e")
+                Timber.e("Couldn't fetch the forecast data! $e")
             }
         }
     }
@@ -48,11 +48,12 @@ class OpenWeatherMapApiRepository @Inject constructor(
                         sharedPreferencesManager.numberOfPeriodsForThreeHourForecastValue
                     ).execute()
                 if (response.isSuccessful) {
-                    val forecast = Forecast(response.body()!!, ForecastType.ThreeHour)
+                    val forecast =
+                        Forecast.createForecastFromThreeHourResponse(response.body()!!)
                     forecastDbRepository.insertForecast(forecast)
                 }
             } catch (e: IOException) {
-                Timber.e(TAG, "Couldn't fetch the forecast data! $e")
+                Timber.e("Couldn't fetch the forecast data! $e")
             }
         }
     }

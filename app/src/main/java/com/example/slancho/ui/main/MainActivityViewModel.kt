@@ -49,7 +49,7 @@ class MainActivityViewModel @Inject constructor(
         if (user != null) {
             currentUser = user
             fetchForecastData(currentUser)
-            Timber.d(TAG, "Fetched user${currentUser.authUID}")
+            Timber.d("Fetched user${currentUser.authUID}")
         }
     }
 

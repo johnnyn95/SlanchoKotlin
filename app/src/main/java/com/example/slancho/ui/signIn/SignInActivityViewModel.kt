@@ -41,7 +41,7 @@ class SignInActivityViewModel @Inject constructor(
             val googleSignInAccount = task.getResult(ApiException::class.java)
             signInWithGoogle(googleSignInAccount!!)
         } catch (e: ApiException) {
-            Timber.w(TAG, "Failed Google Sign in {${e.statusCode}}")
+            Timber.w("Failed Google Sign in {${e.statusCode}}")
         }
     }
 

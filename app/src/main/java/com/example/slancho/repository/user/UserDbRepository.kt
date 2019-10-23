@@ -55,7 +55,7 @@ class UserDbRepository @Inject constructor(
                 }
                 user
             } else {
-                Timber.w(TAG, "Couldn't fetch User")
+                Timber.w("Couldn't fetch User")
                 null
             }
         }
@@ -82,7 +82,7 @@ class UserDbRepository @Inject constructor(
                 }
                 user
             } else {
-                Timber.w(TAG, "Couldn't fetch User")
+                Timber.w("Couldn't fetch User")
                 null
             }
         }

@@ -31,95 +31,129 @@ data class Forecast(
     @ColumnInfo(name = "forecastType")
     val forecastType: String
 ) {
-    companion object {
-        // Existing City Id +1 in order not to "randomly" create existing city
-        const val RANDOM_SEED: Long = 7270111
-    }
-
     @Ignore
     var city: City? = null
 
     @Ignore
     var forecastInfo: ArrayList<ForecastInfo> = ArrayList()
 
-    /**
-     * Used for the Three hour forecast by the OpenWeather Api
-     */
-    constructor(
-        openWeatherMapThreeHourForecastResponse: OpenWeatherMapThreeHourForecastResponse,
-        forecastType: ForecastType
-    ) : this(
-        UUID.randomUUID().toString(),
-        System.currentTimeMillis(),
-        openWeatherMapThreeHourForecastResponse.cod!!,
-        openWeatherMapThreeHourForecastResponse.message!!,
-        if (openWeatherMapThreeHourForecastResponse.numberOfPeriods != null)
-            openWeatherMapThreeHourForecastResponse.numberOfPeriods!! else 0,
-        openWeatherMapThreeHourForecastResponse.city!!.name!!,
-        if (openWeatherMapThreeHourForecastResponse.city!!.cityId != null)
-            openWeatherMapThreeHourForecastResponse.city!!.cityId!!
-        else Random(RANDOM_SEED).nextLong(),
-        forecastType.value
-    ) {
-        this.city = City(openWeatherMapThreeHourForecastResponse.city!!, this.cityId)
-        val forecastInfo = arrayListOf<ForecastInfo>()
-        openWeatherMapThreeHourForecastResponse.threeHourWeatherList!!.stream().forEach {
-            forecastInfo.add(ForecastInfo(it, this.id))
-        }
-        this.forecastInfo = forecastInfo
-    }
+    companion object {
+        /**
+         * Existing City Id +1 in order not to "randomly" create existing city
+         */
+        const val RANDOM_SEED: Long = 7270111
 
-    /**
-     * Used for the Three hour forecast by the RapidApiOpenWeather Api
-     */
-    constructor(
-        rapidApiThreeHourForecastResponse: RapidApiOpenWeatherMapTheeHourForecastResponse,
-        forecastType: ForecastType
-    ) : this(
-        UUID.randomUUID().toString(),
-        System.currentTimeMillis(),
-        rapidApiThreeHourForecastResponse.cod!!,
-        rapidApiThreeHourForecastResponse.message!!,
-        if (rapidApiThreeHourForecastResponse.numberOfPeriods != null)
-            rapidApiThreeHourForecastResponse.numberOfPeriods!! else 0,
-        rapidApiThreeHourForecastResponse.city!!.name!!,
-        if (rapidApiThreeHourForecastResponse.city!!.cityId != null)
-            rapidApiThreeHourForecastResponse.city!!.cityId!!
-        else Random(RANDOM_SEED).nextLong(),
-        forecastType.value
-    ) {
-        this.city = City(rapidApiThreeHourForecastResponse.city!!, this.cityId)
-        val forecastInfo = arrayListOf<ForecastInfo>()
-        rapidApiThreeHourForecastResponse.threeHourWeatherList!!.stream().forEach {
-            forecastInfo.add(ForecastInfo(it, this.id))
+        /**
+         * Used for the Daily forecast by the RapidApiOpenWeatherApi
+         */
+        fun createForecastFromRapidApiDailyResponse(
+            rapidApiOpenWeatherMapDailyForecastResponse:
+            RapidApiOpenWeatherMapDailyForecastResponse
+        ): Forecast {
+            val forecast =
+                Forecast(
+                    UUID.randomUUID().toString(),
+                    System.currentTimeMillis(),
+                    rapidApiOpenWeatherMapDailyForecastResponse.cod!!,
+                    rapidApiOpenWeatherMapDailyForecastResponse.message!!,
+                    if (rapidApiOpenWeatherMapDailyForecastResponse.numberOfPeriods != null)
+                        rapidApiOpenWeatherMapDailyForecastResponse.numberOfPeriods!! else 0,
+                    rapidApiOpenWeatherMapDailyForecastResponse.city!!.name!!,
+                    if (rapidApiOpenWeatherMapDailyForecastResponse.city!!.cityId != null)
+                        rapidApiOpenWeatherMapDailyForecastResponse.city!!.cityId!!
+                    else Random(RANDOM_SEED).nextLong(), ForecastType.Daily.value
+                )
+            forecast.city =
+                City.createCityFromRapidApiCityResponse(
+                    rapidApiOpenWeatherMapDailyForecastResponse.city!!,
+                    forecast.cityId
+                )
+            val forecastInfo = arrayListOf<ForecastInfo>()
+            rapidApiOpenWeatherMapDailyForecastResponse.dailyWeatherList!!.stream().forEach {
+                forecastInfo.add(
+                    ForecastInfo.createForecastInfoFromRapidApiDailyResponse(
+                        it,
+                        forecast.id
+                    )
+                )
+            }
+            forecast.forecastInfo = forecastInfo
+            return forecast
         }
-        this.forecastInfo = forecastInfo
-    }
 
-    /**
-     * Used for the Daily forecast by the RapidApiOpenWeather Api
-     */
-    constructor(
-        rapidApiOpenWeatherMapDailyForecastResponse: RapidApiOpenWeatherMapDailyForecastResponse,
-        forecastType: ForecastType
-    ) : this(
-        UUID.randomUUID().toString(),
-        System.currentTimeMillis(),
-        rapidApiOpenWeatherMapDailyForecastResponse.cod!!,
-        rapidApiOpenWeatherMapDailyForecastResponse.message!!,
-        if (rapidApiOpenWeatherMapDailyForecastResponse.numberOfPeriods != null)
-            rapidApiOpenWeatherMapDailyForecastResponse.numberOfPeriods!! else 0,
-        rapidApiOpenWeatherMapDailyForecastResponse.city!!.name!!,
-        if (rapidApiOpenWeatherMapDailyForecastResponse.city!!.cityId != null)
-            rapidApiOpenWeatherMapDailyForecastResponse.city!!.cityId!!
-        else Random(RANDOM_SEED).nextLong(),
-        forecastType.value
-    ) {
-        this.city = City(rapidApiOpenWeatherMapDailyForecastResponse.city!!, this.cityId)
-        val forecastInfo = arrayListOf<ForecastInfo>()
-        rapidApiOpenWeatherMapDailyForecastResponse.dailyWeatherList!!.stream().forEach {
-            forecastInfo.add(ForecastInfo(it, this.id))
+        /**
+         * Used for the Three hour forecast by the RapidApiOpenWeather Api
+         */
+        fun createForecastFromRapidApiThreeHourResponse(
+            rapidApiThreeHourForecastResponse:
+            RapidApiOpenWeatherMapTheeHourForecastResponse
+        ): Forecast {
+
+            val forecast = Forecast(
+                UUID.randomUUID().toString(),
+                System.currentTimeMillis(),
+                rapidApiThreeHourForecastResponse.cod!!,
+                rapidApiThreeHourForecastResponse.message!!,
+                if (rapidApiThreeHourForecastResponse.numberOfPeriods != null)
+                    rapidApiThreeHourForecastResponse.numberOfPeriods!! else 0,
+                rapidApiThreeHourForecastResponse.city!!.name!!,
+                if (rapidApiThreeHourForecastResponse.city!!.cityId != null)
+                    rapidApiThreeHourForecastResponse.city!!.cityId!!
+                else Random(RANDOM_SEED).nextLong(),
+                ForecastType.ThreeHour.value
+            )
+            forecast.city = City.createCityFromRapidApiCityResponse(
+                rapidApiThreeHourForecastResponse.city!!,
+                forecast.cityId
+            )
+            val forecastInfo = arrayListOf<ForecastInfo>()
+            rapidApiThreeHourForecastResponse.threeHourWeatherList!!.stream().forEach {
+                forecastInfo.add(
+                    ForecastInfo.createForecastInfoFromRapidApiThreeHourResponse(
+                        it,
+                        forecast.id
+                    )
+                )
+            }
+            forecast.forecastInfo = forecastInfo
+            return forecast
         }
-        this.forecastInfo = forecastInfo
+
+        /**
+         * Used for the Three hour forecast by the RapidApiOpenWeather Api
+         */
+        fun createForecastFromThreeHourResponse(
+            openWeatherMapThreeHourForecastResponse:
+            OpenWeatherMapThreeHourForecastResponse
+        ): Forecast {
+            val forecast = Forecast(
+                UUID.randomUUID().toString(),
+                System.currentTimeMillis(),
+                openWeatherMapThreeHourForecastResponse.cod!!,
+                openWeatherMapThreeHourForecastResponse.message!!,
+                if (openWeatherMapThreeHourForecastResponse.numberOfPeriods != null)
+                    openWeatherMapThreeHourForecastResponse.numberOfPeriods!! else 0,
+                openWeatherMapThreeHourForecastResponse.city!!.name!!,
+                if (openWeatherMapThreeHourForecastResponse.city!!.cityId != null)
+                    openWeatherMapThreeHourForecastResponse.city!!.cityId!!
+                else Random(RANDOM_SEED).nextLong(),
+                ForecastType.ThreeHour.value
+            )
+            forecast.city = City.createCityFromCityResponse(
+                openWeatherMapThreeHourForecastResponse.city!!,
+                forecast.cityId
+            )
+            val forecastInfo = arrayListOf<ForecastInfo>()
+            openWeatherMapThreeHourForecastResponse.threeHourWeatherList!!.stream().forEach {
+                forecastInfo.add(
+                    ForecastInfo.createForecastInfoFromThreeHourResponse(
+                        it,
+                        forecast.id
+                    )
+                )
+            }
+            forecast.forecastInfo = forecastInfo
+            return forecast
+        }
     }
 }

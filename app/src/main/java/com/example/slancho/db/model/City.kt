@@ -26,39 +26,47 @@ data class City(
     @ColumnInfo(name = "sunset")
     val sunset: Long?
 ) {
-    /**
-     * Used by OpenWeatherMap Api
-     */
-    constructor(
-        cityResponse: com.example.slancho.api.models.openWeatherMap.CityResponse,
-        cityId: Long
-    ) : this(
-        cityId,
-        cityResponse.name!!,
-        cityResponse.coordinatesResponse!!.lat,
-        cityResponse.coordinatesResponse!!.lon,
-        cityResponse.countryCode,
-        if (cityResponse.population != null) cityResponse.population else 0,
-        cityResponse.timezone,
-        cityResponse.sunrise,
-        cityResponse.sunset
-    )
+    companion object {
+        /**
+         * Used for the creation of City object from CityResponse
+         */
+        fun createCityFromCityResponse(
+            cityResponse:
+            com.example.slancho.api.models.openWeatherMap.CityResponse,
+            cityId: Long
+        ): City {
+            return City(
+                cityId,
+                cityResponse.name!!,
+                cityResponse.coordinatesResponse!!.lat,
+                cityResponse.coordinatesResponse!!.lon,
+                cityResponse.countryCode,
+                if (cityResponse.population != null) cityResponse.population else 0,
+                cityResponse.timezone,
+                cityResponse.sunrise,
+                cityResponse.sunset
+            )
+        }
 
-    /**
-     * Used by RapidApiOpenWeatherMap Api
-     */
-    constructor(
-        cityResponse: com.example.slancho.api.models.rapidApiOpenWeatherMap.CityResponse,
-        cityId: Long
-    ) : this(
-        cityId,
-        cityResponse.name!!,
-        cityResponse.coordinatesResponse!!.lat,
-        cityResponse.coordinatesResponse!!.lon,
-        cityResponse.countryCode,
-        if (cityResponse.population != null) cityResponse.population else 0,
-        cityResponse.timezone,
-        cityResponse.sunrise,
-        cityResponse.sunset
-    )
+        /**
+         * Used for the creation of City object from RapidApi CityResponse
+         */
+        fun createCityFromRapidApiCityResponse(
+            cityResponse:
+            com.example.slancho.api.models.rapidApiOpenWeatherMap.CityResponse,
+            cityId: Long
+        ): City {
+            return City(
+                cityId,
+                cityResponse.name!!,
+                cityResponse.coordinatesResponse!!.lat,
+                cityResponse.coordinatesResponse!!.lon,
+                cityResponse.countryCode,
+                if (cityResponse.population != null) cityResponse.population else 0,
+                cityResponse.timezone,
+                cityResponse.sunrise,
+                cityResponse.sunset
+            )
+        }
+    }
 }
