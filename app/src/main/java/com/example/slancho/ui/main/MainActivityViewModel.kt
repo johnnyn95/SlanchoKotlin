@@ -10,6 +10,7 @@ import com.example.slancho.ui.BaseAuthViewModel
 import com.example.slancho.utils.LocationManager
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import javax.inject.Inject
@@ -28,14 +29,7 @@ class MainActivityViewModel @Inject constructor(
 
     override fun onScreenReady(context: Context, userId: String) {
         registerAuthListeners()
-        runBlocking(IO) {
-            try {
-                fetchCurrentUser(userId)
-            } catch (e: NullPointerException) {
-                Timber.e(TAG, "Failed to fetch user $e")
-                navigateToSignIn()
-            }
-        }
+        fetchCurrentUser(userId)
     }
 
     private fun registerAuthListeners() {
@@ -44,12 +38,19 @@ class MainActivityViewModel @Inject constructor(
         }
     }
 
-    private suspend fun fetchCurrentUser(userId: String) {
-        val user = userDbRepository.getUserById(userId)
-        if (user != null) {
-            currentUser = user
-            fetchForecastData(currentUser)
-            Timber.d("Fetched user${currentUser.authUID}")
+    private fun fetchCurrentUser(userId: String) = runBlocking(IO) {
+        launch {
+            try {
+                val user = userDbRepository.getUserById(userId)
+                if (user != null) {
+                    currentUser = user
+                    fetchForecastData(currentUser)
+                    Timber.d("Fetched user ${currentUser.authUID}")
+                }
+            } catch (e: NullPointerException) {
+                Timber.e("Failed to fetch user $e")
+                navigateToSignIn()
+            }
         }
     }
 

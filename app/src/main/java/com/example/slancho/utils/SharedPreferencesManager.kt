@@ -16,6 +16,8 @@ class SharedPreferencesManager @Inject constructor(var application: Application)
         const val threeHourForecastMaxDays = 5
         const val numberOfPeriodsForThreeHourForecastDefaultValue =
             periodsForADay * threeHourForecastMaxDays
+        const val tempUnitDefaultValue = "metric"
+        const val langDefaultValue = "en"
     }
 
     private lateinit var locationKey: String
@@ -55,8 +57,8 @@ class SharedPreferencesManager @Inject constructor(var application: Application)
 
     private fun fetchSharedPreferences() {
         locationValue = sharedPreferences.getString(locationKey, "")!!
-        tempUnitValue = sharedPreferences.getString(tempUnitKey, "")!!
-        langValue = sharedPreferences.getString(langKey, "")!!
+        tempUnitValue = sharedPreferences.getString(tempUnitKey, tempUnitDefaultValue)!!
+        langValue = sharedPreferences.getString(langKey, langDefaultValue)!!
         fetchDataValue = sharedPreferences.getBoolean(fetchDataKey, fetchDataDefaultValue)
         forecastDataForDaysValue =
             sharedPreferences.getInt(forecastDataForDaysKey, forecastDataForDaysDefaultValue)
