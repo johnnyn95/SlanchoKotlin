@@ -3,6 +3,7 @@ package com.example.slancho.ui
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.work.WorkManager
 import com.example.slancho.db.model.User
 import com.example.slancho.repository.user.UserDbRepository
 import com.example.slancho.utils.LocationManager
@@ -13,7 +14,8 @@ import com.google.firebase.auth.FirebaseAuth
 abstract class BaseAuthViewModel constructor(
     var locationManager: LocationManager,
     var firebaseAuth: FirebaseAuth,
-    var userDbRepository: UserDbRepository
+    var userDbRepository: UserDbRepository,
+    var workManager: WorkManager
 ) : ViewModel(), FirebaseAuth.AuthStateListener {
 
     abstract val TAG: String

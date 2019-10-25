@@ -1,6 +1,7 @@
 package com.example.slancho.ui.signUp
 
 import android.content.Context
+import androidx.work.WorkManager
 import com.example.slancho.repository.user.UserDbRepository
 import com.example.slancho.ui.BaseAuthViewModel
 import com.example.slancho.utils.LocationManager
@@ -10,9 +11,10 @@ import javax.inject.Inject
 
 class SignUpActivityViewModel @Inject constructor(
     locationManager: LocationManager,
-    firebaseAuth: FirebaseAuth
-    , userDbRepository: UserDbRepository
-) : BaseAuthViewModel(locationManager, firebaseAuth, userDbRepository) {
+    firebaseAuth: FirebaseAuth,
+    userDbRepository: UserDbRepository,
+    workManager: WorkManager
+) : BaseAuthViewModel(locationManager, firebaseAuth, userDbRepository, workManager) {
 
     override val TAG: String get() = SignUpActivityViewModel::class.java.simpleName
 

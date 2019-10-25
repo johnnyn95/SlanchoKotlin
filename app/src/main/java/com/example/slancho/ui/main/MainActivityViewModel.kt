@@ -1,6 +1,7 @@
 package com.example.slancho.ui.main
 
 import android.content.Context
+import androidx.work.WorkManager
 import com.example.slancho.db.model.User
 import com.example.slancho.repository.forecast.ForecastDbRepository
 import com.example.slancho.repository.openWeatherMap.OpenWeatherMapApiRepository
@@ -19,10 +20,11 @@ class MainActivityViewModel @Inject constructor(
     locationManager: LocationManager,
     firebaseAuth: FirebaseAuth,
     userDbRepository: UserDbRepository,
+    workManager: WorkManager,
     private var openWeatherMapApiRepository: OpenWeatherMapApiRepository,
     private var rapidApiOpenWeatherMapRepository: RapidApiOpenWeatherMapApiRepository,
     private var forecastDbRepository: ForecastDbRepository
-) : BaseAuthViewModel(locationManager, firebaseAuth, userDbRepository),
+) : BaseAuthViewModel(locationManager, firebaseAuth, userDbRepository, workManager),
     FirebaseAuth.AuthStateListener {
 
     override val TAG: String get() = MainActivityViewModel::class.java.simpleName

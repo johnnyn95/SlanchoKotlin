@@ -43,4 +43,5 @@
     <string name="forecast_data_for_days_key">forecast_data_for_days</string>
     <string name="forecast_data_for_days_default_value">7</string>
 
+    <string name="connection_established">Connection Established!</string>
 </resources>

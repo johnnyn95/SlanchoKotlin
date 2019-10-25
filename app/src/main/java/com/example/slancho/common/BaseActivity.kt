@@ -8,12 +8,15 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.work.ExistingWorkPolicy
+import androidx.work.WorkManager
 import com.example.slancho.BuildConfig
 import com.example.slancho.R
 import com.example.slancho.databinding.ActivityBaseBinding
-import com.example.slancho.di.Injectable
 import com.example.slancho.utils.PermissionsManager
 import com.example.slancho.utils.VibrationManager
+import com.example.slancho.utils.network.NetworkManager
+import com.example.slancho.workers.ConnectionStatusListenerWorker
 import com.google.firebase.auth.FirebaseAuth
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
@@ -21,12 +24,19 @@ import javax.inject.Inject
 /**
  * This Activity is to be inherited by any activity to initiate the injection.
  */
-abstract class BaseActivity<B : ViewDataBinding> : DaggerAppCompatActivity(), Injectable {
-
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-    @Inject lateinit var firebaseAuth: FirebaseAuth
-    @Inject lateinit var vibrationManager: VibrationManager
-    @Inject lateinit var permissionsManager: PermissionsManager
+abstract class BaseActivity<B : ViewDataBinding> : DaggerAppCompatActivity() {
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var firebaseAuth: FirebaseAuth
+    @Inject
+    lateinit var vibrationManager: VibrationManager
+    @Inject
+    lateinit var permissionsManager: PermissionsManager
+    @Inject
+    lateinit var networkManager: NetworkManager
+    @Inject
+    lateinit var workManager: WorkManager
 
     private lateinit var inheritanceBinding: B
     private lateinit var baseBinding: ActivityBaseBinding
@@ -48,6 +58,13 @@ abstract class BaseActivity<B : ViewDataBinding> : DaggerAppCompatActivity(), In
         initFields()
         initViews()
         initListeners()
+        if (!networkManager.hasConnection()) {
+            workManager.beginUniqueWork(
+                NetworkManager.CONNECTION_LISTENER_WORKER_ID,
+                ExistingWorkPolicy.KEEP,
+                ConnectionStatusListenerWorker.createConnectionStatusListenerWorker()
+            ).enqueue()
+        }
     }
 
     fun getBinding() = inheritanceBinding

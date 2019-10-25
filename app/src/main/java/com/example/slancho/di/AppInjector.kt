@@ -31,9 +31,11 @@ import dagger.android.support.AndroidSupportInjection
  * Helper class to automatically inject fragments if they implement [Injectable].
  */
 object AppInjector {
-    fun init(slanchoApp: SlanchoApp) {
-        DaggerAppComponent.builder().application(slanchoApp)
-            .build().inject(slanchoApp)
+    fun init(slanchoApp: SlanchoApp): AppComponent {
+        val daggerAppComponent =
+            DaggerAppComponent.builder().application(slanchoApp)
+                .build()
+        daggerAppComponent.inject(slanchoApp)
         slanchoApp
             .registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
                 override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
@@ -64,6 +66,7 @@ object AppInjector {
 
                 }
             })
+        return daggerAppComponent
     }
 
     private fun handleActivity(activity: Activity) {

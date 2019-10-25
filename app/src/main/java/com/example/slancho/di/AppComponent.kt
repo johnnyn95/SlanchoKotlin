@@ -18,6 +18,7 @@ package com.example.slancho.di
 
 import android.app.Application
 import com.example.slancho.SlanchoApp
+import com.example.slancho.workers.ConnectionStatusListenerWorker
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -40,4 +41,6 @@ interface AppComponent {
     }
 
     fun inject(app: SlanchoApp)
+
+    fun inject(connectionStatusListenerWorker: ConnectionStatusListenerWorker)
 }

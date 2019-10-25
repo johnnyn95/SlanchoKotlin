@@ -18,6 +18,7 @@ package com.example.slancho.di
 
 import android.app.Application
 import androidx.room.Room
+import androidx.work.WorkManager
 import com.example.slancho.api.OpenWeatherMapService
 import com.example.slancho.api.RapidApiOpenWeatherMapService
 import com.example.slancho.api.interceptors.OpenWeatherMapInterceptor
@@ -124,6 +125,10 @@ class AppModule {
             .fallbackToDestructiveMigration()
             .build()
     }
+
+    @Singleton
+    @Provides
+    fun provideWorkManager() = WorkManager.getInstance()
 
     @Singleton
     @Provides
