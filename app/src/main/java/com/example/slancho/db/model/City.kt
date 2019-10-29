@@ -3,6 +3,7 @@ package com.example.slancho.db.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.slancho.api.models.openWeatherMap.OpenWeatherMapCurrentForecastResponse
 
 @Entity(tableName = "city")
 data class City(
@@ -66,6 +67,26 @@ data class City(
                 cityResponse.timezone,
                 cityResponse.sunrise,
                 cityResponse.sunset
+            )
+        }
+
+        /**
+         * Used for the creation of City object from CurrentForecastResponse
+         */
+        fun createCityFromCurrentForecastResponse(
+            currentForecastResponse: OpenWeatherMapCurrentForecastResponse,
+            cityId: Long
+        ): City {
+            return City(
+                cityId,
+                currentForecastResponse.name!!,
+                currentForecastResponse.coordinatesResponse!!.lat,
+                currentForecastResponse.coordinatesResponse!!.lon,
+                currentForecastResponse.sysResponse!!.country,
+                0,
+                currentForecastResponse.timezone,
+                currentForecastResponse.sysResponse!!.sunrise,
+                currentForecastResponse.sysResponse!!.sunset
             )
         }
     }

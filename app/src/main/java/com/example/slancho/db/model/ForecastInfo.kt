@@ -155,5 +155,38 @@ data class ForecastInfo(
                 theeHourWeatherResponse.weatherInfo!!.first().icon
             )
         }
+
+        /**
+         * Used for creation of Current Forecast data object
+         */
+        fun createForecastInfoFromCurrentForecastResponse(
+            openWeatherMapCurrentForecastResponse:
+            com.example.slancho.api.models.openWeatherMap.OpenWeatherMapCurrentForecastResponse,
+            forecastId: String
+        ): ForecastInfo {
+            return ForecastInfo(
+                UUID.randomUUID().toString(),
+                forecastId,
+                openWeatherMapCurrentForecastResponse.dateTime,
+                openWeatherMapCurrentForecastResponse.mainResponse!!.temp,
+                openWeatherMapCurrentForecastResponse.mainResponse!!.tempMin,
+                openWeatherMapCurrentForecastResponse.mainResponse!!.tempMax,
+                null, null, null,
+                openWeatherMapCurrentForecastResponse.sysResponse!!.sunrise,
+                openWeatherMapCurrentForecastResponse.sysResponse!!.sunset,
+                openWeatherMapCurrentForecastResponse.mainResponse!!.pressure,
+                null, null,
+                openWeatherMapCurrentForecastResponse.mainResponse!!.humidity,
+                openWeatherMapCurrentForecastResponse.cloudsResponse!!.all,
+                openWeatherMapCurrentForecastResponse.windResponse!!.speed,
+                openWeatherMapCurrentForecastResponse.windResponse!!.deg,
+                null,
+                openWeatherMapCurrentForecastResponse.weatherInfo!!.first().id,
+                openWeatherMapCurrentForecastResponse.weatherInfo!!.first().main,
+                openWeatherMapCurrentForecastResponse.weatherInfo!!.first().description,
+                openWeatherMapCurrentForecastResponse.weatherInfo!!.first().icon
+            )
+        }
+//        openWeatherMapCurrentForecastResponse: OpenWeatherMapCurrentForecastResponse
     }
 }

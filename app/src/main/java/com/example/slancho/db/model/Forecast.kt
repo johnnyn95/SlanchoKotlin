@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.example.slancho.api.ForecastType
+import com.example.slancho.api.models.openWeatherMap.OpenWeatherMapCurrentForecastResponse
 import com.example.slancho.api.models.openWeatherMap.OpenWeatherMapThreeHourForecastResponse
 import com.example.slancho.api.models.rapidApiOpenWeatherMap.RapidApiOpenWeatherMapDailyForecastResponse
 import com.example.slancho.api.models.rapidApiOpenWeatherMap.RapidApiOpenWeatherMapTheeHourForecastResponse
@@ -152,6 +153,40 @@ data class Forecast(
                     )
                 )
             }
+            forecast.forecastInfo = forecastInfo
+            return forecast
+        }
+
+        /**
+         * Used for the Three hour forecast by the RapidApiOpenWeather Api
+         */
+        fun createForecastFromCurrentForecastResponse(
+            openWeatherMapCurrentForecastResponse:
+            OpenWeatherMapCurrentForecastResponse
+        ): Forecast {
+            val forecast = Forecast(
+                UUID.randomUUID().toString(),
+                System.currentTimeMillis(),
+                openWeatherMapCurrentForecastResponse.cod!!.toString(),
+                0.0,
+                1,
+                openWeatherMapCurrentForecastResponse.name!!,
+                if (openWeatherMapCurrentForecastResponse.id != null)
+                    openWeatherMapCurrentForecastResponse.id!!
+                else Random(RANDOM_SEED).nextLong(),
+                ForecastType.Current.value
+            )
+            forecast.city = City.createCityFromCurrentForecastResponse(
+                openWeatherMapCurrentForecastResponse,
+                forecast.cityId
+            )
+            val forecastInfo = arrayListOf<ForecastInfo>()
+            forecastInfo.add(
+                ForecastInfo.createForecastInfoFromCurrentForecastResponse(
+                    openWeatherMapCurrentForecastResponse,
+                    forecast.id
+                )
+            )
             forecast.forecastInfo = forecastInfo
             return forecast
         }

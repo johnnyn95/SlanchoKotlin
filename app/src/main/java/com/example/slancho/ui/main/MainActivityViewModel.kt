@@ -57,7 +57,7 @@ class MainActivityViewModel @Inject constructor(
     }
 
     private suspend fun fetchForecastData(user: User) {
-        openWeatherMapApiRepository.getThreeHourForecastByLocation(
+        openWeatherMapApiRepository.getCurrentForecastByLocation(
             user.lastKnownLocation!!.latitude,
             user.lastKnownLocation!!.longitude
         )

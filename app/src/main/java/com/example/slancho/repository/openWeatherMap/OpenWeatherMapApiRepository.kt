@@ -57,4 +57,39 @@ class OpenWeatherMapApiRepository @Inject constructor(
             }
         }
     }
+
+    override suspend fun getCurrentForecastByLocation(latitude: Double, longitude: Double) {
+        withContext(IO) {
+            try {
+                val response =
+                    openWeatherMapService.getCurrentForecast(null, latitude, longitude).execute()
+                if (response.isSuccessful) {
+                    val forecast =
+                        Forecast.createForecastFromCurrentForecastResponse(response.body()!!)
+                    forecastDbRepository.insertForecast(forecast)
+                }
+            } catch (e: IOException) {
+                Timber.e("Couldn't fetch the forecast data! $e")
+            }
+        }
+    }
+
+    override suspend fun getCurrentForecastByCityAndCountryCode(location: String) {
+        withContext(IO) {
+            try {
+                val response =
+                    openWeatherMapService.getCurrentForecast(
+                        location, null, null
+                    ).execute()
+                if (response.isSuccessful) {
+                    val forecast =
+                        Forecast.createForecastFromCurrentForecastResponse(response.body()!!)
+                    forecastDbRepository.insertForecast(forecast)
+                }
+            } catch (e: IOException) {
+                Timber.e("Couldn't fetch the forecast data! $e")
+            }
+        }
+    }
+
 }
