@@ -10,9 +10,9 @@ import com.example.slancho.repository.user.UserDbRepository
 import com.example.slancho.ui.BaseAuthViewModel
 import com.example.slancho.utils.LocationManager
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -40,7 +40,7 @@ class MainActivityViewModel @Inject constructor(
         }
     }
 
-    private fun fetchCurrentUser(userId: String) = runBlocking(IO) {
+    private fun fetchCurrentUser(userId: String) = CoroutineScope(IO).launch {
         launch {
             try {
                 val user = userDbRepository.getUserById(userId)

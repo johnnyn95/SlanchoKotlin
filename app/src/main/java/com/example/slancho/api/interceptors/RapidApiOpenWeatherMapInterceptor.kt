@@ -1,24 +1,27 @@
 package com.example.slancho.api.interceptors
 
-import com.example.slancho.api.Environment
+import com.example.slancho.api.TemperatureUnit
+import com.example.slancho.utils.SharedPreferencesManager
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class RapidApiOpenWeatherMapInterceptor : Interceptor {
+class RapidApiOpenWeatherMapInterceptor : BaseWeatherInterceptor() {
 
-    companion object {
-        const val HEADER = "x-rapidapi-key"
+    override fun setup(sharedPreferencesManager: SharedPreferencesManager): RapidApiOpenWeatherMapInterceptor {
+        this.sharedPreferencesManager = sharedPreferencesManager
+        return this
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val request = chain.request()
-        if (request.header(HEADER) == null) {
-            val newRequest = request.newBuilder()
-                .addHeader(HEADER, Environment.Environments.DEV.getRapidApiOpenWeatherMapKey())
-                .build()
-            return chain.proceed(newRequest)
+        var request = chain.request()
+        request = appendRapidApiAuthHeader(request)
+        var newUrl = request.url
+        if (sharedPreferencesManager.tempUnitValue != TemperatureUnit.Kelvin.value) {
+            newUrl = appendTempUnit(newUrl)
         }
+        newUrl = appendLang(newUrl)
+        val requestBuilder = request.newBuilder().url(newUrl)
+        request = requestBuilder.build()
         return chain.proceed(request)
     }
-
 }

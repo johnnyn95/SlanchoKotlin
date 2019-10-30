@@ -12,8 +12,7 @@ interface RapidApiOpenWeatherMapService {
         @Query("q") location: String?,
         @Query("lat") latitude: Double?,
         @Query("lon") longitude: Double?,
-        @Query("cnt") numberOfPeriods: Int,
-        @Query("units") tempUnits: String
+        @Query("cnt") numberOfPeriods: Int
     ): Call<RapidApiOpenWeatherMapTheeHourForecastResponse>
 
     @GET("forecast/daily")
@@ -21,7 +20,6 @@ interface RapidApiOpenWeatherMapService {
         @Query("q") location: String?,
         @Query("lat") latitude: Double?,
         @Query("lon") longitude: Double?,
-        @Query("cnt") numberOfDays: Int,
-        @Query("units") tempUnits: String
+        @Query("cnt") numberOfDays: Int
     ): Call<RapidApiOpenWeatherMapDailyForecastResponse>
 }

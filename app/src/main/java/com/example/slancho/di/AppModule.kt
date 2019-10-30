@@ -109,13 +109,14 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun provideOpenWeatherMapInterceptor(sharedPreferencesManager: SharedPreferencesManager): OpenWeatherMapInterceptor =
-        OpenWeatherMapInterceptor().setup(sharedPreferencesManager)
+    fun provideOpenWeatherMapInterceptor(sharedPreferencesManager: SharedPreferencesManager):
+            OpenWeatherMapInterceptor = OpenWeatherMapInterceptor().setup(sharedPreferencesManager)
 
     @Singleton
     @Provides
-    fun provideRapidApiOpenWeatherMapInterceptor(): RapidApiOpenWeatherMapInterceptor =
-        RapidApiOpenWeatherMapInterceptor()
+    fun provideRapidApiOpenWeatherMapInterceptor(sharedPreferencesManager: SharedPreferencesManager):
+            RapidApiOpenWeatherMapInterceptor =
+        RapidApiOpenWeatherMapInterceptor().setup(sharedPreferencesManager)
 
     @Singleton
     @Provides

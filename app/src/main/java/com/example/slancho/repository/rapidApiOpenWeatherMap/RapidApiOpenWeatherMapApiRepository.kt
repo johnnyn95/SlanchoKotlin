@@ -29,8 +29,7 @@ class RapidApiOpenWeatherMapApiRepository @Inject constructor(
                 val response =
                     rapidApiOpenWeatherMapService.getThreeHourForecastWeatherData(
                         null, latitude, longitude,
-                        sharedPreferencesManager.numberOfPeriodsForThreeHourForecastValue,
-                        sharedPreferencesManager.tempUnitValue
+                        sharedPreferencesManager.numberOfPeriodsForThreeHourForecastValue
                     ).execute()
                 if (response.isSuccessful) {
                     val forecast =
@@ -49,8 +48,7 @@ class RapidApiOpenWeatherMapApiRepository @Inject constructor(
                 val response =
                     rapidApiOpenWeatherMapService.getThreeHourForecastWeatherData(
                         location, null, null,
-                        sharedPreferencesManager.numberOfPeriodsForThreeHourForecastValue,
-                        sharedPreferencesManager.tempUnitValue
+                        sharedPreferencesManager.numberOfPeriodsForThreeHourForecastValue
                     ).execute()
                 if (response.isSuccessful) {
                     val forecast =
@@ -69,8 +67,7 @@ class RapidApiOpenWeatherMapApiRepository @Inject constructor(
                 val response =
                     rapidApiOpenWeatherMapService.getDailyForecastWeatherData(
                         null, latitude, longitude,
-                        sharedPreferencesManager.forecastDataForDaysValue,
-                        sharedPreferencesManager.tempUnitValue
+                        sharedPreferencesManager.forecastDataForDaysValue
                     ).execute()
                 if (response.isSuccessful) {
                     val forecast =
@@ -89,8 +86,7 @@ class RapidApiOpenWeatherMapApiRepository @Inject constructor(
                 val response =
                     rapidApiOpenWeatherMapService.getDailyForecastWeatherData(
                         location, null, null,
-                        sharedPreferencesManager.forecastDataForDaysValue,
-                        sharedPreferencesManager.tempUnitValue
+                        sharedPreferencesManager.forecastDataForDaysValue
                     ).execute()
                 if (response.isSuccessful) {
                     val forecast =

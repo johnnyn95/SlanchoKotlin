@@ -6,8 +6,8 @@ import android.location.Geocoder
 import android.location.Location
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -29,7 +29,7 @@ class LocationManager @Inject constructor(var application: Application) {
     }
 
     private fun initFusedLocationClient() {
-        GlobalScope.launch {
+        CoroutineScope(IO).launch {
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(application)
             getLastKnownLocation()
         }
