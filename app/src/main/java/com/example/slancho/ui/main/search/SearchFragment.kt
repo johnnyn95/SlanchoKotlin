@@ -6,18 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.slancho.R
-import com.example.slancho.common.BaseFragment
 import com.example.slancho.databinding.FragmentSearchBinding
+import com.example.slancho.db.model.User
+import com.example.slancho.ui.main.BaseMainFragment
 
-class SearchFragment : BaseFragment() {
-    override val TAG: String get() = SearchFragment::class.toString()
-
+class SearchFragment : BaseMainFragment() {
     lateinit var binding: FragmentSearchBinding
     lateinit var viewModel: SearchFragmentViewModel
 
     companion object {
-        fun newInstance(): SearchFragment {
-            return SearchFragment()
+        fun newInstance(user: User): SearchFragment {
+            val searchFragment = SearchFragment()
+            searchFragment.currentUser = user
+            return searchFragment
         }
     }
 
@@ -26,10 +27,14 @@ class SearchFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_search, container, false
+        )
         initFields()
         initViews()
         initListeners()
+        viewModel.onScreenReady(currentUser)
         return binding.root
     }
 

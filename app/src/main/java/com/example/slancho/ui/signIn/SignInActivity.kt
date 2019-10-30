@@ -25,8 +25,6 @@ class SignInActivity : BaseActivity<ActivitySignInBinding>() {
         const val GOOGLE_SIGN_IN_REQUEST_CODE = 12345
     }
 
-    override val TAG: String get() = SignInActivity::class.java.simpleName
-
     private lateinit var viewModel: SignInActivityViewModel
     private lateinit var email: String
     private lateinit var password: String

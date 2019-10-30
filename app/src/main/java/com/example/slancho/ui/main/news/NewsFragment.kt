@@ -6,18 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.slancho.R
-import com.example.slancho.common.BaseFragment
 import com.example.slancho.databinding.FragmentNewsBinding
+import com.example.slancho.db.model.User
+import com.example.slancho.ui.main.BaseMainFragment
 
-class NewsFragment : BaseFragment() {
-    override val TAG: String get() = NewsFragment::class.toString()
-
+class NewsFragment : BaseMainFragment() {
     lateinit var binding: FragmentNewsBinding
     lateinit var viewModel: NewsFragmentViewModel
 
     companion object {
-        fun newInstance(): NewsFragment {
-            return NewsFragment()
+        fun newInstance(user: User): NewsFragment {
+            val newsFragment = NewsFragment()
+            newsFragment.currentUser = user
+            return newsFragment
         }
     }
 
@@ -26,10 +27,14 @@ class NewsFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_news, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_news, container, false
+        )
         initFields()
         initViews()
         initListeners()
+        viewModel.onScreenReady(currentUser)
         return binding.root
     }
 

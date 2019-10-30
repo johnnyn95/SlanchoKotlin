@@ -22,8 +22,6 @@ class SignInActivityViewModel @Inject constructor(
     workManager: WorkManager
 ) : BaseAuthViewModel(locationManager, firebaseAuth, userDbRepository, workManager) {
 
-    override val TAG: String get() = SignInActivityViewModel::class.java.simpleName
-
     override fun onScreenReady(context: Context, userId: String) {
     }
 

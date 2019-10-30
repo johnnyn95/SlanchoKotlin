@@ -77,9 +77,6 @@ abstract class BaseActivity<B : ViewDataBinding> : DaggerAppCompatActivity() {
 
     protected abstract fun getLayoutResId(): Int
 
-    protected abstract val TAG: String
-
-
     fun hideKeyboard() {
         if (currentFocus != null) {
             val inputMethodManager =

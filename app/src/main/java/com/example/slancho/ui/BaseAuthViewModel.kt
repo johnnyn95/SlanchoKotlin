@@ -18,8 +18,6 @@ abstract class BaseAuthViewModel constructor(
     var workManager: WorkManager
 ) : ViewModel(), FirebaseAuth.AuthStateListener {
 
-    abstract val TAG: String
-
     val navigateToMain: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
@@ -28,7 +26,9 @@ abstract class BaseAuthViewModel constructor(
         MutableLiveData<Boolean>()
     }
 
-    lateinit var currentUser: User
+    val currentUser: MutableLiveData<User> by lazy {
+        MutableLiveData<User>()
+    }
 
     abstract fun onScreenReady(context: Context, userId: String)
 

@@ -5,19 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.example.slancho.R
-import com.example.slancho.common.BaseFragment
 import com.example.slancho.databinding.FragmentWeatherBinding
+import com.example.slancho.db.model.User
+import com.example.slancho.ui.main.BaseMainFragment
+import timber.log.Timber
 
-class WeatherFragment : BaseFragment() {
-    override val TAG: String get() = WeatherFragment::class.toString()
-
+class WeatherFragment : BaseMainFragment() {
     lateinit var binding: FragmentWeatherBinding
     lateinit var viewModel: WeatherFragmentViewModel
 
     companion object {
-        fun newInstance(): WeatherFragment {
-            return WeatherFragment()
+        fun newInstance(user: User): WeatherFragment {
+            val weatherFragment = WeatherFragment()
+            weatherFragment.currentUser = user
+            return weatherFragment
         }
     }
 
@@ -26,10 +29,14 @@ class WeatherFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_weather, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_weather, container, false
+        )
         initFields()
         initViews()
         initListeners()
+        viewModel.onScreenReady(currentUser)
         return binding.root
     }
 
@@ -39,7 +46,11 @@ class WeatherFragment : BaseFragment() {
 
     override fun initViews() {}
 
-    override fun initListeners() {}
+    override fun initListeners() {
+        viewModel.forecast.observe(this, Observer {
+            Timber.d("Fetched forecast")
+        })
+    }
 }
 
 

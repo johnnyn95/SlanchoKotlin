@@ -2,10 +2,6 @@ package com.example.slancho.ui.main
 
 import android.content.Context
 import androidx.work.WorkManager
-import com.example.slancho.db.model.User
-import com.example.slancho.repository.forecast.ForecastDbRepository
-import com.example.slancho.repository.openWeatherMap.OpenWeatherMapApiRepository
-import com.example.slancho.repository.rapidApiOpenWeatherMap.RapidApiOpenWeatherMapApiRepository
 import com.example.slancho.repository.user.UserDbRepository
 import com.example.slancho.ui.BaseAuthViewModel
 import com.example.slancho.utils.LocationManager
@@ -20,14 +16,9 @@ class MainActivityViewModel @Inject constructor(
     locationManager: LocationManager,
     firebaseAuth: FirebaseAuth,
     userDbRepository: UserDbRepository,
-    workManager: WorkManager,
-    private var openWeatherMapApiRepository: OpenWeatherMapApiRepository,
-    private var rapidApiOpenWeatherMapRepository: RapidApiOpenWeatherMapApiRepository,
-    private var forecastDbRepository: ForecastDbRepository
+    workManager: WorkManager
 ) : BaseAuthViewModel(locationManager, firebaseAuth, userDbRepository, workManager),
     FirebaseAuth.AuthStateListener {
-
-    override val TAG: String get() = MainActivityViewModel::class.java.simpleName
 
     override fun onScreenReady(context: Context, userId: String) {
         registerAuthListeners()
@@ -45,26 +36,13 @@ class MainActivityViewModel @Inject constructor(
             try {
                 val user = userDbRepository.getUserById(userId)
                 if (user != null) {
-                    currentUser = user
-                    fetchForecastData(currentUser)
-                    Timber.d("Fetched user ${currentUser.authUID}")
+                    currentUser.postValue(user)
+                    Timber.d("Fetched user ${user.authUID}")
                 }
             } catch (e: NullPointerException) {
                 Timber.e("Failed to fetch user $e")
                 navigateToSignIn()
             }
         }
-    }
-
-    private suspend fun fetchForecastData(user: User) {
-        openWeatherMapApiRepository.getCurrentForecastByLocation(
-            user.lastKnownLocation!!.latitude,
-            user.lastKnownLocation!!.longitude
-        )
-
-        rapidApiOpenWeatherMapRepository.getRapidApiDailyForecastByCityAndCountryCode(user.lastKnownLocation!!.getFormattedCityAndCountryCode())
-
-        val forecast =
-            forecastDbRepository.getLatestForecastByCityName(user.lastKnownLocation!!.city)
     }
 }

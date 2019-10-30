@@ -46,8 +46,6 @@ abstract class BaseFragment : DaggerFragment(), Injectable {
         super.onAttach(context)
     }
 
-    protected abstract val TAG: String
-
     protected abstract fun initFields()
 
     protected abstract fun initViews()

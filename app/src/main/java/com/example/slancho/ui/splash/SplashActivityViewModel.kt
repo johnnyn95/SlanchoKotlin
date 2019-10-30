@@ -17,8 +17,6 @@ class SplashActivityViewModel @Inject constructor(
     workManager: WorkManager
 ) : BaseAuthViewModel(locationManager, firebaseAuth, userDbRepository, workManager) {
 
-    override val TAG: String get() = SplashActivityViewModel::class.java.simpleName
-
     override fun onScreenReady(context: Context, userId: String) {
         if (firebaseAuth.currentUser != null || GoogleSignIn.getLastSignedInAccount(context) != null) {
             runBlocking {

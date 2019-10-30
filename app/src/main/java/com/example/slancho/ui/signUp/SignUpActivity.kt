@@ -20,8 +20,6 @@ import kotlinx.coroutines.launch
 
 class SignUpActivity : BaseActivity<ActivitySignUpBinding>() {
 
-    override val TAG: String get() = SignUpActivity::class.java.simpleName
-
     private lateinit var viewModel: SignUpActivityViewModel
     private lateinit var email: String
     private lateinit var password: String

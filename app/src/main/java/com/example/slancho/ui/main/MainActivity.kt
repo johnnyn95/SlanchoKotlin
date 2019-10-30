@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import com.example.slancho.R
 import com.example.slancho.common.BaseActivity
 import com.example.slancho.databinding.ActivityMainBinding
+import com.example.slancho.db.model.User
 import com.example.slancho.ui.main.news.NewsFragment
 import com.example.slancho.ui.main.search.SearchFragment
 import com.example.slancho.ui.main.weather.WeatherFragment
@@ -28,8 +29,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         const val EXTRA_USER_ID = "extra_user_id"
     }
 
-    override val TAG: String get() = MainActivity::class.java.simpleName
-
     private lateinit var viewModel: MainActivityViewModel
     private lateinit var weatherFragment: WeatherFragment
     private lateinit var searchFragment: SearchFragment
@@ -43,6 +42,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         initNavigationSubscribers()
+        initDataSubscribers()
         viewModel.onScreenReady(this, userId)
     }
 
@@ -59,7 +59,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         initToolbar()
         initBottomNavigation()
         initDrawer()
-        initFragments()
+//        initFragments(userId)
     }
 
     override fun initListeners() {
@@ -83,6 +83,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         })
     }
 
+    private fun  initDataSubscribers(){
+        viewModel.currentUser.observe(this, Observer {
+            initFragments(it)
+        })
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         hideKeyboard()
         if (item.itemId == android.R.id.home) {
@@ -92,10 +98,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         return super.onOptionsItemSelected(item)
     }
 
-    private fun initFragments() {
-        weatherFragment = WeatherFragment.newInstance()
-        searchFragment = SearchFragment.newInstance()
-        newsFragment = NewsFragment.newInstance()
+    private fun initFragments(user: User) {
+        weatherFragment = WeatherFragment.newInstance(user)
+        searchFragment = SearchFragment.newInstance(user)
+        newsFragment = NewsFragment.newInstance(user)
 
         val manager = supportFragmentManager
         for (fragment in listOf(
