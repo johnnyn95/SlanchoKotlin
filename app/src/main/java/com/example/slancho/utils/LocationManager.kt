@@ -42,6 +42,8 @@ class LocationManager @Inject constructor(var application: Application) {
                     lastKnownLocation = location
                     return@addOnSuccessListener
                 }
+                // TODO BUG: Returns null when the device hasn't established a location request
+                //  Usually after a restart,when Google Maps App hasn't been opened yet
                 Timber.w(TAG, "Couldn't fetch Location")
             }
         }

@@ -26,6 +26,7 @@
 
     <string name="location">Location</string>
     <string name="location_key">location</string>
+    <string name="location_summary">Leave the field empty to fetch location automatically based on your current location</string>
     <string name="temperature_unit">Temperature Unit</string>
     <string name="temperature_unit_key">temperature_unit_key</string>
     <string name="temperature_unit_default_value">metric</string>
@@ -44,4 +45,8 @@
     <string name="forecast_data_for_days_default_value">7</string>
 
     <string name="connection_established">Connection Established!</string>
+
+    <string name="current">Current</string>
+    <string name="daily">Daily</string>
+    <string name="three_hour">3 Hour</string>
 </resources>

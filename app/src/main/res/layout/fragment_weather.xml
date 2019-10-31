@@ -1,14 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools">
-    <FrameLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/grp_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:applyMotionScene="@xml/motion_scene_weather_fragment"
+        tools:context=".ui.main.weather.WeatherFragment"
+        tools:showPaths="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/grp_forecast_banner"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".ui.main.weather.WeatherFragment">
-        <TextView
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_padding"
+            android:background="@drawable/weather_banner_background"
+            android:minHeight="140dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_city"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/weather"/>
+                android:adjustViewBounds="true"
+                android:maxHeight="140dp"
+                android:text="@string/weather"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </FrameLayout>
+            <TextView
+                android:id="@+id/txt_forecast_city"
+                style="@style/BannerTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_padding"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Sofia" />
+
+            <LinearLayout
+                android:id="@+id/grp_forecast_filters"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_margin="@dimen/small_padding"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/grp_forecast_banner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <RadioGroup
+                    android:id="@+id/grp_radio_filters"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/btn_filter_current"
+                        style="@style/WeatherFilterRadioButton"
+                        android:checked="true"
+                        android:text="@string/current" />
+
+                    <RadioButton
+                        android:id="@+id/btn_filter_daily"
+                        style="@style/WeatherFilterRadioButton"
+                        android:layout_marginStart="8dp"
+                        android:checked="false"
+                        android:text="@string/daily" />
+
+                    <RadioButton
+                        android:id="@+id/btn_filter_three_hour"
+                        style="@style/WeatherFilterRadioButton"
+                        android:layout_marginStart="8dp"
+                        android:checked="false"
+                        android:text="@string/three_hour" />
+                </RadioGroup>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_forecast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_padding"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/grp_forecast_banner" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

@@ -18,6 +18,9 @@ class SharedPreferencesManager @Inject constructor(var application: Application)
             periodsForADay * threeHourForecastMaxDays
         const val tempUnitDefaultValue = "metric"
         const val langDefaultValue = "en"
+        // TODO Implement functionality where the app fetches the location based on the input in
+        //  shared preferences and also add functionality to smart search existing cities
+
     }
 
     private lateinit var locationKey: String

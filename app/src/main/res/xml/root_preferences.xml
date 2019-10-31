@@ -22,7 +22,8 @@
             app:icon="@drawable/ic_location_primary_color"
             app:key="@string/location_key"
             app:title="@string/location"
-            app:useSimpleSummaryProvider="true" />
+            app:useSimpleSummaryProvider="true"
+            android:dialogMessage="@string/location_summary"/>
 
         <ListPreference
             app:defaultValue="@string/temperature_unit_default_value"
