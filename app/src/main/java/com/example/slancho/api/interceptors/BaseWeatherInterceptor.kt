@@ -15,7 +15,9 @@ open class BaseWeatherInterceptor : Interceptor {
         const val QUERY_PARAMETER_KEY = "appid"
         const val QUERY_PARAMETER_UNITS = "units"
         const val QUERY_PARAMETER_LANG = "lang"
-        const val HEADER = "x-rapidapi-key"
+        const val RAPIDAPI_HEADER = "x-rapidapi-key"
+        const val PEXELS_HEADER = "Authorization"
+
     }
 
     open fun setup(sharedPreferencesManager: SharedPreferencesManager): Any {
@@ -47,9 +49,20 @@ open class BaseWeatherInterceptor : Interceptor {
     }
 
     protected fun appendRapidApiAuthHeader(request: Request): Request {
-        return if (request.header(HEADER) == null) {
+        return if (request.header(RAPIDAPI_HEADER) == null) {
             request.newBuilder()
-                .addHeader(HEADER, Environment.Environments.DEV.getRapidApiOpenWeatherMapKey())
+                .addHeader(
+                    RAPIDAPI_HEADER,
+                    Environment.Environments.DEV.getRapidApiOpenWeatherMapKey()
+                )
+                .build()
+        } else request
+    }
+
+    protected fun appendPexelsAuthHeader(request: Request): Request {
+        return if (request.header(PEXELS_HEADER) == null) {
+            request.newBuilder()
+                .addHeader(PEXELS_HEADER, Environment.Environments.DEV.getPexelsKey())
                 .build()
         } else request
     }

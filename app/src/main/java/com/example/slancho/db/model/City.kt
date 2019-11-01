@@ -25,7 +25,9 @@ data class City(
     @ColumnInfo(name = "sunrise")
     val sunrise: Long?,
     @ColumnInfo(name = "sunset")
-    val sunset: Long?
+    val sunset: Long?,
+    @ColumnInfo(name = "cityImageUrl")
+    var cityImageUrl: String?
 ) {
     companion object {
         /**
@@ -45,7 +47,7 @@ data class City(
                 if (cityResponse.population != null) cityResponse.population else 0,
                 cityResponse.timezone,
                 cityResponse.sunrise,
-                cityResponse.sunset
+                cityResponse.sunset, null
             )
         }
 
@@ -66,7 +68,7 @@ data class City(
                 if (cityResponse.population != null) cityResponse.population else 0,
                 cityResponse.timezone,
                 cityResponse.sunrise,
-                cityResponse.sunset
+                cityResponse.sunset, null
             )
         }
 
@@ -86,7 +88,7 @@ data class City(
                 0,
                 currentForecastResponse.timezone,
                 currentForecastResponse.sysResponse!!.sunrise,
-                currentForecastResponse.sysResponse!!.sunset
+                currentForecastResponse.sysResponse!!.sunset, null
             )
         }
     }

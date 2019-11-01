@@ -6,6 +6,7 @@ import com.example.slancho.db.model.Forecast
 import com.example.slancho.db.model.User
 import com.example.slancho.repository.forecast.ForecastDbRepository
 import com.example.slancho.repository.openWeatherMap.OpenWeatherMapApiRepository
+import com.example.slancho.repository.pexels.PexelsApiRepository
 import com.example.slancho.repository.rapidApiOpenWeatherMap.RapidApiOpenWeatherMapApiRepository
 import com.example.slancho.repository.user.UserDbRepository
 import com.example.slancho.ui.main.BaseMainFragmentViewModel
@@ -21,7 +22,8 @@ class WeatherFragmentViewModel @Inject constructor(
     workManager: WorkManager,
     private var openWeatherMapApiRepository: OpenWeatherMapApiRepository,
     private var rapidApiOpenWeatherMapRepository: RapidApiOpenWeatherMapApiRepository,
-    private var forecastDbRepository: ForecastDbRepository
+    private var forecastDbRepository: ForecastDbRepository,
+    private var pexelsApiRepository: PexelsApiRepository
 
 ) : BaseMainFragmentViewModel(locationManager, userDbRepository, workManager) {
 
@@ -51,7 +53,7 @@ class WeatherFragmentViewModel @Inject constructor(
 
         val forecast =
             forecastDbRepository.getLatestForecastByCityName(user.lastKnownLocation!!.city)
+        forecast.city = pexelsApiRepository.performPexelsImageSearchForCity(forecast.city!!)
         this.forecast.postValue(forecast)
     }
-
 }

@@ -33,7 +33,7 @@ import com.example.slancho.db.model.*
         City::class,
         ForecastInfo::class
     ],
-    version = 9,
+    version = 10,
     exportSchema = false
 )
 abstract class SlanchoDb : RoomDatabase() {

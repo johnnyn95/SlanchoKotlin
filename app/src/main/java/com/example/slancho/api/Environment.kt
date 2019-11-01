@@ -15,6 +15,12 @@ interface Environment {
             override fun getOpenWeatherMapKey(): String =
                 "1dfb36c4d302f2169ffd9a9df76411cf"
 
+            override fun getPexelsApiUrl(): String =
+
+                "https://api.pexels.com/v1/"
+
+            override fun getPexelsKey(): String =
+                "563492ad6f91700001000001381cd3af5818477db81f77a5cce4df49"
         },
         PROD {
             override fun getRapidApiOpenWeatherMapApiUrl(): String =
@@ -28,6 +34,12 @@ interface Environment {
 
             override fun getOpenWeatherMapKey(): String =
                 "1dfb36c4d302f2169ffd9a9df76411cf"
+
+            override fun getPexelsApiUrl(): String =
+                "https://api.pexels.com/v1/"
+
+            override fun getPexelsKey(): String =
+                "563492ad6f91700001000001381cd3af5818477db81f77a5cce4df49"
         }
     }
 
@@ -38,4 +50,8 @@ interface Environment {
     fun getOpenWeatherMapApiUrl(): String
 
     fun getOpenWeatherMapKey(): String
+
+    fun getPexelsApiUrl(): String
+
+    fun getPexelsKey(): String
 }

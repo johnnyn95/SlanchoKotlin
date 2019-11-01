@@ -22,17 +22,15 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/iv_city"
+                android:id="@+id/iv_banner_image"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:maxHeight="140dp"
-                android:text="@string/weather"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_padding"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/txt_forecast_city"
+                android:id="@+id/txt_banner_title"
                 style="@style/BannerTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -20,8 +20,10 @@ import android.app.Application
 import androidx.room.Room
 import androidx.work.WorkManager
 import com.example.slancho.api.OpenWeatherMapService
+import com.example.slancho.api.PexelsService
 import com.example.slancho.api.RapidApiOpenWeatherMapService
 import com.example.slancho.api.interceptors.OpenWeatherMapInterceptor
+import com.example.slancho.api.interceptors.PexelsInterceptor
 import com.example.slancho.api.interceptors.RapidApiOpenWeatherMapInterceptor
 import com.example.slancho.common.FlavorConstants
 import com.example.slancho.db.SlanchoDb
@@ -81,6 +83,26 @@ class AppModule {
 
     @Singleton
     @Provides
+    fun providePexelsService(
+        client: OkHttpClient,
+        gson: Gson,
+        pexelsInterceptor: PexelsInterceptor
+    ): PexelsService {
+
+        val newClient = client.newBuilder()
+            .addInterceptor(pexelsInterceptor)
+            .build()
+
+        return Retrofit.Builder()
+            .baseUrl(FlavorConstants.ENV.getPexelsApiUrl())
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(newClient)
+            .build()
+            .create(PexelsService::class.java)
+    }
+
+    @Singleton
+    @Provides
     fun provideRapidApiOpenWeatherMapService(
         client: OkHttpClient,
         gson: Gson,
@@ -117,6 +139,11 @@ class AppModule {
     fun provideRapidApiOpenWeatherMapInterceptor(sharedPreferencesManager: SharedPreferencesManager):
             RapidApiOpenWeatherMapInterceptor =
         RapidApiOpenWeatherMapInterceptor().setup(sharedPreferencesManager)
+
+    @Singleton
+    @Provides
+    fun providePexelInterceptor(sharedPreferencesManager: SharedPreferencesManager):
+            PexelsInterceptor = PexelsInterceptor().setup(sharedPreferencesManager)
 
     @Singleton
     @Provides
