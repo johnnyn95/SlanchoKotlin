@@ -10,7 +10,7 @@ class PexelsImageSearchResponse {
             if (photos != null) photos[Random.nextInt(
                 0,
                 photos.size
-            )].srcResponse!!.small!! else ""
+            )].srcResponse!!.medium!! else ""
     }
 
     @SerializedName("page")
