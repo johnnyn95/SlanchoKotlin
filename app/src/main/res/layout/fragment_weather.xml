@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/small_padding"
-            android:background="@drawable/weather_banner_background"
+            android:maxHeight="200dp"
             android:minHeight="140dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -24,8 +24,9 @@
             <ImageView
                 android:id="@+id/iv_banner_image"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/small_padding"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,7 +55,7 @@
                     android:id="@+id/grp_radio_filters"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_margin="@dimen/small_padding"
                     android:orientation="horizontal">
 
                     <RadioButton

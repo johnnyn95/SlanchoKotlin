@@ -15,12 +15,20 @@ class PexelsApiRepository @Inject constructor(
     var pexelsService: PexelsService
 ) :
     PexelsRepository {
+    companion object {
+        // Temporary solution until proper image API is found
+        private val keywords = listOf("weather", "sky", "nature", "landscape")
+
+        fun selectRandomKeyword() = keywords.random()
+    }
+
     override suspend fun performPexelsImageSearchForCity(city: City): City {
         return withContext(IO) {
             try {
                 // TODO Use city name eventually,currently API doesn't fetch the proper images
                 val response =
-                    pexelsService.performPexelsImageSearch("weather", null, null).execute()
+                    pexelsService.performPexelsImageSearch(selectRandomKeyword(), null, null)
+                        .execute()
                 if (response.isSuccessful) {
                     city.cityImageUrl =
                         PexelsImageSearchResponse.getRandomImageUrlFromResponse(response.body()!!.photos)

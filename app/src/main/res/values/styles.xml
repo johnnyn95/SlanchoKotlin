@@ -79,6 +79,10 @@
     <style name="BannerTextView" parent="TextView">
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">@dimen/large_text_size</item>
+        <item name="android:shadowColor">@color/black</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
     </style>
 
     <style name="WeatherFilterRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">

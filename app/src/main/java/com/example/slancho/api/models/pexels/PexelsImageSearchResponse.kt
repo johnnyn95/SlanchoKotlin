@@ -7,7 +7,10 @@ import kotlin.random.Random
 class PexelsImageSearchResponse {
     companion object {
         fun getRandomImageUrlFromResponse(photos: List<PhotoResponse>?): String =
-            if (photos != null) photos[Random.nextInt(0, photos.size)].url!! else ""
+            if (photos != null) photos[Random.nextInt(
+                0,
+                photos.size
+            )].srcResponse!!.small!! else ""
     }
 
     @SerializedName("page")

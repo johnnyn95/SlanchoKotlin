@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.slancho.R
 import com.example.slancho.databinding.FragmentWeatherBinding
+import com.example.slancho.db.model.Forecast
 import com.example.slancho.db.model.User
 import com.example.slancho.di.GlideApp
 import com.example.slancho.ui.main.BaseMainFragment
@@ -50,12 +52,22 @@ class WeatherFragment : BaseMainFragment() {
 
     override fun initListeners() {
         viewModel.forecast.observe(this, Observer {
-            binding.txtBannerTitle.text = it.cityName
-            GlideApp.with(this)
-                .load(it.city!!.cityImageUrl)
-                .into(binding.ivBannerImage)
+            initWeatherBanner(it)
             Timber.d("Fetched forecast")
         })
+    }
+
+    private fun initWeatherBanner(forecast: Forecast) {
+        binding.txtBannerTitle.text = forecast.cityName
+        val imageUrl = forecast.city!!.cityImageUrl
+        if (imageUrl!!.isNotEmpty()) {
+            GlideApp.with(this)
+                .load(forecast.city!!.cityImageUrl)
+                .transform(
+                    CenterCrop(),
+                    RoundedCorners(resources.getInteger(R.integer.glide_rounded_corners_radius))
+                ).into(binding.ivBannerImage)
+        }
     }
 }
 

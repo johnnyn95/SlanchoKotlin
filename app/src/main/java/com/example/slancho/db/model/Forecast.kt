@@ -32,11 +32,9 @@ data class Forecast(
     @ColumnInfo(name = "forecastType")
     val forecastType: String
 ) {
-    @Ignore
-    var city: City? = null
+    @Ignore var city: City? = null
 
-    @Ignore
-    var forecastInfo: ArrayList<ForecastInfo> = ArrayList()
+    @Ignore var forecastInfo: ArrayList<ForecastInfo> = ArrayList()
 
     companion object {
         /**
