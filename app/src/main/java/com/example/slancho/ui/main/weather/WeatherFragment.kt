@@ -62,11 +62,13 @@ class WeatherFragment : BaseMainFragment() {
         val imageUrl = forecast.city!!.cityImageUrl
         if (imageUrl!!.isNotEmpty()) {
             GlideApp.with(this)
-                .load(forecast.city!!.cityImageUrl)
+                .load(imageUrl)
                 .transform(
                     CenterCrop(),
                     RoundedCorners(resources.getInteger(R.integer.glide_rounded_corners_radius))
-                ).into(binding.ivBannerImage)
+                )
+                .error(resources.getDrawable(R.drawable.ic_wallpaper_placeholder, context!!.theme))
+                .into(binding.ivBannerImage)
         }
     }
 }
