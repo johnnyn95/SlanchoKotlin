@@ -51,6 +51,12 @@ class WeatherFragmentViewModel @Inject constructor(
                     .getFormattedCityAndCountryCode()
             )
 
+        rapidApiOpenWeatherMapRepository
+            .getRapidApiThreeHourForecastByCityAndCountryCode(
+                user.lastKnownLocation!!
+                    .getFormattedCityAndCountryCode()
+            )
+
         val forecast =
             forecastDbRepository.getLatestForecastByCityName(user.lastKnownLocation!!.city)
         forecast.city = pexelsApiRepository.performPexelsImageSearchForCity(forecast.city!!)
