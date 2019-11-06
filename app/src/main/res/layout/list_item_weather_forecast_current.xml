@@ -7,59 +7,66 @@
         android:id="@+id/grp_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/medium_padding"
         android:background="@drawable/weather_banner_background"
         android:minHeight="360dp">
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_weather_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
             android:layout_margin="@dimen/large_padding"
-            android:minWidth="24dp"
-            android:minHeight="24dp"
+            android:maxWidth="320dp"
+            android:maxHeight="320dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
             tools:src="@drawable/ic_wallpaper_placeholder" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/grp_weather_info"
+
+        <TextView
+            android:id="@+id/txt_temp"
+            style="@style/WeatherCardTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/txt_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/lottie_weather_icon"
+            app:layout_constraintTop_toTopOf="@id/lottie_weather_icon"
+            tools:text="°6" />
+
+        <TextView
+            android:id="@+id/txt_date"
+            style="@style/WeatherCardTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/txt_temp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/lottie_weather_icon"
+            app:layout_constraintBottom_toBottomOf="@id/lottie_weather_icon"
+            tools:text="12/09" />
+
+        <TextView
+            android:id="@+id/txt_description"
+            style="@style/TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/large_padding"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/lottie_weather_icon"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/txt_temp"
-                style="@style/WeatherCardTitleTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="°6" />
-
-            <TextView
-                android:id="@+id/txt_description"
-                style="@style/TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/txt_temp"
-                app:layout_constraintStart_toStartOf="@id/txt_temp"
-                app:layout_constraintTop_toBottomOf="@id/txt_temp"
-                tools:text="Clear: Clear Sky" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lottie_weather_icon"
+            tools:text="Clear: Clear Sky" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/grp_min_max_temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/large_padding"
-            android:padding="@dimen/extra_small_padding"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/grp_weather_info">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_description">
 
             <ImageView
                 android:id="@+id/iv_min_temp"
@@ -77,60 +84,49 @@
                 style="@style/TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/iv_min_temp"
                 app:layout_constraintStart_toEndOf="@id/iv_min_temp"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iv_min_temp"
                 tools:text="°0" />
 
             <ImageView
                 android:id="@+id/iv_max_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/large_padding"
                 android:minWidth="24dp"
                 android:minHeight="24dp"
                 android:src="@drawable/ic_max_temp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/txt_min_temp"
                 app:layout_constraintStart_toEndOf="@id/txt_min_temp"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@id/txt_min_temp" />
 
             <TextView
                 android:id="@+id/txt_max_tempt"
                 style="@style/TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/iv_max_temp"
                 app:layout_constraintStart_toEndOf="@id/iv_max_temp"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iv_max_temp"
                 tools:text="°10" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/grp_wind"
+            android:id="@+id/grp_wind_pressure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/large_padding"
-            android:padding="@dimen/extra_small_padding"
-            app:layout_constraintEnd_toStartOf="@+id/grp_min_max_temp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/grp_weather_info">
-
-            <!--            <ImageView-->
-            <!--                android:id="@+id/iv_wind"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:minWidth="24dp"-->
-            <!--                android:minHeight="24dp"-->
-            <!--                android:src="@drawable/ic_wind"-->
-            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toTopOf="parent" />-->
+            app:layout_constraintTop_toBottomOf="@+id/grp_min_max_temp">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/iv_wind"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxWidth="24dp"
-                android:maxHeight="24dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:maxWidth="48dp"
+                android:maxHeight="48dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -146,7 +142,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_wind"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="1.87 km/h ↑ N" />
+                tools:text="1.87 m/s ↑ N" />
 
             <ImageView
                 android:id="@+id/iv_wind_direction"
@@ -154,23 +150,31 @@
                 android:layout_height="wrap_content"
                 android:minWidth="24dp"
                 android:minHeight="24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/txt_wind_speed"
                 app:layout_constraintStart_toEndOf="@id/txt_wind_speed"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_back_arrow_primary_color" />
-
+                app:layout_constraintTop_toTopOf="@id/txt_wind_speed"
+                android:src="@drawable/ic_pressure" />
+            <TextView
+                android:id="@+id/txt_pressure"
+                style="@style/TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/iv_wind_direction"
+                app:layout_constraintBottom_toBottomOf="@id/iv_wind_direction"
+                app:layout_constraintStart_toEndOf="@id/iv_wind_direction"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="1000hPa"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/grp_sunrise_sunset"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/large_padding"
-            android:padding="@dimen/extra_small_padding"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/grp_wind">
+            app:layout_constraintTop_toBottomOf="@+id/grp_wind_pressure">
 
             <ImageView
                 android:id="@+id/iv_sunrise"
@@ -180,9 +184,9 @@
                 android:minHeight="24dp"
                 android:src="@drawable/ic_sunrise"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/txt_sunrise"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/txt_sunrise"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/txt_sunrise"
@@ -203,8 +207,9 @@
                 android:minHeight="24dp"
                 android:src="@drawable/ic_sunset"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/txt_sunset"
                 app:layout_constraintStart_toEndOf="@id/txt_sunrise"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toStartOf="@id/txt_sunset"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/txt_sunset"

@@ -6,19 +6,34 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.slancho.R
+import com.example.slancho.common.weatherForecastModels.CurrentWeatherForecast
+import com.example.slancho.common.weatherForecastModels.WeatherForecast
 import com.example.slancho.databinding.FragmentWeatherBinding
 import com.example.slancho.db.model.Forecast
 import com.example.slancho.db.model.User
 import com.example.slancho.di.GlideApp
 import com.example.slancho.ui.main.BaseMainFragment
+import com.example.slancho.ui.main.weather.adapterDelegates.CurrentWeatherForecastAdapterDelegate
+import com.example.slancho.utils.SharedPreferencesManager
+import com.example.slancho.utils.WeatherFormatUtils
+import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import timber.log.Timber
+import javax.inject.Inject
 
-class WeatherFragment : BaseMainFragment() {
+class WeatherFragment : BaseMainFragment(), (CurrentWeatherForecast) -> Unit {
+    override fun invoke(p1: CurrentWeatherForecast) {
+        Timber.d("Current weather forecast clicked!")
+    }
+
     lateinit var binding: FragmentWeatherBinding
     lateinit var viewModel: WeatherFragmentViewModel
+
+    @Inject
+    lateinit var sharedPreferencesManager: SharedPreferencesManager
 
     companion object {
         fun newInstance(user: User): WeatherFragment {
@@ -53,6 +68,17 @@ class WeatherFragment : BaseMainFragment() {
     override fun initListeners() {
         viewModel.forecast.observe(this, Observer {
             initWeatherBanner(it)
+            val weatherFormatUtils = WeatherFormatUtils(sharedPreferencesManager)
+            val adapter = ListDelegationAdapter<List<WeatherForecast>>(
+                CurrentWeatherForecastAdapterDelegate().init(weatherFormatUtils, this)
+            )
+            val listItems = ArrayList<CurrentWeatherForecast>()
+            it.forecastInfo.listIterator().forEach { forecastInfo ->
+                listItems.add(CurrentWeatherForecast.createFromForecastInfo(forecastInfo))
+            }
+            adapter.items = listItems
+            binding.rvForecast.adapter = adapter
+            binding.rvForecast.layoutManager = LinearLayoutManager(context)
             Timber.d("Fetched forecast")
         })
     }

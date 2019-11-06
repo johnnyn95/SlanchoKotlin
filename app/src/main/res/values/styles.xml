@@ -102,4 +102,8 @@
     <style name="WeatherCardTitleTextView" parent="LargeFontFamily">
         <item name="android:textSize">@dimen/huge_text_size</item>
     </style>
+
+    <style name="WeatherCardTextView" parent="LargeFontFamily">
+        <item name="android:textSize">@dimen/large_text_size</item>
+    </style>
 </resources>
