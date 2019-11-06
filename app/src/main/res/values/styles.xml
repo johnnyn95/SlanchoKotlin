@@ -36,18 +36,18 @@
     <style name="TextView" parent="MediumFontFamily">
         <item name="android:textSize">@dimen/medium_text_size</item>
         <item name="android:textColor">@color/textColor</item>
-        <item name="android:layout_margin">@dimen/small_padding</item>
-        <item name="android:padding">@dimen/small_padding</item>
+        <item name="android:layout_margin">@dimen/medium_padding</item>
+        <item name="android:padding">@dimen/medium_padding</item>
     </style>
 
     <style name="EditText" parent="MediumFontFamily">
-        <item name="android:layout_margin">@dimen/medium_padding</item>
+        <item name="android:layout_margin">@dimen/large_padding</item>
         <item name="android:textSize">@dimen/medium_text_size</item>
         <item name="android:textColor">@color/textColor</item>
     </style>
 
     <style name="Button" parent="SmallFontFamily">
-        <item name="android:layout_margin">@dimen/medium_padding</item>
+        <item name="android:layout_margin">@dimen/large_padding</item>
     </style>
 
     <style name="TextViewTitle" parent="TextView">
@@ -97,5 +97,9 @@
         <item name="android:textAlignment">center</item>
         <item name="android:textColor">@color/radio_button_text_color_selector</item>
         <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="WeatherCardTitleTextView" parent="LargeFontFamily">
+        <item name="android:textSize">@dimen/huge_text_size</item>
     </style>
 </resources>

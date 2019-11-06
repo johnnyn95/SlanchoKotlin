@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/grp_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/weather_banner_background"
+        android:minHeight="360dp">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_weather_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/large_padding"
+            android:minWidth="24dp"
+            android:minHeight="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_wallpaper_placeholder" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/grp_weather_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/large_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/lottie_weather_icon"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/txt_temp"
+                style="@style/WeatherCardTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="°6" />
+
+            <TextView
+                android:id="@+id/txt_description"
+                style="@style/TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/txt_temp"
+                app:layout_constraintStart_toStartOf="@id/txt_temp"
+                app:layout_constraintTop_toBottomOf="@id/txt_temp"
+                tools:text="Clear: Clear Sky" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/grp_min_max_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/large_padding"
+            android:padding="@dimen/extra_small_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/grp_weather_info">
+
+            <ImageView
+                android:id="@+id/iv_min_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="24dp"
+                android:minHeight="24dp"
+                android:src="@drawable/ic_min_temp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_min_temp"
+                style="@style/TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_min_temp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="°0" />
+
+            <ImageView
+                android:id="@+id/iv_max_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="24dp"
+                android:minHeight="24dp"
+                android:src="@drawable/ic_max_temp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/txt_min_temp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_max_tempt"
+                style="@style/TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_max_temp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="°10" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/grp_wind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/large_padding"
+            android:padding="@dimen/extra_small_padding"
+            app:layout_constraintEnd_toStartOf="@+id/grp_min_max_temp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/grp_weather_info">
+
+            <!--            <ImageView-->
+            <!--                android:id="@+id/iv_wind"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:minWidth="24dp"-->
+            <!--                android:minHeight="24dp"-->
+            <!--                android:src="@drawable/ic_wind"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/iv_wind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="24dp"
+                android:maxHeight="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/list_item_wind_animation" />
+
+            <TextView
+                android:id="@+id/txt_wind_speed"
+                style="@style/TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_wind"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="1.87 km/h ↑ N" />
+
+            <ImageView
+                android:id="@+id/iv_wind_direction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="24dp"
+                android:minHeight="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/txt_wind_speed"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_back_arrow_primary_color" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/grp_sunrise_sunset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/large_padding"
+            android:padding="@dimen/extra_small_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/grp_wind">
+
+            <ImageView
+                android:id="@+id/iv_sunrise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="24dp"
+                android:minHeight="24dp"
+                android:src="@drawable/ic_sunrise"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/txt_sunrise"/>
+
+            <TextView
+                android:id="@+id/txt_sunrise"
+                style="@style/TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/iv_sunset"
+                app:layout_constraintStart_toEndOf="@id/iv_sunrise"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="07:00" />
+
+            <ImageView
+                android:id="@+id/iv_sunset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="24dp"
+                android:minHeight="24dp"
+                android:src="@drawable/ic_sunset"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/txt_sunrise"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toStartOf="@id/txt_sunset"/>
+
+            <TextView
+                android:id="@+id/txt_sunset"
+                style="@style/TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_sunset"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="20:00" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

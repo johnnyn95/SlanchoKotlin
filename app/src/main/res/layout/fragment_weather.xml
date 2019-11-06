@@ -15,8 +15,8 @@
             android:id="@+id/grp_forecast_banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_padding"
-            android:maxHeight="200dp"
+            android:layout_margin="@dimen/medium_padding"
+            android:maxHeight="260dp"
             android:minHeight="140dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -38,7 +38,7 @@
                 style="@style/BannerTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/small_padding"
+                android:layout_margin="@dimen/medium_padding"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -57,7 +57,7 @@
                     android:id="@+id/grp_radio_filters"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/small_padding"
+                    android:layout_margin="@dimen/medium_padding"
                     android:orientation="horizontal">
 
                     <RadioButton
@@ -86,10 +86,12 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_forecast"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_padding"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/medium_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/grp_forecast_banner" />
+            app:layout_constraintTop_toBottomOf="@id/grp_forecast_banner"
+            tools:listitem="@layout/list_item_weather_forecast_current" />
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>
