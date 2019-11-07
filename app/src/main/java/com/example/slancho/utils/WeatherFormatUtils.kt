@@ -6,6 +6,7 @@ import com.example.slancho.api.TemperatureUnit
 import com.example.slancho.api.WindUnit
 import org.joda.time.DateTime
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
 import kotlin.math.roundToInt
 
 class WeatherFormatUtils(val sharedPreferencesManager: SharedPreferencesManager) {
@@ -16,21 +17,33 @@ class WeatherFormatUtils(val sharedPreferencesManager: SharedPreferencesManager)
 
         const val temperatureSymbol = "°"
 
+        const val percentageSymbol = "%"
+
         const val pressureUnit = "hPa"
 
         val temperatureDecimalFormat = DecimalFormat(".#")
+
+        @SuppressLint("SimpleDateFormat")
+        val dateFormat = SimpleDateFormat("dd/MM")
+
+        @SuppressLint("SimpleDateFormat")
+        val dateTimeFormat = SimpleDateFormat("HH:mm dd/MM")
+
         fun getCardinalDirection(angle: Double): String =
             directions[(angle / 45).roundToInt() % 8]
 
 
     }
 
+    fun formatPercentageSimple(percentage: Double) = "${percentage.toInt()}$percentageSymbol"
 
     fun formatWindSpeedAndDirection(windSpeed: Double, windDegree: Double) =
         " $windSpeed ${chooseWindUnit()} ${getCardinalDirection(windDegree)}"
 
     fun formatTemperature(temperature: Double) =
         "$temperatureSymbol${temperatureDecimalFormat.format(temperature)}"
+
+    fun formatTemperatureSimple(temperature: Double) = "$temperatureSymbol${temperature.toInt()}"
 
     @SuppressLint("DefaultLocale")
     fun formatDescription(info: String, description: String) = "$info: ${description.capitalize()}"
@@ -40,13 +53,14 @@ class WeatherFormatUtils(val sharedPreferencesManager: SharedPreferencesManager)
             WindUnit.Imperial.value else WindUnit.Metric.value
 
     fun formatDate(dateTime: DateTime) =
-        "${dateTime.dayOfMonth().get()}/${dateTime.monthOfYear().get()}"
+        dateFormat.format(dateTime.toDate())!!
 
     fun formatDateTime(dateTime: DateTime) =
-        "${dateTime.hourOfDay().get()}:${dateTime.minuteOfHour().get()} " +
-                "${dateTime.dayOfMonth().get()}/${dateTime.monthOfYear().get()}"
+        dateTimeFormat.format(dateTime.toDate())!!
 
     fun formatPressure(pressure: Double) = "$pressure $pressureUnit"
+
+    fun formatPressureSimple(pressure: Double) = "${pressure.toInt()} $pressureUnit"
 
     fun fetchWeatherIcon(iconId: String) =
         when (iconId) {

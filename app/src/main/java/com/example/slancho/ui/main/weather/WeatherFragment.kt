@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.slancho.R
+import com.example.slancho.api.ForecastType
 import com.example.slancho.common.weatherForecastModels.CurrentWeatherForecast
 import com.example.slancho.common.weatherForecastModels.WeatherForecast
 import com.example.slancho.databinding.FragmentWeatherBinding
@@ -31,9 +32,7 @@ class WeatherFragment : BaseMainFragment(), (CurrentWeatherForecast) -> Unit {
 
     lateinit var binding: FragmentWeatherBinding
     lateinit var viewModel: WeatherFragmentViewModel
-
-    @Inject
-    lateinit var sharedPreferencesManager: SharedPreferencesManager
+    @Inject lateinit var sharedPreferencesManager: SharedPreferencesManager
 
     companion object {
         fun newInstance(user: User): WeatherFragment {
@@ -55,6 +54,7 @@ class WeatherFragment : BaseMainFragment(), (CurrentWeatherForecast) -> Unit {
         initFields()
         initViews()
         initListeners()
+        initDataListeners()
         viewModel.onScreenReady(currentUser)
         return binding.root
     }
@@ -66,7 +66,17 @@ class WeatherFragment : BaseMainFragment(), (CurrentWeatherForecast) -> Unit {
     override fun initViews() {}
 
     override fun initListeners() {
-        viewModel.forecast.observe(this, Observer {
+        binding.grpRadioFilters.setOnCheckedChangeListener { _, id ->
+            when (id) {
+                R.id.btn_filter_current -> viewModel.onFilterButtonClicked(ForecastType.Current)
+                R.id.btn_filter_daily -> viewModel.onFilterButtonClicked(ForecastType.Daily)
+                R.id.btn_filter_three_hour -> viewModel.onFilterButtonClicked(ForecastType.ThreeHour)
+            }
+        }
+    }
+
+    private fun initDataListeners() {
+        viewModel.currentForecast.observe(this, Observer {
             initWeatherBanner(it)
             val weatherFormatUtils = WeatherFormatUtils(sharedPreferencesManager)
             val adapter = ListDelegationAdapter<List<WeatherForecast>>(
@@ -79,7 +89,7 @@ class WeatherFragment : BaseMainFragment(), (CurrentWeatherForecast) -> Unit {
             adapter.items = listItems
             binding.rvForecast.adapter = adapter
             binding.rvForecast.layoutManager = LinearLayoutManager(context)
-            Timber.d("Fetched forecast")
+            Timber.d("Fetched currentForecast")
         })
     }
 

@@ -21,14 +21,16 @@ class CurrentWeatherForecastAdapterDelegate {
         ) {
             grp_content.setOnClickListener { itemClickListener(item) }
             bind {
-                //TODO Add Humidity and Clouds Percentage
-                txt_temp.text = weatherFormatUtils.formatTemperature(item.temp)
+                txt_temp.text = weatherFormatUtils.formatTemperatureSimple(item.temp)
                 txt_date.text = weatherFormatUtils.formatDate(item.dateTime)
-                txt_min_temp.text = weatherFormatUtils.formatTemperature(item.tempMin)
-                txt_max_tempt.text = weatherFormatUtils.formatTemperature(item.tempMax)
+                txt_humidity.text =
+                    weatherFormatUtils.formatPercentageSimple(item.humidityPercentage)
+                txt_clouds.text = weatherFormatUtils.formatPercentageSimple(item.cloudsPercentage)
+                txt_min_temp.text = weatherFormatUtils.formatTemperatureSimple(item.tempMin)
+                txt_max_tempt.text = weatherFormatUtils.formatTemperatureSimple(item.tempMax)
                 txt_wind_speed.text =
                     weatherFormatUtils.formatWindSpeedAndDirection(item.windSpeed, item.windDegrees)
-                txt_pressure.text = weatherFormatUtils.formatPressure(item.pressure)
+                txt_pressure.text = weatherFormatUtils.formatPressureSimple(item.pressure)
                 txt_description.text =
                     weatherFormatUtils.formatDescription(item.info, item.description)
                 txt_sunrise.text = weatherFormatUtils.formatDateTime(item.sunrise)
