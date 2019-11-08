@@ -11,88 +11,62 @@
         tools:context=".ui.main.weather.WeatherFragment"
         tools:showPaths="true">
 
-        <View
-            android:id="@+id/view_motion"
+        <ImageView
+            android:id="@+id/iv_banner_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_padding"
+            android:background="@drawable/weather_banner_background"
+            android:maxHeight="320dp"
+            android:minHeight="140dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_wallpaper_placeholder"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/grp_forecast_banner"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/txt_banner_title"
+            style="@style/BannerTextView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/medium_padding"
-            android:maxHeight="320dp"
-            android:minHeight="140dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="@id/iv_banner_image"
+            tools:text="Sofia" />
 
-            <ImageView
-                android:id="@+id/iv_banner_image"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@drawable/weather_banner_background"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_wallpaper_placeholder"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/txt_banner_title"
-                style="@style/BannerTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/medium_padding"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Sofia" />
+        <RadioGroup
+            android:id="@+id/grp_radio_filters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_padding"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/iv_banner_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-            <LinearLayout
-                android:id="@+id/grp_forecast_filters"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="@+id/grp_forecast_banner"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+            <RadioButton
+                android:id="@+id/btn_filter_current"
+                style="@style/WeatherFilterRadioButton"
+                android:checked="true"
+                android:text="@string/current" />
 
-                <RadioGroup
-                    android:id="@+id/grp_radio_filters"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/medium_padding"
-                    android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/btn_filter_daily"
+                style="@style/WeatherFilterRadioButton"
+                android:layout_marginStart="8dp"
+                android:checked="false"
+                android:text="@string/daily" />
 
-                    <RadioButton
-                        android:id="@+id/btn_filter_current"
-                        style="@style/WeatherFilterRadioButton"
-                        android:checked="true"
-                        android:text="@string/current" />
-
-                    <RadioButton
-                        android:id="@+id/btn_filter_daily"
-                        style="@style/WeatherFilterRadioButton"
-                        android:layout_marginStart="8dp"
-                        android:checked="false"
-                        android:text="@string/daily" />
-
-                    <RadioButton
-                        android:id="@+id/btn_filter_three_hour"
-                        style="@style/WeatherFilterRadioButton"
-                        android:layout_marginStart="8dp"
-                        android:checked="false"
-                        android:text="@string/three_hour" />
-                </RadioGroup>
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <RadioButton
+                android:id="@+id/btn_filter_three_hour"
+                style="@style/WeatherFilterRadioButton"
+                android:layout_marginStart="8dp"
+                android:checked="false"
+                android:text="@string/three_hour" />
+        </RadioGroup>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_forecast"
@@ -101,7 +75,7 @@
             android:layout_margin="@dimen/medium_padding"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/grp_forecast_banner"
+            app:layout_constraintTop_toBottomOf="@id/iv_banner_image"
             tools:itemCount="1"
             tools:listitem="@layout/list_item_weather_forecast_current" />
 

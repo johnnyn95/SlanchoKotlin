@@ -90,8 +90,10 @@
 
     <style name="WeatherFilterRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
         <item name="android:background">@drawable/radio_button_background_selector</item>
-        <item name="android:layout_width">80dp</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">65dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:maxWidth">80dp</item>
+        <item name="android:maxHeight">40dp</item>
         <item name="android:button">@android:color/transparent</item>
         <item name="android:fontFamily">@font/rubik_medium</item>
         <item name="android:textAlignment">center</item>
