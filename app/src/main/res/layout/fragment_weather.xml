@@ -7,17 +7,28 @@
         android:id="@+id/grp_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:applyMotionScene="@xml/motion_scene_weather_fragment"
+        app:layoutDescription="@xml/motion_scene_weather_fragment"
         tools:context=".ui.main.weather.WeatherFragment"
         tools:showPaths="true">
+
+        <View
+            android:id="@+id/view_motion"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/grp_forecast_banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/medium_padding"
-            android:maxHeight="260dp"
+            android:maxHeight="320dp"
             android:minHeight="140dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -91,6 +102,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/grp_forecast_banner"
+            tools:itemCount="1"
             tools:listitem="@layout/list_item_weather_forecast_current" />
 
     </androidx.constraintlayout.motion.widget.MotionLayout>

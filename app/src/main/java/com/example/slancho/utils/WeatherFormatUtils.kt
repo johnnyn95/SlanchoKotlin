@@ -7,6 +7,7 @@ import com.example.slancho.api.WindUnit
 import org.joda.time.DateTime
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
+import java.util.concurrent.TimeUnit
 import kotlin.math.roundToInt
 
 class WeatherFormatUtils(val sharedPreferencesManager: SharedPreferencesManager) {
@@ -32,7 +33,7 @@ class WeatherFormatUtils(val sharedPreferencesManager: SharedPreferencesManager)
         fun getCardinalDirection(angle: Double): String =
             directions[(angle / 45).roundToInt() % 8]
 
-
+        fun initJodaDateTime(long: Long): DateTime = DateTime(TimeUnit.SECONDS.toMillis(long))
     }
 
     fun formatPercentageSimple(percentage: Double) = "${percentage.toInt()}$percentageSymbol"
