@@ -4,9 +4,9 @@
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@+id/start"
-        motion:duration="5000">
+        motion:duration="3000">
         <OnSwipe
-            motion:dragDirection="dragDown"
+            motion:dragDirection="dragUp"
             motion:touchAnchorId="@+id/rv_forecast"
             motion:touchAnchorSide="bottom" />
     </Transition>
@@ -18,12 +18,29 @@
     <ConstraintSet android:id="@+id/end">
         <Constraint
             android:id="@+id/iv_banner_image"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:visibility="invisible" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
         <Constraint
             android:id="@+id/txt_banner_title"
-            android:visibility="invisible" />
+            android:visibility="gone" />
+
+        <Constraint
+            android:id="@+id/grp_radio_filters"
+            android:visibility="gone" />
+
+        <Constraint
+            android:id="@+id/rv_forecast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/medium_padding"
+            android:layout_marginTop="@dimen/medium_padding"
+            android:layout_marginEnd="@dimen/medium_padding"
+            android:layout_marginBottom="@dimen/large_padding"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="parent" />
     </ConstraintSet>
 </MotionScene>
