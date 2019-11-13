@@ -1,6 +1,7 @@
 package com.example.slancho.common.weatherForecastModels
 
 import com.example.slancho.db.model.ForecastInfo
+import com.example.slancho.utils.WeatherFormatUtils
 import org.joda.time.DateTime
 
 class DailyWeatherForecast(
@@ -30,7 +31,7 @@ class DailyWeatherForecast(
             return DailyWeatherForecast(
                 forecastInfo.id,
                 forecastInfo.forecastId,
-                DateTime(forecastInfo.dateTime),
+                WeatherFormatUtils.initJodaDateTime(forecastInfo.dateTime!!),
                 forecastInfo.weatherIcon ?: "",
                 forecastInfo.weatherInfo ?: "",
                 forecastInfo.weatherDescription ?: "",
@@ -42,8 +43,8 @@ class DailyWeatherForecast(
                 forecastInfo.windDegrees ?: 0.0,
                 forecastInfo.humidityPercentage ?: 0.0,
                 forecastInfo.cloudsPercentage ?: 0.0,
-                DateTime(forecastInfo.sunset),
-                DateTime(forecastInfo.sunrise),
+                WeatherFormatUtils.initJodaDateTime(forecastInfo.sunset!!),
+                WeatherFormatUtils.initJodaDateTime(forecastInfo.sunrise!!),
                 forecastInfo.tempMorning ?: 0.0,
                 forecastInfo.tempEvening ?: 0.0,
                 forecastInfo.tempNight ?: 0.0

@@ -1,6 +1,7 @@
 package com.example.slancho.common.weatherForecastModels
 
 import com.example.slancho.db.model.ForecastInfo
+import com.example.slancho.utils.WeatherFormatUtils
 import org.joda.time.DateTime
 
 class ThreeHourWeatherForecast(
@@ -26,7 +27,7 @@ class ThreeHourWeatherForecast(
             return ThreeHourWeatherForecast(
                 forecastInfo.id,
                 forecastInfo.forecastId,
-                DateTime(forecastInfo.dateTime),
+                WeatherFormatUtils.initJodaDateTime(forecastInfo.dateTime!!),
                 forecastInfo.weatherIcon ?: "",
                 forecastInfo.weatherInfo ?: "",
                 forecastInfo.weatherDescription ?: "",

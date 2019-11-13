@@ -214,7 +214,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/grp_sunrise_sunset"
+            android:id="@+id/grp_ground_sea_level_pressure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/medium_padding"
@@ -224,49 +224,49 @@
             app:layout_constraintTop_toBottomOf="@+id/grp_wind_pressure">
 
             <ImageView
-                android:id="@+id/iv_sunrise"
+                android:id="@+id/iv_ground_level"
                 style="@style/WeatherCardImageViewIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_sunrise"
+                android:src="@drawable/ic_ground_level"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/txt_sunrise"
+                app:layout_constraintEnd_toStartOf="@id/txt_ground_level"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/txt_sunrise"
+                android:id="@+id/txt_ground_level"
                 style="@style/TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/iv_sunset"
-                app:layout_constraintStart_toEndOf="@id/iv_sunrise"
+                app:layout_constraintEnd_toStartOf="@id/iv_sea_level"
+                app:layout_constraintStart_toEndOf="@id/iv_ground_level"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="07:00 12/09" />
+                tools:text="1000hPa" />
 
             <ImageView
-                android:id="@+id/iv_sunset"
+                android:id="@+id/iv_sea_level"
                 style="@style/WeatherCardImageViewIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/medium_padding"
-                android:src="@drawable/ic_sunset"
+                android:src="@drawable/ic_sea_level"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/txt_sunset"
-                app:layout_constraintStart_toEndOf="@id/txt_sunrise"
+                app:layout_constraintEnd_toStartOf="@id/txt_sea_level"
+                app:layout_constraintStart_toEndOf="@id/txt_ground_level"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/txt_sunset"
+                android:id="@+id/txt_sea_level"
                 style="@style/TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/iv_sunset"
+                app:layout_constraintStart_toEndOf="@id/iv_sea_level"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="20:00 12/09" />
+                tools:text="1000hPa"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

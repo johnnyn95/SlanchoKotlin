@@ -5,7 +5,6 @@ import com.example.slancho.R
 import com.example.slancho.api.TemperatureUnit
 import com.example.slancho.api.WindUnit
 import org.joda.time.DateTime
-import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
 import kotlin.math.roundToInt
@@ -21,8 +20,6 @@ class WeatherFormatUtils(val sharedPreferencesManager: SharedPreferencesManager)
         const val percentageSymbol = "%"
 
         const val pressureUnit = "hPa"
-
-        val temperatureDecimalFormat = DecimalFormat(".#")
 
         @SuppressLint("SimpleDateFormat")
         val dateFormat = SimpleDateFormat("dd/MM")
@@ -41,9 +38,6 @@ class WeatherFormatUtils(val sharedPreferencesManager: SharedPreferencesManager)
     fun formatWindSpeedAndDirection(windSpeed: Double, windDegree: Double) =
         " $windSpeed ${chooseWindUnit()} ${getCardinalDirection(windDegree)}"
 
-    fun formatTemperature(temperature: Double) =
-        "$temperatureSymbol${temperatureDecimalFormat.format(temperature)}"
-
     fun formatTemperatureSimple(temperature: Double) = "$temperatureSymbol${temperature.toInt()}"
 
     @SuppressLint("DefaultLocale")
@@ -58,8 +52,6 @@ class WeatherFormatUtils(val sharedPreferencesManager: SharedPreferencesManager)
 
     fun formatDateTime(dateTime: DateTime) =
         dateTimeFormat.format(dateTime.toDate())!!
-
-    fun formatPressure(pressure: Double) = "$pressure $pressureUnit"
 
     fun formatPressureSimple(pressure: Double) = "${pressure.toInt()} $pressureUnit"
 
