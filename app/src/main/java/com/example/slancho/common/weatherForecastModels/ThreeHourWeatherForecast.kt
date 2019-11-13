@@ -22,7 +22,7 @@ class ThreeHourWeatherForecast(
     val groundLevel: Double
 ) : WeatherForecast() {
     companion object {
-        fun createFromForecastInfo(forecastInfo: ForecastInfo): ThreeHourWeatherForecast {
+        private fun createFromForecastInfo(forecastInfo: ForecastInfo): ThreeHourWeatherForecast {
             return ThreeHourWeatherForecast(
                 forecastInfo.id,
                 forecastInfo.forecastId,
@@ -41,6 +41,14 @@ class ThreeHourWeatherForecast(
                 forecastInfo.seaLevel ?: 0.0,
                 forecastInfo.groundLevel ?: 0.0
             )
+        }
+
+        fun createFromForecastInfoList(list: List<ForecastInfo>): List<ThreeHourWeatherForecast> {
+            val listItems = ArrayList<ThreeHourWeatherForecast>()
+            list.listIterator().forEach { forecastInfo ->
+                listItems.add(createFromForecastInfo(forecastInfo))
+            }
+            return listItems
         }
     }
 }

@@ -6,12 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.slancho.R
 import com.example.slancho.api.ForecastType
 import com.example.slancho.common.weatherForecastModels.CurrentWeatherForecast
+import com.example.slancho.common.weatherForecastModels.DailyWeatherForecast
+import com.example.slancho.common.weatherForecastModels.ThreeHourWeatherForecast
 import com.example.slancho.common.weatherForecastModels.WeatherForecast
 import com.example.slancho.databinding.FragmentWeatherBinding
 import com.example.slancho.db.model.Forecast
@@ -19,20 +22,26 @@ import com.example.slancho.db.model.User
 import com.example.slancho.di.GlideApp
 import com.example.slancho.ui.main.BaseMainFragment
 import com.example.slancho.ui.main.weather.adapterDelegates.CurrentWeatherForecastAdapterDelegate
+import com.example.slancho.ui.main.weather.adapterDelegates.DailyWeatherForecastAdapterDelegate
+import com.example.slancho.ui.main.weather.adapterDelegates.ThreeHourWeatherForecastAdapterDelegate
 import com.example.slancho.utils.SharedPreferencesManager
 import com.example.slancho.utils.WeatherFormatUtils
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import timber.log.Timber
 import javax.inject.Inject
 
-class WeatherFragment : BaseMainFragment(), (CurrentWeatherForecast) -> Unit {
-    override fun invoke(p1: CurrentWeatherForecast) {
+class WeatherFragment : BaseMainFragment(), (WeatherForecast) -> Unit {
+    override fun invoke(p2: WeatherForecast) {
         Timber.d("Current weather forecast clicked!")
     }
 
+
     lateinit var binding: FragmentWeatherBinding
     lateinit var viewModel: WeatherFragmentViewModel
-    @Inject lateinit var sharedPreferencesManager: SharedPreferencesManager
+    lateinit var forecastAdapter: ListDelegationAdapter<List<WeatherForecast>>
+    private lateinit var weatherFormatUtils: WeatherFormatUtils
+    @Inject
+    lateinit var sharedPreferencesManager: SharedPreferencesManager
 
     companion object {
         fun newInstance(user: User): WeatherFragment {
@@ -61,6 +70,12 @@ class WeatherFragment : BaseMainFragment(), (CurrentWeatherForecast) -> Unit {
 
     override fun initFields() {
         viewModel = getViewModel(WeatherFragmentViewModel::class.java)
+        weatherFormatUtils = WeatherFormatUtils(sharedPreferencesManager)
+        forecastAdapter = ListDelegationAdapter<List<WeatherForecast>>(
+            CurrentWeatherForecastAdapterDelegate().init(weatherFormatUtils, this),
+            DailyWeatherForecastAdapterDelegate().init(weatherFormatUtils, this),
+            ThreeHourWeatherForecastAdapterDelegate().init(weatherFormatUtils, this)
+        )
     }
 
     override fun initViews() {}
@@ -78,18 +93,24 @@ class WeatherFragment : BaseMainFragment(), (CurrentWeatherForecast) -> Unit {
     private fun initDataListeners() {
         viewModel.currentForecast.observe(this, Observer {
             initWeatherBanner(it)
-            val weatherFormatUtils = WeatherFormatUtils(sharedPreferencesManager)
-            val adapter = ListDelegationAdapter<List<WeatherForecast>>(
-                CurrentWeatherForecastAdapterDelegate().init(weatherFormatUtils, this)
-            )
-            val listItems = ArrayList<CurrentWeatherForecast>()
-            it.forecastInfo.listIterator().forEach { forecastInfo ->
-                listItems.add(CurrentWeatherForecast.createFromForecastInfo(forecastInfo))
+            when (it.forecastType) {
+                ForecastType.Current.value -> {
+                    forecastAdapter.items =
+                        CurrentWeatherForecast.createFromForecastInfoList(it.forecastInfo)
+                    Timber.d("Fetched currentForecast")
+                }
+                ForecastType.Daily.value -> {
+                    forecastAdapter.items =
+                        DailyWeatherForecast.createFromForecastInfoList(it.forecastInfo)
+                    Timber.d("Fetched dailyForecast")
+                }
+                ForecastType.ThreeHour.value -> {
+                    forecastAdapter.items =
+                        ThreeHourWeatherForecast.createFromForecastInfoList(it.forecastInfo)
+                    Timber.d("Fetched threeHourForecast")
+                }
             }
-            adapter.items = listItems
-            binding.rvForecast.adapter = adapter
-            binding.rvForecast.layoutManager = LinearLayoutManager(context)
-            Timber.d("Fetched currentForecast")
+            initForecastAdapter()
         })
     }
 
@@ -106,6 +127,14 @@ class WeatherFragment : BaseMainFragment(), (CurrentWeatherForecast) -> Unit {
                 .error(resources.getDrawable(R.drawable.ic_wallpaper_placeholder, context!!.theme))
                 .into(binding.ivBannerImage)
         }
+    }
+
+    private fun initForecastAdapter() {
+        val decoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
+        decoration.setDrawable(context!!.getDrawable(R.drawable.weather_decoration_divider)!!)
+        binding.rvForecast.adapter = forecastAdapter
+        binding.rvForecast.addItemDecoration(decoration)
+        binding.rvForecast.layoutManager = LinearLayoutManager(context)
     }
 }
 

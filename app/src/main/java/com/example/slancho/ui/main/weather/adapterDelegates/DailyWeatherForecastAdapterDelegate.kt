@@ -2,21 +2,36 @@ package com.example.slancho.ui.main.weather.adapterDelegates
 
 import com.example.slancho.R
 import com.example.slancho.common.weatherForecastModels.CurrentWeatherForecast
+import com.example.slancho.common.weatherForecastModels.DailyWeatherForecast
 import com.example.slancho.common.weatherForecastModels.WeatherForecast
 import com.example.slancho.utils.WeatherFormatUtils
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateLayoutContainer
 import kotlinx.android.synthetic.main.list_item_weather_forecast_current.*
+import kotlinx.android.synthetic.main.list_item_weather_forecast_current.grp_content
+import kotlinx.android.synthetic.main.list_item_weather_forecast_current.lottie_weather_icon
+import kotlinx.android.synthetic.main.list_item_weather_forecast_current.txt_clouds
+import kotlinx.android.synthetic.main.list_item_weather_forecast_current.txt_date
+import kotlinx.android.synthetic.main.list_item_weather_forecast_current.txt_description
+import kotlinx.android.synthetic.main.list_item_weather_forecast_current.txt_humidity
+import kotlinx.android.synthetic.main.list_item_weather_forecast_current.txt_max_tempt
+import kotlinx.android.synthetic.main.list_item_weather_forecast_current.txt_min_temp
+import kotlinx.android.synthetic.main.list_item_weather_forecast_current.txt_pressure
+import kotlinx.android.synthetic.main.list_item_weather_forecast_current.txt_sunrise
+import kotlinx.android.synthetic.main.list_item_weather_forecast_current.txt_sunset
+import kotlinx.android.synthetic.main.list_item_weather_forecast_current.txt_temp
+import kotlinx.android.synthetic.main.list_item_weather_forecast_current.txt_wind_speed
+import kotlinx.android.synthetic.main.list_item_weather_forecast_daily.*
 
-class CurrentWeatherForecastAdapterDelegate {
+class DailyWeatherForecastAdapterDelegate {
     companion object {
-        const val layoutResId = R.layout.list_item_weather_forecast_current
+        const val layoutResId = R.layout.list_item_weather_forecast_daily
     }
 
     fun init(
         weatherFormatUtils: WeatherFormatUtils,
-        itemClickListener: (CurrentWeatherForecast) -> Unit
+        itemClickListener: (DailyWeatherForecast) -> Unit
     ) =
-        adapterDelegateLayoutContainer<CurrentWeatherForecast, WeatherForecast>(
+        adapterDelegateLayoutContainer<DailyWeatherForecast, WeatherForecast>(
             layoutResId
         ) {
             grp_content.setOnClickListener { itemClickListener(item) }
@@ -35,6 +50,9 @@ class CurrentWeatherForecastAdapterDelegate {
                     weatherFormatUtils.formatDescription(item.info, item.description)
                 txt_sunrise.text = weatherFormatUtils.formatDateTime(item.sunrise)
                 txt_sunset.text = weatherFormatUtils.formatDateTime(item.sunset)
+                txt_temp_morn_value.text = weatherFormatUtils.formatTemperatureSimple(item.tempMorning)
+                txt_temp_eve_value.text = weatherFormatUtils.formatTemperatureSimple(item.tempEvening)
+                txt_temp_night_value.text = weatherFormatUtils.formatTemperatureSimple(item.tempNight)
                 lottie_weather_icon.setAnimation(weatherFormatUtils.fetchWeatherIcon(item.icon))
             }
         }

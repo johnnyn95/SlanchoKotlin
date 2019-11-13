@@ -12,27 +12,26 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_weather_icon"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_margin="@dimen/large_padding"
-            android:maxWidth="320dp"
-            android:maxHeight="320dp"
+            android:maxWidth="160dp"
+            android:maxHeight="160dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             tools:src="@drawable/ic_wallpaper_placeholder" />
 
-
         <TextView
             android:id="@+id/txt_temp"
-            style="@style/WeatherCardTitleTextView"
+            style="@style/WeatherCardTitleTextViewMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/txt_date"
-            app:layout_constraintEnd_toEndOf="@+id/txt_date"
-            app:layout_constraintStart_toStartOf="@+id/txt_date"
-            app:layout_constraintTop_toTopOf="@id/lottie_weather_icon"
+            app:layout_constraintEnd_toEndOf="@id/txt_date"
+            app:layout_constraintStart_toStartOf="@id/txt_date"
+            app:layout_constraintTop_toTopOf="@+id/lottie_weather_icon"
             tools:text="°6" />
 
         <TextView
@@ -40,10 +39,10 @@
             style="@style/WeatherCardTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/lottie_weather_icon"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="44dp"
+            android:layout_marginBottom="52dp"
+            app:layout_constraintBottom_toBottomOf="@+id/grp_temp_morn_eve_night"
             app:layout_constraintStart_toEndOf="@+id/lottie_weather_icon"
-            app:layout_constraintTop_toBottomOf="@+id/txt_temp"
             tools:text="12/09" />
 
         <TextView
@@ -53,11 +52,83 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/large_padding"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.503"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/grp_min_max_temp"
-            tools:layout_editor_absoluteY="192dp"
+            app:layout_constraintTop_toBottomOf="@+id/grp_temp_morn_eve_night"
             tools:text="Clear: Clear Sky" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/grp_temp_morn_eve_night"
+            android:layout_width="126dp"
+            android:layout_height="121dp"
+            android:layout_margin="@dimen/medium_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.833"
+            app:layout_constraintStart_toEndOf="@+id/txt_date"
+            app:layout_constraintTop_toTopOf="@+id/lottie_weather_icon">
+
+            <TextView
+                android:id="@+id/txt_temp_morn_title"
+                style="@style/TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/morning"
+                app:layout_constraintBottom_toTopOf="@id/txt_temp_eve_title"
+                app:layout_constraintEnd_toStartOf="@id/txt_temp_morn_value"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_temp_morn_value"
+                style="@style/TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/txt_temp_morn_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/txt_temp_morn_title"
+                app:layout_constraintTop_toTopOf="@id/txt_temp_morn_title"
+                tools:text="°3" />
+
+            <TextView
+                android:id="@+id/txt_temp_eve_title"
+                style="@style/TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/evening"
+                app:layout_constraintEnd_toStartOf="@id/txt_temp_eve_value"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_temp_morn_title" />
+
+            <TextView
+                android:id="@+id/txt_temp_eve_value"
+                style="@style/TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/txt_temp_eve_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/txt_temp_eve_title"
+                app:layout_constraintTop_toTopOf="@id/txt_temp_eve_title"
+                tools:text="°7" />
+
+            <TextView
+                android:id="@+id/txt_temp_night_title"
+                style="@style/TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/night"
+                app:layout_constraintEnd_toStartOf="@id/txt_temp_night_value"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_temp_eve_title" />
+
+            <TextView
+                android:id="@+id/txt_temp_night_value"
+                style="@style/TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/txt_temp_night_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/txt_temp_night_title"
+                app:layout_constraintTop_toTopOf="@id/txt_temp_night_title"
+                tools:text="°3" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/grp_min_max_temp"
@@ -66,7 +137,7 @@
             android:layout_margin="@dimen/large_padding"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lottie_weather_icon">
+            app:layout_constraintTop_toBottomOf="@+id/txt_description">
 
             <ImageView
                 android:id="@+id/iv_min_temp"
@@ -117,7 +188,8 @@
             android:layout_margin="@dimen/large_padding"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_description">
+            app:layout_constraintTop_toBottomOf="@id/grp_min_max_temp"
+            tools:layout_editor_absoluteY="246dp">
 
             <ImageView
                 android:id="@+id/iv_humidity"

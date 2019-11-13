@@ -26,7 +26,7 @@ class DailyWeatherForecast(
 
 ) : WeatherForecast() {
     companion object {
-        fun createFromForecastInfo(forecastInfo: ForecastInfo): DailyWeatherForecast {
+        private fun createFromForecastInfo(forecastInfo: ForecastInfo): DailyWeatherForecast {
             return DailyWeatherForecast(
                 forecastInfo.id,
                 forecastInfo.forecastId,
@@ -48,6 +48,14 @@ class DailyWeatherForecast(
                 forecastInfo.tempEvening ?: 0.0,
                 forecastInfo.tempNight ?: 0.0
             )
+        }
+
+        fun createFromForecastInfoList(list: List<ForecastInfo>): List<DailyWeatherForecast> {
+            val listItems = ArrayList<DailyWeatherForecast>()
+            list.listIterator().forEach { forecastInfo ->
+                listItems.add(createFromForecastInfo(forecastInfo))
+            }
+            return listItems
         }
     }
 }

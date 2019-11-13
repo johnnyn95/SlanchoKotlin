@@ -23,7 +23,7 @@ class CurrentWeatherForecast(
     val sunrise: DateTime
 ) : WeatherForecast() {
     companion object {
-        fun createFromForecastInfo(forecastInfo: ForecastInfo): CurrentWeatherForecast {
+        private fun createFromForecastInfo(forecastInfo: ForecastInfo): CurrentWeatherForecast {
             return CurrentWeatherForecast(
                 forecastInfo.id,
                 forecastInfo.forecastId,
@@ -42,6 +42,14 @@ class CurrentWeatherForecast(
                 WeatherFormatUtils.initJodaDateTime(forecastInfo.sunset!!),
                 WeatherFormatUtils.initJodaDateTime(forecastInfo.sunrise!!)
             )
+        }
+
+        fun createFromForecastInfoList(list: List<ForecastInfo>): List<CurrentWeatherForecast> {
+            val listItems = ArrayList<CurrentWeatherForecast>()
+            list.listIterator().forEach { forecastInfo ->
+                listItems.add(createFromForecastInfo(forecastInfo))
+            }
+            return listItems
         }
     }
 }
