@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 import com.example.slancho.api.ForecastType
 import com.example.slancho.api.models.openWeatherMap.OpenWeatherMapCurrentForecastResponse
 import com.example.slancho.api.models.openWeatherMap.OpenWeatherMapThreeHourForecastResponse
+import com.example.slancho.api.models.rapidApiOpenWeatherMap.RapidApiOpenWeatherMapCurrentForecastResponse
 import com.example.slancho.api.models.rapidApiOpenWeatherMap.RapidApiOpenWeatherMapDailyForecastResponse
 import com.example.slancho.api.models.rapidApiOpenWeatherMap.RapidApiOpenWeatherMapTheeHourForecastResponse
 import java.util.*
@@ -156,7 +157,7 @@ data class Forecast(
         }
 
         /**
-         * Used for the Three hour forecast by the RapidApiOpenWeather Api
+         * Used for the current weather forecast by the OpenWeatherMap Api
          */
         fun createForecastFromCurrentForecastResponse(
             openWeatherMapCurrentForecastResponse:
@@ -182,6 +183,40 @@ data class Forecast(
             forecastInfo.add(
                 ForecastInfo.createForecastInfoFromCurrentForecastResponse(
                     openWeatherMapCurrentForecastResponse,
+                    forecast.id
+                )
+            )
+            forecast.forecastInfo = forecastInfo
+            return forecast
+        }
+
+        /**
+         * Used for the current weather forecast by the RapidApiOpenWeather Api
+         */
+        fun createForecastFromCurrentForecastResponse(
+            rapidApiOpenWeatherMapCurrentForecastResponse:
+            RapidApiOpenWeatherMapCurrentForecastResponse
+        ): Forecast {
+            val forecast = Forecast(
+                UUID.randomUUID().toString(),
+                System.currentTimeMillis(),
+                rapidApiOpenWeatherMapCurrentForecastResponse.cod!!.toString(),
+                0.0,
+                1,
+                rapidApiOpenWeatherMapCurrentForecastResponse.name!!,
+                if (rapidApiOpenWeatherMapCurrentForecastResponse.id != null)
+                    rapidApiOpenWeatherMapCurrentForecastResponse.id!!
+                else Random(RANDOM_SEED).nextLong(),
+                ForecastType.Current.value
+            )
+            forecast.city = City.createCityFromCurrentForecastResponse(
+                rapidApiOpenWeatherMapCurrentForecastResponse,
+                forecast.cityId
+            )
+            val forecastInfo = arrayListOf<ForecastInfo>()
+            forecastInfo.add(
+                ForecastInfo.createForecastInfoFromCurrentForecastResponse(
+                    rapidApiOpenWeatherMapCurrentForecastResponse,
                     forecast.id
                 )
             )

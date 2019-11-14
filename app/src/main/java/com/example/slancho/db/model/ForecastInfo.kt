@@ -187,6 +187,37 @@ data class ForecastInfo(
                 openWeatherMapCurrentForecastResponse.weatherInfo!!.first().icon
             )
         }
-//        openWeatherMapCurrentForecastResponse: OpenWeatherMapCurrentForecastResponse
+
+        /**
+         * Used for creation of Current Forecast data object
+         */
+        fun createForecastInfoFromCurrentForecastResponse(
+            rapidApiOpenWeatherMapCurrentForecastResponse:
+            com.example.slancho.api.models.rapidApiOpenWeatherMap.RapidApiOpenWeatherMapCurrentForecastResponse,
+            forecastId: String
+        ): ForecastInfo {
+            return ForecastInfo(
+                UUID.randomUUID().toString(),
+                forecastId,
+                rapidApiOpenWeatherMapCurrentForecastResponse.dateTime,
+                rapidApiOpenWeatherMapCurrentForecastResponse.mainResponse!!.temp,
+                rapidApiOpenWeatherMapCurrentForecastResponse.mainResponse!!.tempMin,
+                rapidApiOpenWeatherMapCurrentForecastResponse.mainResponse!!.tempMax,
+                null, null, null,
+                rapidApiOpenWeatherMapCurrentForecastResponse.sysResponse!!.sunrise,
+                rapidApiOpenWeatherMapCurrentForecastResponse.sysResponse!!.sunset,
+                rapidApiOpenWeatherMapCurrentForecastResponse.mainResponse!!.pressure,
+                null, null,
+                rapidApiOpenWeatherMapCurrentForecastResponse.mainResponse!!.humidity,
+                rapidApiOpenWeatherMapCurrentForecastResponse.cloudsResponse!!.all,
+                rapidApiOpenWeatherMapCurrentForecastResponse.windResponse!!.speed,
+                rapidApiOpenWeatherMapCurrentForecastResponse.windResponse!!.deg,
+                null,
+                rapidApiOpenWeatherMapCurrentForecastResponse.weatherInfo!!.first().id,
+                rapidApiOpenWeatherMapCurrentForecastResponse.weatherInfo!!.first().main,
+                rapidApiOpenWeatherMapCurrentForecastResponse.weatherInfo!!.first().description,
+                rapidApiOpenWeatherMapCurrentForecastResponse.weatherInfo!!.first().icon
+            )
+        }
     }
 }

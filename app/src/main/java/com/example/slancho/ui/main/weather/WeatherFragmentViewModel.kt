@@ -48,7 +48,7 @@ class WeatherFragmentViewModel @Inject constructor(
     }
 
     private suspend fun fetchForecastData(user: User) {
-        openWeatherMapApiRepository.getCurrentForecastByCityAndCountryCode(
+        rapidApiOpenWeatherMapRepository.getCurrentForecastByCityAndCountryCode(
             user.lastKnownLocation!!.getFormattedCityAndCountryCode()
         )
 

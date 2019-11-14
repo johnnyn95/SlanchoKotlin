@@ -20,6 +20,40 @@ class RapidApiOpenWeatherMapApiRepository @Inject constructor(
         val TAG = RapidApiOpenWeatherMapApiRepository::class.java.simpleName
     }
 
+    override suspend fun getCurrentForecastByLocation(latitude: Double, longitude: Double) {
+        withContext(IO) {
+            try {
+                val response =
+                    rapidApiOpenWeatherMapService.getCurrentForecast(null, latitude, longitude).execute()
+                if (response.isSuccessful) {
+                    val forecast =
+                        Forecast.createForecastFromCurrentForecastResponse(response.body()!!)
+                    forecastDbRepository.insertForecast(forecast)
+                }
+            } catch (e: IOException) {
+                Timber.e("Couldn't fetch the forecast data! $e")
+            }
+        }
+    }
+
+    override suspend fun getCurrentForecastByCityAndCountryCode(location: String) {
+        withContext(IO) {
+            try {
+                val response =
+                    rapidApiOpenWeatherMapService.getCurrentForecast(
+                        location, null, null
+                    ).execute()
+                if (response.isSuccessful) {
+                    val forecast =
+                        Forecast.createForecastFromCurrentForecastResponse(response.body()!!)
+                    forecastDbRepository.insertForecast(forecast)
+                }
+            } catch (e: IOException) {
+                Timber.e("Couldn't fetch the forecast data! $e")
+            }
+        }
+    }
+
     override suspend fun getRapidApiThreeHourForecastByLocation(
         latitude: Double,
         longitude: Double
