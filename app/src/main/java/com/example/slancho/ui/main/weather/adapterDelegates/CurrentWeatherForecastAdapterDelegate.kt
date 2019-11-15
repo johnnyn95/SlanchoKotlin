@@ -32,7 +32,7 @@ class CurrentWeatherForecastAdapterDelegate {
                     weatherFormatUtils.formatWindSpeedAndDirection(item.windSpeed, item.windDegrees)
                 txt_pressure.text = weatherFormatUtils.formatPressureSimple(item.pressure)
                 txt_description.text =
-                    weatherFormatUtils.formatDescription(item.info, item.description)
+                    weatherFormatUtils.formatDescription(item.description)
                 txt_sunrise.text = weatherFormatUtils.formatDateTime(item.sunrise)
                 txt_sunset.text = weatherFormatUtils.formatDateTime(item.sunset)
                 lottie_weather_icon.setAnimation(weatherFormatUtils.fetchWeatherIcon(item.icon))

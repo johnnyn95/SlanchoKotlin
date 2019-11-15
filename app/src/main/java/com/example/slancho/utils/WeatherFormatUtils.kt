@@ -27,6 +27,9 @@ class WeatherFormatUtils(val sharedPreferencesManager: SharedPreferencesManager)
         @SuppressLint("SimpleDateFormat")
         val dateTimeFormat = SimpleDateFormat("HH:mm dd/MM")
 
+        @SuppressLint("SimpleDateFormat")
+        val dateTimeWeekdayFormat = SimpleDateFormat("EEEE")
+
         fun getCardinalDirection(angle: Double): String =
             directions[(angle / 45).roundToInt() % 8]
 
@@ -41,7 +44,7 @@ class WeatherFormatUtils(val sharedPreferencesManager: SharedPreferencesManager)
     fun formatTemperatureSimple(temperature: Double) = "$temperatureSymbol${temperature.toInt()}"
 
     @SuppressLint("DefaultLocale")
-    fun formatDescription(info: String, description: String) = "$info: ${description.capitalize()}"
+    fun formatDescription(description: String) = description.capitalize()
 
     private fun chooseWindUnit() =
         if (sharedPreferencesManager.tempUnitValue == TemperatureUnit.Fahrenheit.value)
@@ -52,6 +55,9 @@ class WeatherFormatUtils(val sharedPreferencesManager: SharedPreferencesManager)
 
     fun formatDateTime(dateTime: DateTime) =
         dateTimeFormat.format(dateTime.toDate())!!
+
+    fun formatDateTimeWeekday(dateTime: DateTime) =
+        dateTimeWeekdayFormat.format(dateTime.toDate())!!
 
     fun formatPressureSimple(pressure: Double) = "${pressure.toInt()} $pressureUnit"
 

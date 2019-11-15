@@ -33,7 +33,7 @@ class ThreeHourWeatherForecastAdapterDelegate {
             grp_content.setOnClickListener { itemClickListener(item) }
             bind {
                 txt_temp.text = weatherFormatUtils.formatTemperatureSimple(item.temp)
-                txt_date.text = weatherFormatUtils.formatDateTime(item.dateTime)
+                txt_date.text = weatherFormatUtils.formatDateTimeWeekday(item.dateTime)
                 txt_humidity.text =
                     weatherFormatUtils.formatPercentageSimple(item.humidityPercentage)
                 txt_clouds.text = weatherFormatUtils.formatPercentageSimple(item.cloudsPercentage)
@@ -43,7 +43,7 @@ class ThreeHourWeatherForecastAdapterDelegate {
                     weatherFormatUtils.formatWindSpeedAndDirection(item.windSpeed, item.windDegrees)
                 txt_pressure.text = weatherFormatUtils.formatPressureSimple(item.pressure)
                 txt_description.text =
-                    weatherFormatUtils.formatDescription(item.info, item.description)
+                    weatherFormatUtils.formatDescription(item.description)
                 txt_ground_level.text = weatherFormatUtils.formatPressureSimple(item.groundLevel)
                 txt_sea_level.text = weatherFormatUtils.formatPressureSimple(item.seaLevel)
                 lottie_weather_icon.setAnimation(weatherFormatUtils.fetchWeatherIcon(item.icon))

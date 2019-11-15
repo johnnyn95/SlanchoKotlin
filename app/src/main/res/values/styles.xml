@@ -110,7 +110,7 @@
     </style>
 
     <style name="WeatherCardTitleTextViewMedium" parent="MediumFontFamily">
-        <item name="android:textSize">@dimen/large_text_size</item>
+        <item name="android:textSize">@dimen/medium_text_size</item>
     </style>
 
     <style name="WeatherCardTextViewMedium" parent="MediumFontFamily">
@@ -126,5 +126,17 @@
         <item name="android:maxWidth">48dp</item>
         <item name="android:minHeight">24dp</item>
         <item name="android:minWidth">24dp</item>
+    </style>
+
+    <style name="WeatherCardImageViewIconMedium">
+        <item name="android:scaleType">fitStart</item>
+        <item name="android:layout_margin">@dimen/small_padding</item>
+        <item name="android:layout_height">16dp</item>
+        <item name="android:layout_width">16dp</item>
+        <item name="android:maxHeight">32dp</item>
+        <item name="android:maxWidth">32dp</item>
+        <item name="android:minHeight">16dp</item>
+        <item name="android:minWidth">16dp</item>
+        <item name="android:adjustViewBounds">true</item>
     </style>
 </resources>

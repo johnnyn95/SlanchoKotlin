@@ -1,12 +1,10 @@
 package com.example.slancho.ui.main.weather.adapterDelegates
 
 import com.example.slancho.R
-import com.example.slancho.common.weatherForecastModels.CurrentWeatherForecast
 import com.example.slancho.common.weatherForecastModels.DailyWeatherForecast
 import com.example.slancho.common.weatherForecastModels.WeatherForecast
 import com.example.slancho.utils.WeatherFormatUtils
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateLayoutContainer
-import kotlinx.android.synthetic.main.list_item_weather_forecast_current.*
 import kotlinx.android.synthetic.main.list_item_weather_forecast_current.grp_content
 import kotlinx.android.synthetic.main.list_item_weather_forecast_current.lottie_weather_icon
 import kotlinx.android.synthetic.main.list_item_weather_forecast_current.txt_clouds
@@ -38,6 +36,7 @@ class DailyWeatherForecastAdapterDelegate {
             bind {
                 txt_temp.text = weatherFormatUtils.formatTemperatureSimple(item.temp)
                 txt_date.text = weatherFormatUtils.formatDate(item.dateTime)
+                txt_weekday.text = weatherFormatUtils.formatDateTimeWeekday(item.dateTime)
                 txt_humidity.text =
                     weatherFormatUtils.formatPercentageSimple(item.humidityPercentage)
                 txt_clouds.text = weatherFormatUtils.formatPercentageSimple(item.cloudsPercentage)
@@ -47,12 +46,15 @@ class DailyWeatherForecastAdapterDelegate {
                     weatherFormatUtils.formatWindSpeedAndDirection(item.windSpeed, item.windDegrees)
                 txt_pressure.text = weatherFormatUtils.formatPressureSimple(item.pressure)
                 txt_description.text =
-                    weatherFormatUtils.formatDescription(item.info, item.description)
+                    weatherFormatUtils.formatDescription(item.description)
                 txt_sunrise.text = weatherFormatUtils.formatDateTime(item.sunrise)
                 txt_sunset.text = weatherFormatUtils.formatDateTime(item.sunset)
-                txt_temp_morn_value.text = weatherFormatUtils.formatTemperatureSimple(item.tempMorning)
-                txt_temp_eve_value.text = weatherFormatUtils.formatTemperatureSimple(item.tempEvening)
-                txt_temp_night_value.text = weatherFormatUtils.formatTemperatureSimple(item.tempNight)
+                txt_temp_morn_value.text =
+                    weatherFormatUtils.formatTemperatureSimple(item.tempMorning)
+                txt_temp_eve_value.text =
+                    weatherFormatUtils.formatTemperatureSimple(item.tempEvening)
+                txt_temp_night_value.text =
+                    weatherFormatUtils.formatTemperatureSimple(item.tempNight)
                 lottie_weather_icon.setAnimation(weatherFormatUtils.fetchWeatherIcon(item.icon))
             }
         }

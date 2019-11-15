@@ -35,11 +35,11 @@ class WeatherFragment : BaseMainFragment(), (WeatherForecast) -> Unit {
         Timber.d("Current weather forecast clicked!")
     }
 
-
     lateinit var binding: FragmentWeatherBinding
     lateinit var viewModel: WeatherFragmentViewModel
     lateinit var forecastAdapter: ListDelegationAdapter<List<WeatherForecast>>
     private lateinit var weatherFormatUtils: WeatherFormatUtils
+
     @Inject
     lateinit var sharedPreferencesManager: SharedPreferencesManager
 
@@ -78,7 +78,12 @@ class WeatherFragment : BaseMainFragment(), (WeatherForecast) -> Unit {
         )
     }
 
-    override fun initViews() {}
+    override fun initViews() {
+        val decoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
+        decoration.setDrawable(context!!.getDrawable(R.drawable.weather_decoration_divider)!!)
+        binding.rvForecast.addItemDecoration(decoration)
+        binding.rvForecast.layoutManager = LinearLayoutManager(context)
+    }
 
     override fun initListeners() {
         binding.grpRadioFilters.setOnCheckedChangeListener { _, id ->
@@ -130,11 +135,7 @@ class WeatherFragment : BaseMainFragment(), (WeatherForecast) -> Unit {
     }
 
     private fun initForecastAdapter() {
-        val decoration = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
-        decoration.setDrawable(context!!.getDrawable(R.drawable.weather_decoration_divider)!!)
         binding.rvForecast.adapter = forecastAdapter
-        binding.rvForecast.addItemDecoration(decoration)
-        binding.rvForecast.layoutManager = LinearLayoutManager(context)
     }
 }
 
