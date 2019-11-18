@@ -1,8 +1,8 @@
 package com.example.slancho.ui.main.weather.adapterDelegates
 
 import com.example.slancho.R
+import com.example.slancho.common.weatherForecastModels.AdapterCard
 import com.example.slancho.common.weatherForecastModels.DailyWeatherForecast
-import com.example.slancho.common.weatherForecastModels.WeatherForecast
 import com.example.slancho.utils.WeatherFormatUtils
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateLayoutContainer
 import kotlinx.android.synthetic.main.list_item_weather_forecast_current.grp_content
@@ -29,7 +29,7 @@ class DailyWeatherForecastAdapterDelegate {
         weatherFormatUtils: WeatherFormatUtils,
         itemClickListener: (DailyWeatherForecast) -> Unit
     ) =
-        adapterDelegateLayoutContainer<DailyWeatherForecast, WeatherForecast>(
+        adapterDelegateLayoutContainer<DailyWeatherForecast, AdapterCard>(
             layoutResId
         ) {
             grp_content.setOnClickListener { itemClickListener(item) }

@@ -12,10 +12,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.slancho.R
 import com.example.slancho.api.ForecastType
-import com.example.slancho.common.weatherForecastModels.CurrentWeatherForecast
-import com.example.slancho.common.weatherForecastModels.DailyWeatherForecast
-import com.example.slancho.common.weatherForecastModels.ThreeHourWeatherForecast
-import com.example.slancho.common.weatherForecastModels.WeatherForecast
+import com.example.slancho.common.weatherForecastModels.*
 import com.example.slancho.databinding.FragmentWeatherBinding
 import com.example.slancho.db.model.Forecast
 import com.example.slancho.db.model.User
@@ -30,14 +27,25 @@ import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import timber.log.Timber
 import javax.inject.Inject
 
-class WeatherFragment : BaseMainFragment(), (WeatherForecast) -> Unit {
-    override fun invoke(p2: WeatherForecast) {
-        Timber.d("Current weather forecast clicked!")
+class WeatherFragment : BaseMainFragment(), (AdapterCard) -> Unit {
+    override fun invoke(adapterCard: AdapterCard) {
+        when (adapterCard.getCardType()) {
+            AdapterCardType.WeatherCard -> {
+                Timber.d("Weather forecast clicked!")
+                when ((adapterCard as WeatherForecast).getForecastType()) {
+                    ForecastType.Current -> Timber.d("Current forecast clicked!")
+                    ForecastType.Daily -> Timber.d("Daily forecast clicked!")
+                    ForecastType.ThreeHour -> Timber.d("Three hour forecast clicked!")
+                }
+            }
+            else ->
+                Timber.d("Other")
+        }
     }
 
     lateinit var binding: FragmentWeatherBinding
     lateinit var viewModel: WeatherFragmentViewModel
-    lateinit var forecastAdapter: ListDelegationAdapter<List<WeatherForecast>>
+    lateinit var forecastAdapter: ListDelegationAdapter<List<AdapterCard>>
     private lateinit var weatherFormatUtils: WeatherFormatUtils
 
     @Inject
@@ -71,7 +79,7 @@ class WeatherFragment : BaseMainFragment(), (WeatherForecast) -> Unit {
     override fun initFields() {
         viewModel = getViewModel(WeatherFragmentViewModel::class.java)
         weatherFormatUtils = WeatherFormatUtils(sharedPreferencesManager)
-        forecastAdapter = ListDelegationAdapter<List<WeatherForecast>>(
+        forecastAdapter = ListDelegationAdapter<List<AdapterCard>>(
             CurrentWeatherForecastAdapterDelegate().init(weatherFormatUtils, this),
             DailyWeatherForecastAdapterDelegate().init(weatherFormatUtils, this),
             ThreeHourWeatherForecastAdapterDelegate().init(weatherFormatUtils, this)

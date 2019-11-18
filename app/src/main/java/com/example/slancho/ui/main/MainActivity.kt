@@ -59,7 +59,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(),
         initToolbar()
         initBottomNavigation()
         initDrawer()
-//        initFragments(userId)
     }
 
     override fun initListeners() {

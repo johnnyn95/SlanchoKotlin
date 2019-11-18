@@ -2,6 +2,7 @@
   <dictionary name="jonathan.nguyen">
     <words>
       <w>appid</w>
+      <w>collapsable</w>
       <w>coord</w>
       <w>coroutines</w>
       <w>firebase</w>

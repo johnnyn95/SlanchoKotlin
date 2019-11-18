@@ -1,5 +1,6 @@
 package com.example.slancho.common.weatherForecastModels
 
+import com.example.slancho.api.ForecastType
 import com.example.slancho.db.model.ForecastInfo
 import com.example.slancho.utils.WeatherFormatUtils
 import org.joda.time.DateTime
@@ -22,6 +23,9 @@ class CurrentWeatherForecast(
     val sunset: DateTime,
     val sunrise: DateTime
 ) : WeatherForecast() {
+    override fun isCollapsable(): Boolean = false
+    override fun getForecastType(): ForecastType = ForecastType.Current
+
     companion object {
         private fun createFromForecastInfo(forecastInfo: ForecastInfo): CurrentWeatherForecast {
             return CurrentWeatherForecast(

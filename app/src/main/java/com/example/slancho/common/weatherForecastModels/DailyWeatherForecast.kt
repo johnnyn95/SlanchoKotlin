@@ -1,5 +1,6 @@
 package com.example.slancho.common.weatherForecastModels
 
+import com.example.slancho.api.ForecastType
 import com.example.slancho.db.model.ForecastInfo
 import com.example.slancho.utils.WeatherFormatUtils
 import org.joda.time.DateTime
@@ -23,9 +24,12 @@ class DailyWeatherForecast(
     val sunrise: DateTime,
     val tempMorning: Double,
     val tempEvening: Double,
-    val tempNight: Double
+    val tempNight: Double,
+    override var collapsedCard: Boolean
+) : WeatherForecast(), CollapsableCard {
+    override fun isCollapsable(): Boolean = true
+    override fun getForecastType(): ForecastType = ForecastType.Daily
 
-) : WeatherForecast() {
     companion object {
         private fun createFromForecastInfo(forecastInfo: ForecastInfo): DailyWeatherForecast {
             return DailyWeatherForecast(
@@ -47,7 +51,8 @@ class DailyWeatherForecast(
                 WeatherFormatUtils.initJodaDateTime(forecastInfo.sunrise!!),
                 forecastInfo.tempMorning ?: 0.0,
                 forecastInfo.tempEvening ?: 0.0,
-                forecastInfo.tempNight ?: 0.0
+                forecastInfo.tempNight ?: 0.0,
+                true
             )
         }
 

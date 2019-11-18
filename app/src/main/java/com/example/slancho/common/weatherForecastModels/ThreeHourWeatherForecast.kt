@@ -1,5 +1,6 @@
 package com.example.slancho.common.weatherForecastModels
 
+import com.example.slancho.api.ForecastType
 import com.example.slancho.db.model.ForecastInfo
 import com.example.slancho.utils.WeatherFormatUtils
 import org.joda.time.DateTime
@@ -20,8 +21,12 @@ class ThreeHourWeatherForecast(
     override val humidityPercentage: Double,
     override val cloudsPercentage: Double,
     val seaLevel: Double,
-    val groundLevel: Double
-) : WeatherForecast() {
+    val groundLevel: Double,
+    override var collapsedCard: Boolean
+) : WeatherForecast(), CollapsableCard {
+    override fun isCollapsable(): Boolean = true
+    override fun getForecastType(): ForecastType = ForecastType.ThreeHour
+
     companion object {
         private fun createFromForecastInfo(forecastInfo: ForecastInfo): ThreeHourWeatherForecast {
             return ThreeHourWeatherForecast(
@@ -40,7 +45,8 @@ class ThreeHourWeatherForecast(
                 forecastInfo.humidityPercentage ?: 0.0,
                 forecastInfo.cloudsPercentage ?: 0.0,
                 forecastInfo.seaLevel ?: 0.0,
-                forecastInfo.groundLevel ?: 0.0
+                forecastInfo.groundLevel ?: 0.0,
+                true
             )
         }
 
