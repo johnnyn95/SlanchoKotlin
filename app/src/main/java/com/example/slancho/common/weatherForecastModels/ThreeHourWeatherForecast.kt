@@ -26,6 +26,9 @@ class ThreeHourWeatherForecast(
 ) : WeatherForecast(), CollapsableCard {
     override fun isCollapsable(): Boolean = true
     override fun getForecastType(): ForecastType = ForecastType.ThreeHour
+    override fun toggleCollapse() {
+        this.collapsedCard = !collapsedCard
+    }
 
     companion object {
         private fun createFromForecastInfo(forecastInfo: ForecastInfo): ThreeHourWeatherForecast {

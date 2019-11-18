@@ -26,8 +26,8 @@
             android:id="@+id/grp_forecast_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/lottie_weather_icon"
             app:layout_constraintEnd_toStartOf="@id/grp_min_max_temp"
+            app:layout_constraintStart_toEndOf="@id/lottie_weather_icon"
             app:layout_constraintTop_toTopOf="@+id/lottie_weather_icon">
 
             <TextView
@@ -63,13 +63,24 @@
                 tools:text="Friday" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <TextView
+            android:id="@+id/txt_description"
+            style="@style/TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/medium_padding"
+            app:layout_constraintBottom_toTopOf="@id/grp_min_max_temp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/grp_forecast_header"
+            app:layout_constraintTop_toTopOf="@+id/grp_forecast_header"
+            tools:text="Clear Sky" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/grp_temp_morn_eve_night"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/small_padding"
-            app:layout_constraintBottom_toTopOf="@id/grp_humidity_clouds"
+            app:layout_constraintBottom_toTopOf="@id/grp_additional_details"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/grp_min_max_temp">
@@ -194,181 +205,178 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/grp_humidity_clouds"
+            android:id="@+id/grp_additional_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/medium_padding"
-            app:layout_constraintBottom_toTopOf="@id/grp_wind_pressure"
-
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/grp_temp_morn_eve_night">
 
-            <ImageView
-                android:id="@+id/iv_humidity"
-                style="@style/WeatherCardImageViewIconMedium"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/grp_humidity_clouds"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_humidity"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/txt_humidity"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/txt_humidity"
-                style="@style/TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@id/iv_humidity"
-                app:layout_constraintEnd_toStartOf="@id/iv_clouds"
-                app:layout_constraintStart_toEndOf="@id/iv_humidity"
-                app:layout_constraintTop_toTopOf="@id/iv_humidity"
-                tools:text="8%" />
-
-            <ImageView
-                android:id="@+id/iv_clouds"
-                style="@style/WeatherCardImageViewIconMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/large_padding"
-                android:src="@drawable/ic_clouds"
-                app:layout_constraintBottom_toBottomOf="@id/txt_humidity"
-                app:layout_constraintEnd_toStartOf="@id/txt_clouds"
-                app:layout_constraintStart_toEndOf="@id/txt_humidity"
-                app:layout_constraintTop_toTopOf="@id/txt_humidity" />
-
-            <TextView
-                android:id="@+id/txt_clouds"
-                style="@style/TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@id/iv_clouds"
+                android:layout_margin="@dimen/medium_padding"
+                app:layout_constraintBottom_toTopOf="@id/grp_wind_pressure"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/iv_clouds"
-                app:layout_constraintTop_toTopOf="@id/iv_clouds"
-                tools:text="12%" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/txt_description"
-            style="@style/TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/medium_padding"
-            app:layout_constraintBottom_toTopOf="@id/grp_min_max_temp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/grp_forecast_header"
-            app:layout_constraintTop_toTopOf="@+id/grp_forecast_header"
-            tools:text="Clear Sky" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/grp_wind_pressure"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_padding"
-            app:layout_constraintBottom_toTopOf="@id/grp_sunrise_sunset"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/grp_humidity_clouds">
-
-            <ImageView
-                android:id="@+id/iv_wind"
-                style="@style/WeatherCardImageViewIconMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_wind"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="parent">
 
-            <TextView
-                android:id="@+id/txt_wind_speed"
-                style="@style/TextView"
+                <ImageView
+                    android:id="@+id/iv_humidity"
+                    style="@style/WeatherCardImageViewIconMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_humidity"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/txt_humidity"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_humidity"
+                    style="@style/TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_humidity"
+                    app:layout_constraintEnd_toStartOf="@id/iv_clouds"
+                    app:layout_constraintStart_toEndOf="@id/iv_humidity"
+                    app:layout_constraintTop_toTopOf="@id/iv_humidity"
+                    tools:text="8%" />
+
+                <ImageView
+                    android:id="@+id/iv_clouds"
+                    style="@style/WeatherCardImageViewIconMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/large_padding"
+                    android:src="@drawable/ic_clouds"
+                    app:layout_constraintBottom_toBottomOf="@id/txt_humidity"
+                    app:layout_constraintEnd_toStartOf="@id/txt_clouds"
+                    app:layout_constraintStart_toEndOf="@id/txt_humidity"
+                    app:layout_constraintTop_toTopOf="@id/txt_humidity" />
+
+                <TextView
+                    android:id="@+id/txt_clouds"
+                    style="@style/TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_clouds"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_clouds"
+                    app:layout_constraintTop_toTopOf="@id/iv_clouds"
+                    tools:text="12%" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/grp_wind_pressure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/iv_wind"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="1.87 m/s ↑ N" />
-
-            <ImageView
-                android:id="@+id/iv_wind_direction"
-                style="@style/WeatherCardImageViewIconMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/medium_padding"
-                android:src="@drawable/ic_pressure"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/txt_wind_speed"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/txt_pressure"
-                style="@style/TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_margin="@dimen/small_padding"
+                app:layout_constraintBottom_toTopOf="@id/grp_sunrise_sunset"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/iv_wind_direction"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="1000hPa" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/grp_sunrise_sunset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_padding"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/grp_wind_pressure">
-
-            <ImageView
-                android:id="@+id/iv_sunrise"
-                style="@style/WeatherCardImageViewIconMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_sunrise"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/txt_sunrise"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/grp_humidity_clouds">
 
-            <TextView
-                android:id="@+id/txt_sunrise"
-                style="@style/TextView"
+                <ImageView
+                    android:id="@+id/iv_wind"
+                    style="@style/WeatherCardImageViewIconMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_wind"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_wind_speed"
+                    style="@style/TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_wind"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="1.87 m/s ↑ N" />
+
+                <ImageView
+                    android:id="@+id/iv_wind_direction"
+                    style="@style/WeatherCardImageViewIconMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/medium_padding"
+                    android:src="@drawable/ic_pressure"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/txt_wind_speed"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_pressure"
+                    style="@style/TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_wind_direction"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="1000hPa" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/grp_sunrise_sunset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/iv_sunset"
-                app:layout_constraintStart_toEndOf="@id/iv_sunrise"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="07:00 12/09" />
-
-            <ImageView
-                android:id="@+id/iv_sunset"
-                style="@style/WeatherCardImageViewIconMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/medium_padding"
-                android:src="@drawable/ic_sunset"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/txt_sunset"
-                app:layout_constraintStart_toEndOf="@id/txt_sunrise"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/txt_sunset"
-                style="@style/TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_padding"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/iv_sunset"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="20:00 12/09" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/grp_wind_pressure">
+
+                <ImageView
+                    android:id="@+id/iv_sunrise"
+                    style="@style/WeatherCardImageViewIconMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_sunrise"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/txt_sunrise"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_sunrise"
+                    style="@style/TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/iv_sunset"
+                    app:layout_constraintStart_toEndOf="@id/iv_sunrise"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="07:00 12/09" />
+
+                <ImageView
+                    android:id="@+id/iv_sunset"
+                    style="@style/WeatherCardImageViewIconMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/medium_padding"
+                    android:src="@drawable/ic_sunset"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/txt_sunset"
+                    app:layout_constraintStart_toEndOf="@id/txt_sunrise"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/txt_sunset"
+                    style="@style/TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_sunset"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="20:00 12/09" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

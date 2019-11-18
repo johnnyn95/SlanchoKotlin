@@ -34,13 +34,17 @@ class WeatherFragment : BaseMainFragment(), (AdapterCard) -> Unit {
                 Timber.d("Weather forecast clicked!")
                 when ((adapterCard as WeatherForecast).getForecastType()) {
                     ForecastType.Current -> Timber.d("Current forecast clicked!")
-                    ForecastType.Daily -> Timber.d("Daily forecast clicked!")
+                    ForecastType.Daily -> {
+                        (adapterCard as DailyWeatherForecast).toggleCollapse()
+                        Timber.d("Daily forecast clicked!")
+                    }
                     ForecastType.ThreeHour -> Timber.d("Three hour forecast clicked!")
                 }
             }
             else ->
                 Timber.d("Other")
         }
+        forecastAdapter.notifyDataSetChanged()
     }
 
     lateinit var binding: FragmentWeatherBinding

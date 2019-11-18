@@ -1,5 +1,7 @@
 package com.example.slancho.ui.main.weather.adapterDelegates
 
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import com.example.slancho.R
 import com.example.slancho.common.weatherForecastModels.AdapterCard
 import com.example.slancho.common.weatherForecastModels.DailyWeatherForecast
@@ -56,6 +58,7 @@ class DailyWeatherForecastAdapterDelegate {
                 txt_temp_night_value.text =
                     weatherFormatUtils.formatTemperatureSimple(item.tempNight)
                 lottie_weather_icon.setAnimation(weatherFormatUtils.fetchWeatherIcon(item.icon))
+                grp_additional_details.visibility = if (item.collapsedCard) GONE else VISIBLE
             }
         }
 }
