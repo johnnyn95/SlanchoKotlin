@@ -17,6 +17,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.lang.Exception
 import javax.inject.Inject
 
 class WeatherFragmentViewModel @Inject constructor(
@@ -29,6 +30,10 @@ class WeatherFragmentViewModel @Inject constructor(
     private var pexelsApiRepository: PexelsApiRepository
 
 ) : BaseMainFragmentViewModel(locationManager, userDbRepository, workManager) {
+
+    companion object{
+        const val default_query = "1000"
+    }
 
     override val TAG: String = WeatherFragmentViewModel::javaClass.name
     private lateinit var currentUser: User
@@ -49,15 +54,18 @@ class WeatherFragmentViewModel @Inject constructor(
 
     private suspend fun fetchForecastData(user: User) {
         rapidApiOpenWeatherMapRepository.getCurrentForecastByCityAndCountryCode(
-            user.lastKnownLocation!!.getFormattedCityAndCountryCode()
+            try { user.lastKnownLocation!!.getFormattedCityAndCountryCode() }
+            catch (e:Exception){ default_query }
         )
 
         rapidApiOpenWeatherMapRepository.getRapidApiDailyForecastByCityAndCountryCode(
-            user.lastKnownLocation!!.getFormattedCityAndCountryCode()
+            try { user.lastKnownLocation!!.getFormattedCityAndCountryCode() }
+            catch (e:Exception){ default_query }
         )
 
         rapidApiOpenWeatherMapRepository.getRapidApiThreeHourForecastByCityAndCountryCode(
-            user.lastKnownLocation!!.getFormattedCityAndCountryCode()
+            try { user.lastKnownLocation!!.getFormattedCityAndCountryCode() }
+            catch (e:Exception){ default_query }
         )
     }
 

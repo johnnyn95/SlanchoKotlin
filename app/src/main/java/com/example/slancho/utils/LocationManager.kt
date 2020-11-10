@@ -69,6 +69,9 @@ class LocationManager @Inject constructor(var application: Application) {
             } catch (e: IOException) {
                 Timber.w(TAG, "Couldn't fetch Address from Location")
                 null
+            } catch (e: KotlinNullPointerException){
+                Timber.w(TAG, "Couldn't fetch Address from Location")
+                null
             }
         }
     }

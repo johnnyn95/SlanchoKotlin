@@ -14,10 +14,9 @@ buildscript {
     ext.adapter_delegates_version= '4.2.0'
     ext.firebase_version = '19.1.0'
     ext.firebase_services_version = "17.0.0"
-
     ext.support_version = '1.1.0'
     ext.dagger_version = '2.24'
-
+    ext.epoxy_version = "3.8.0"
 
     repositories {
         google()
